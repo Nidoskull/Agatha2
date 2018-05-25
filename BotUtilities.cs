@@ -12,9 +12,13 @@ namespace Agatha2
 	internal static class BotUtilities 
 	{
 
-		private static Dictionary<string, List<string>> bartending;
-		private static bool hasDictionaryChanged = false;
+		private static Dictionary<string, List<string>> _bartending;
+		private static bool _hasDictionaryChanged = false;
 		private static List<string> validDrinkFields = new List<string>(new string[] {"vessel","beverage","garnish"});
+
+		public static Random rnjesus = new Random();
+		public static Dictionary<string, List<string>> BartendingData { get => _bartending; set => _bartending = value; }
+		public static bool HasDictionaryChanged { get => _hasDictionaryChanged; set => _hasDictionaryChanged = value; }
 
 		static BotUtilities() 
 		{
@@ -22,23 +26,23 @@ namespace Agatha2
 			try
 			{
 				using (var file = File.OpenRead("data/bartending.bin")) {
-					bartending = Serializer.Deserialize<Dictionary<string, List<string>>>(file);
+					BartendingData = Serializer.Deserialize<Dictionary<string, List<string>>>(file);
 				}
 			}
 			catch (FileNotFoundException ex)
 			{
 				Console.WriteLine(ex);
-				bartending = new Dictionary<string, List<string>>();
-				bartending.Add("vessel", new List<string>(new string[] {"a generic cup"}));
-				bartending.Add("garnish", new List<string>(new string[] {"a generic garnish"}));
-				bartending.Add("beverage", new List<string>(new string[] {"a generic liquid"}));
+				BartendingData = new Dictionary<string, List<string>>();
+				BartendingData.Add("vessel", new List<string>(new string[] {"a generic cup"}));
+				BartendingData.Add("garnish", new List<string>(new string[] {"a generic garnish"}));
+				BartendingData.Add("beverage", new List<string>(new string[] {"a generic liquid"}));
 			}
 
 			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
 			CancellationTokenSource source = new CancellationTokenSource();
 			Action action = (() => 
 			{
-				TrySaveDictionary();
+				Program.Config.SaveBartendingData();
 			}
 			);
 			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
@@ -53,71 +57,20 @@ namespace Agatha2
 					await BotUtilities.CommandDrink(message);
 					break;
 				case "save":
-					await BotUtilities.CommandSave(message);
+					await Program.Config.Save(message);
 					break;
 				case "wakeup":
-					await BotUtilities.CommandWakeUp(message);
+					await Program.Config.WakeUp(message);
 					break;
 				case "shutup":
-					await BotUtilities.CommandShutUp(message);
+					await Program.Config.ShutUp(message);
+					break;
+				case "replyrate":
+					await Program.Config.SetReplyRate(message);
 					break;
 				default:
 					await message.Channel.SendMessageAsync("Unknown command, insect.");
 					break;
-			}
-		}
-
-		private static void TrySaveDictionary()
-		{
-			if(hasDictionaryChanged)
-			{
-				hasDictionaryChanged = false;
-				Console.WriteLine("Serializing bartending dictionary.");
-				using (var file = File.Create("data/bartending.bin")) {
-					Serializer.Serialize(file, bartending);
-				}
-			}
-		}
-
-		private static bool IsAuthorized(SocketUser user)
-		{
-			return true;
-		}
-
-		internal static async Task CommandWakeUp(SocketMessage message)
-		{
-			if(BotConfig.isAwake)
-			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: I am already awake.");
-			} 
-			else
-			{
-				BotConfig.isAwake = true;
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Good morning, insect.");
-			}
-		}
-		internal static async Task CommandShutUp(SocketMessage message)
-		{
-			if(BotConfig.isAwake)
-			{
-				BotConfig.isAwake = false;
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: I will be silent for now.");
-			} 
-			else
-			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: I am already being silent.");
-			}
-		}
-		internal static async Task CommandSave(SocketMessage message)
-		{
-			if(IsAuthorized(message.Author))
-			{
-				TrySaveDictionary();
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Saving bartending dictionary.");
-			}
-			else
-			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: You are not authorized, insect.");
 			}
 		}
 
@@ -130,7 +83,7 @@ namespace Agatha2
 				List<string> drinkParts = new List<string>();
 				foreach(string drinkPart in validDrinkFields) 
 				{
-					drinkParts.Add(bartending[drinkPart][Program.rnjesus.Next(bartending[drinkPart].Count)]);
+					drinkParts.Add(BartendingData[drinkPart][rnjesus.Next(BartendingData[drinkPart].Count)]);
 				}
 				result = $"_slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to {message.Author.Mention}._";
 			} 
@@ -142,9 +95,9 @@ namespace Agatha2
 					if(validDrinkFields.Contains(barKey))
 					{
 						string barText = message.Content.Substring(12 + barKey.Length);
-						bartending[barKey].Add(barText);
+						BartendingData[barKey].Add(barText);
 						result = $"_will now stock {barText} as a {barKey}._";
-						hasDictionaryChanged = true;
+						HasDictionaryChanged = true;
 					}
 				}
 			}

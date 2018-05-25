@@ -2,15 +2,17 @@
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Agatha2
 {
 	public class Program
 	{
-		public static Random rnjesus = new Random();
-		private string _token = "SORRYNOTOKEN";
-		public string Token { get => _token; set => _token = value; }
-		public static DiscordSocketClient client;
+		private static DiscordSocketClient _client;
+		private static BotConfig _config;
+
+		public static DiscordSocketClient Client {get => _client; set => _client = value; }
+		public static BotConfig Config {get => _config; set => _config = value; }
 
 		public static void Main(string[] args)
 		{
@@ -25,13 +27,15 @@ namespace Agatha2
 
 		public async Task MainAsync()
 		{
-			client = new DiscordSocketClient();
 
-			client.Log += Log;
-			client.MessageReceived += MessageReceived;
+			Config = new BotConfig();
+			Client = new DiscordSocketClient();
 
-			await client.LoginAsync(TokenType.Bot, Token);
-			await client.StartAsync();
+			Client.Log += Log;
+			Client.MessageReceived += MessageReceived;
+
+			await Client.LoginAsync(TokenType.Bot, Config.Token);
+			await Client.StartAsync();
 			await Task.Delay(-1);
 		}
 
@@ -40,8 +44,7 @@ namespace Agatha2
 
 			if(!message.Author.IsBot)
 			{
-				char[] message_chars = message.Content.ToCharArray();
-				if(message_chars.Length > 1 && message_chars[0] == BotConfig.commandPrefix)
+				if(message.Content.Length > 1 && message.Content.StartsWith(Config.CommandPrefix))
 				{
 					await BotUtilities.ResolveCommand(message);
 				}

@@ -1,0 +1,4 @@
+Token = "SORRYNOTOKEN"
+Awake = false
+CommandPrefix = '.'
+MarkovChance = 0

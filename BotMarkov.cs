@@ -61,7 +61,7 @@ namespace Agatha2
 				result = $"{token}";
 				while(max_tokens > 0 && markovDict.ContainsKey(token) && markovDict[token].Count > 0)
 				{
-					token = markovDict[token][Program.rnjesus.Next(markovDict[token].Count)];
+					token = markovDict[token][BotUtilities.rnjesus.Next(markovDict[token].Count)];
 					result += $" {token}";
 					max_tokens--;
 				}
@@ -94,10 +94,10 @@ namespace Agatha2
 				}
 				lastString = token;
 			}
-			if(BotConfig.isAwake && (message.Content.Contains("Agatha") || message.Content.Contains("agatha") || Program.rnjesus.Next(100) <= BotConfig.markovChance))
+			if(Program.Config.Awake && (message.Content.Contains("Agatha") || message.Content.Contains("agatha") || BotUtilities.rnjesus.Next(100) <= Program.Config.MarkovChance))
 			{
 				string[] tokens = message.Content.Split(" ");
-				string markovText = GetMarkovChain(tokens[Program.rnjesus.Next(tokens.Length)]);
+				string markovText = GetMarkovChain(tokens[BotUtilities.rnjesus.Next(tokens.Length)]);
 				if(markovText != null && markovText != "") 
 				{
 					message.Channel.SendMessageAsync(markovText);

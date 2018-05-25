@@ -248,4 +248,4 @@ ModelManifest.xml
 .fake/
 
 # Agatha stuff.
-[Dd]ata/*
+[Dd]ata/*.bin
