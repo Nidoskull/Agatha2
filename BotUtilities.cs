@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace Agatha2
 {
+
 	internal static class BotUtilities 
 	{
 
@@ -19,6 +20,11 @@ namespace Agatha2
 		public static Random rnjesus = new Random();
 		public static Dictionary<string, List<string>> BartendingData { get => _bartending; set => _bartending = value; }
 		public static bool HasDictionaryChanged { get => _hasDictionaryChanged; set => _hasDictionaryChanged = value; }
+
+		public static int Clamp(int value, int min, int max)  
+		{  
+			return (value < min) ? min : (value > max) ? max : value;  
+		}
 
 		static BotUtilities() 
 		{
@@ -67,6 +73,15 @@ namespace Agatha2
 					break;
 				case "replyrate":
 					await Program.Config.SetReplyRate(message);
+					break;
+				case "roll":
+					await BotDice.RollDiceStandard(message);
+					break;
+				case "dryh":
+					await BotDice.RollDiceDRYH(message);
+					break;
+				case "fate":
+					await BotDice.RollDiceFate(message);
 					break;
 				default:
 					await message.Channel.SendMessageAsync("Unknown command, insect.");
