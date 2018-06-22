@@ -16,19 +16,27 @@ namespace Agatha2
 		private string _commandPrefix;
 		private int _markovChance;
 		private string _token;
+		private ulong _streamChannelId;
+		private string _streamAPIClientID;
 
 		public string Token { get => _token; set => _token = value; }
 		public bool Awake { get => _isAwake; set => _isAwake = value; }
 		public string CommandPrefix { get => _commandPrefix; set => _commandPrefix = value; }
+		public string StreamAPIClientID { get => _streamAPIClientID; set => _streamAPIClientID = value; }
 		public int MarkovChance { get => _markovChance; set => _markovChance = value; }
+		public ulong StreamChannelID { get => _streamChannelId; set => _streamChannelId = value; }
 
 		public BotConfig()
 		{
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
-			Token = configTable.Get<string>("Token");
-			Awake = configTable.Get<bool>("Awake");
-			CommandPrefix = configTable.Get<string>("CommandPrefix");
-			MarkovChance = configTable.Get<int>("MarkovChance");
+			Token =             configTable.Get<string>("Token");
+			Awake =             configTable.Get<bool>("Awake");
+			CommandPrefix =     configTable.Get<string>("CommandPrefix");
+			MarkovChance =      configTable.Get<int>("MarkovChance");
+			StreamAPIClientID = configTable.Get<string>("StreamAPIClientID");
+
+			string streamID =   configTable.Get<string>("StreamChannelID");
+			StreamChannelID =   Convert.ToUInt64(streamID);
 		}
 
 		internal async Task WakeUp(SocketMessage message)

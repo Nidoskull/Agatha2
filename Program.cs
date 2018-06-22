@@ -37,6 +37,8 @@ namespace Agatha2
 			await Client.LoginAsync(TokenType.Bot, Config.Token);
 			await Client.StartAsync();
 			await Task.Delay(-1);
+			// force the Twitch poller to init
+			await BotTwitchPoller.PollStreamers(null);
 		}
 
 		private async Task MessageReceived(SocketMessage message)

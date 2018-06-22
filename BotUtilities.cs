@@ -83,6 +83,9 @@ namespace Agatha2
 				case "fate":
 					await BotDice.RollDiceFate(message);
 					break;
+				case "twitch":
+					await BotTwitchPoller.CommandPollStreamer(message);
+					break;
 				default:
 					await message.Channel.SendMessageAsync("Unknown command, insect.");
 					break;
