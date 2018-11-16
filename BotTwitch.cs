@@ -144,7 +144,7 @@ namespace Agatha2
                             if(!streamStatus[streamer] && streamActive)
                             {   
                                 streamStatus[streamer] = true;
-                                await channel.SendMessageAsync($"{streamerDisplayName} has started streaming '{jsonObject["data"][0]["title"].ToString()}' at http://twitch.tv/{streamerName}!");
+                                await channel.SendMessageAsync($"{streamerDisplayName} has started streaming '{jsonObject["data"][0]["title"].ToString()}' at http://twitch.tv/{streamerName}.");
                             }
                             else if(streamStatus[streamer] && !streamActive)
                             {

@@ -46,15 +46,13 @@ namespace Agatha2
 
 			if(!message.Author.IsBot)
 			{
-				if(message.Content.Length > 1 && message.Content.StartsWith(Config.CommandPrefix))
+				if(message.Content.Length > 1 && message.Content.StartsWith(Config.CommandPrefix) && !message.Content.Substring(1,1).Equals(Config.CommandPrefix))
 				{
 					await BotUtilities.ResolveCommand(message);
+					return;
 				}
-				else 
-				{
-					BotMarkov.ReceiveInput(message);
-				}
-			}
+				BotMarkov.ReceiveInput(message);
+			} 	
 		}
 	}
 }

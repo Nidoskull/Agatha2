@@ -50,6 +50,7 @@ namespace Agatha2
 				}
 			}
 		}
+
 		public static string GetMarkovChain(string initialToken)
 		{
 			string result = "";
@@ -74,6 +75,7 @@ namespace Agatha2
 			}
 			return result;
 		}
+
 		public static void ReceiveInput(SocketMessage message)
 		{
 			string lastString = null;
