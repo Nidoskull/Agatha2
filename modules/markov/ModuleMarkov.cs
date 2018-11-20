@@ -10,12 +10,18 @@ using System.Reactive.Linq;
 
 namespace Agatha2
 {
-	internal static class BotMarkov
+	internal class ModuleMarkov : BotModule
 	{
-		private static bool hasDictionaryChanged = false;
-		private static Dictionary<string, List<string>> markovDict;
-		static BotMarkov()
-		{
+   		private bool hasDictionaryChanged = false;
+		private Dictionary<string, List<string>> markovDict;
+
+        public ModuleMarkov()
+        {
+            moduleName = "Markov";
+            description = "Listens to chatter and produces Markov string responses.";
+        }
+        public override bool Register(List<BotCommand> commands)
+        {
 			Console.WriteLine("Deserializing Markov dictionary.");
 			try
 			{
@@ -37,9 +43,12 @@ namespace Agatha2
 			}
 			);
 			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-		}
+            
+            commands.Add(new CommandReplyrate());
+            return true;
+        }
 
-		private static void TrySaveDictionary()
+		private void TrySaveDictionary()
 		{
 			if(hasDictionaryChanged)
 			{
@@ -51,7 +60,7 @@ namespace Agatha2
 			}
 		}
 
-		public static string GetMarkovChain(string initialToken)
+		public string GetMarkovChain(string initialToken)
 		{
 			string result = "";
 
@@ -62,7 +71,7 @@ namespace Agatha2
 				result = $"{token}";
 				while(max_tokens > 0 && markovDict.ContainsKey(token) && markovDict[token].Count > 0)
 				{
-					token = markovDict[token][BotUtilities.rnjesus.Next(markovDict[token].Count)];
+					token = markovDict[token][Program.rand.Next(markovDict[token].Count)];
 					result += $" {token}";
 					max_tokens--;
 				}
@@ -76,7 +85,7 @@ namespace Agatha2
 			return result;
 		}
 
-		public static void ReceiveInput(SocketMessage message)
+		public override async Task ListenTo(SocketMessage message)
 		{
 			string lastString = null;
 			foreach(string token in message.Content.Split(" "))
@@ -96,15 +105,16 @@ namespace Agatha2
 				}
 				lastString = token;
 			}
-			if(Program.Config.Awake && (message.Content.Contains("Agatha") || message.Content.Contains("agatha") || BotUtilities.rnjesus.Next(100) <= Program.Config.MarkovChance))
+			string searchSpace =  message.Content.ToLower();
+			if(Program.rand.Next(100) <= Program.MarkovChance || searchSpace.Contains("agatha"))
 			{
 				string[] tokens = message.Content.Split(" ");
-				string markovText = GetMarkovChain(tokens[BotUtilities.rnjesus.Next(tokens.Length)]);
+				string markovText = GetMarkovChain(tokens[Program.rand.Next(tokens.Length)]);
 				if(markovText != null && markovText != "") 
 				{
-					message.Channel.SendMessageAsync(markovText);
+					await message.Channel.SendMessageAsync(markovText);
 				}
 			}
 		}
-	}
+    }
 }
