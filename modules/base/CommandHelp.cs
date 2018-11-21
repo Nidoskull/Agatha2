@@ -1,4 +1,5 @@
 using Discord.WebSocket;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,12 +15,33 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
         {
+
+			string[] message_contents = message.Content.Substring(1).Split(" ");
             string result = $"{Program.commands.Count} commands registered:";
-            foreach(BotCommand command in Program.commands)
+			if(message_contents.Length < 2)
             {
-                result = $"{result}\n\n   {command.aliases[0].ToString()} [{string.Join(", ", command.aliases.ToArray())}] ({Program.CommandPrefix}{command.usage.ToString()}):\n      {command.description.ToString()}";
+                foreach(BotCommand command in Program.commands)
+                {
+                    string cmdName = command.aliases[0].ToString();
+                    result = $"{result}\n {cmdName} {new String(' ', 12 - cmdName.Length)} [{string.Join(", ", command.aliases.ToArray())}]";
+                }
+                result = $"```{result}\nUse {Program.CommandPrefix}help [command] for more information on usage.```";
             }
-            await message.Channel.SendMessageAsync($"{message.Author.Mention}: ```{result}```");
+            else 
+            {
+                result = "Help for that command was not found.";
+                string checkCommandName = message_contents[1].ToLower();
+                foreach(BotCommand command in Program.commands)
+                {
+                    if(command.aliases.Contains(checkCommandName))
+                    {   
+                        string cmdName = command.aliases[0].ToString();
+                        result = $"```\n{cmdName} {new String(' ', 13 - cmdName.Length)} [{string.Join(", ", command.aliases.ToArray())}] ({Program.CommandPrefix}{command.usage.ToString()}):\n{command.description.ToString()}\n```";
+                        break;
+                    }
+                }
+            }
+            await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");
         }
     }
 }

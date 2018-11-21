@@ -26,15 +26,10 @@ namespace Agatha2
             moduleName = "Twitch";
             description = "A module for watching for and looking up Twitch streamers.";
         }
-        public override bool Register(List<BotCommand> commands)
-        {
 
-            Console.WriteLine("Initializing stream module.");
-            streamStatus = new Dictionary<String, Boolean>();
-            streamIDtoUserName = new Dictionary<String, String>();
-            streamIDToDisplayName = new Dictionary<String, String>();
-            streamers = new List<String>();
-
+		public override async Task StartModule()
+		{
+            Console.WriteLine("Starting Twitch polling.");
             var logFile = File.ReadAllLines("data/streamers.txt");
             foreach(String streamer in new List<string>(logFile))
             {
@@ -55,7 +50,14 @@ namespace Agatha2
 			);
 			pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
             Console.WriteLine("Stream poller initialized.");
+		}
 
+        public override bool Register(List<BotCommand> commands)
+        {
+            streamStatus = new Dictionary<String, Boolean>();
+            streamIDtoUserName = new Dictionary<String, String>();
+            streamIDToDisplayName = new Dictionary<String, String>();
+            streamers = new List<String>();
             commands.Add(new CommandTwitch());
             return true;
         }

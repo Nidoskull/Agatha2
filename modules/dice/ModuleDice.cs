@@ -26,6 +26,9 @@ namespace Agatha2
 		public override async Task ListenTo(SocketMessage message)
 		{
         }
+		public override async Task StartModule()
+		{
+		}
     }
 
 	internal class Die  

@@ -20,6 +20,17 @@ namespace Agatha2
             moduleName = "Markov";
             description = "Listens to chatter and produces Markov string responses.";
         }
+		public override async Task StartModule()
+		{
+			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
+			CancellationTokenSource source = new CancellationTokenSource();
+			Action action = (() => 
+			{
+				TrySaveDictionary();
+			}
+			);
+			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
+        }
         public override bool Register(List<BotCommand> commands)
         {
 			Console.WriteLine("Deserializing Markov dictionary.");
@@ -34,16 +45,6 @@ namespace Agatha2
 				Console.WriteLine(ex);
 				markovDict = new Dictionary<string, List<string>>();
 			}
-
-			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
-			CancellationTokenSource source = new CancellationTokenSource();
-			Action action = (() => 
-			{
-				TrySaveDictionary();
-			}
-			);
-			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-            
             commands.Add(new CommandReplyrate());
             return true;
         }

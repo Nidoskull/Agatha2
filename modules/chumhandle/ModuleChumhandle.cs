@@ -17,6 +17,9 @@ namespace Agatha2
             moduleName = "Chumhandle";
             description = "Provides randomly generated Homestuck character profiles.";
         }
+		public override async Task StartModule()
+		{
+		}
         public override bool Register(List<BotCommand> commands)
         {
             chumStrings = new Dictionary<string, List<string>>();

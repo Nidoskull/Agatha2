@@ -22,6 +22,11 @@ namespace Agatha2
             moduleName = "Bartender";
             description = "Provides randomly generated food and drink. May or may not be edible.";
         }
+
+		public override async Task StartModule()
+		{
+		}
+
         public override bool Register(List<BotCommand> commands)
         {
 

@@ -4,9 +4,26 @@ using System;
 using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
+using System.Data.SQLite;
 
 namespace Agatha2
 {
+    internal class FishingHole
+    {
+        internal string holeName;
+        internal string holeType;
+        internal string vNum;
+        internal List<string> containsFish;
+        public FishingHole(string _name, string _type, string _vnum, List<string> _fish)
+        {
+                holeName = _name;
+                holeType = _type;
+                vNum = _vnum;
+                containsFish = _fish;
+        }
+    }
+
 	internal class ModuleAetolia : BotModule
 	{
         public ModuleAetolia()
@@ -14,12 +31,59 @@ namespace Agatha2
             moduleName = "Aetolia";
             description = "A character lookup and news-reading module for the IRE MUD Aetolia: The Midnight Age.";
         }
+
+        private string fishDbPath = "data/aetfish.db";
+        public List<FishingHole> fishingHoles;
+		public override async Task StartModule()
+		{
+            Console.WriteLine("Loading Aetolia fish database.");
+            if(!File.Exists(fishDbPath))
+            {
+                Console.WriteLine($"No database found, creating an empty one at {fishDbPath}.");
+                SQLiteConnection.CreateFile(fishDbPath);                
+            }
+            SQLiteConnection fishDbConnection = new SQLiteConnection($"Data Source={fishDbPath};Version=3;");
+            fishDbConnection.Open();
+
+            List<string> uniqueFish = new List<string>();
+            Dictionary<string, List<string>> tmpFish = new Dictionary<string, List<string>>();
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM fish_types;", fishDbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                string fishName = reader["fishName"].ToString();
+                string holeName = reader["fishingHoleName"].ToString();
+                
+                if(!uniqueFish.Contains(fishName))
+                {
+                    uniqueFish.Add(fishName);
+                }
+                if(!tmpFish.ContainsKey(holeName))
+                {
+                    tmpFish.Add(holeName, new List<string>());
+                }
+                tmpFish[holeName].Add(fishName);
+            }
+            command = new SQLiteCommand("SELECT * FROM fishing_holes;", fishDbConnection);
+            reader = command.ExecuteReader();
+            while(reader.Read())
+            {
+                string holeName = reader["fishingHoleName"].ToString();
+                string holeType = reader["fishingHoleType"].ToString();
+                string holeVnum = reader["fishingHoleVnum"].ToString();
+                fishingHoles.Add(new FishingHole(holeName, holeType, holeVnum, tmpFish[holeName]));
+            }
+            Console.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
+		}
+
         public override bool Register(List<BotCommand> commands)
         {
+            fishingHoles = new List<FishingHole>();
             commands.Add(new CommandNstat());
             commands.Add(new CommandReadnews());
             commands.Add(new CommandHonours());
             commands.Add(new CommandWho());
+            commands.Add(new CommandFish());
             return true;
         }
 

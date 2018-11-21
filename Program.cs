@@ -14,9 +14,9 @@ namespace Agatha2
         internal string moduleName;
         public List<BotCommand> commands;
         public string description;
-
         public abstract bool Register(List<BotCommand> commands);
 		public abstract Task ListenTo(SocketMessage message);
+		public abstract Task StartModule();
     }
 
 	internal abstract class BotCommand
@@ -109,7 +109,6 @@ namespace Agatha2
 			commands = new List<BotCommand>();
 			foreach(BotModule module in modules)
 			{
-				Console.WriteLine($"Regis {module.moduleName}");
 				List<BotCommand> tmpCmds = new List<BotCommand>();
 				if(module.Register(tmpCmds))
 				{
@@ -120,6 +119,13 @@ namespace Agatha2
 					}
 					Console.WriteLine($"Registered module {module.moduleName} with {tmpCmds.Count} commands.");
 				}
+			}
+			Console.WriteLine("Done.");
+
+			Console.WriteLine($"Starting {modules.Count} modules.");
+			foreach(BotModule module in modules)
+			{
+				Task.Run( () => module.StartModule());
 			}
 			Console.WriteLine("Done.");
 

@@ -24,6 +24,10 @@ namespace Agatha2
             moduleName = "Warframe";
             description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
         }
+
+		public override async Task StartModule()
+		{
+		}
         public override bool Register(List<BotCommand> commands)
         {
             vorPostStrings =   new List<string>(File.ReadAllLines("data/vor_strings.txt"));
