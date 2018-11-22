@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -34,6 +35,7 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
         {
+            EmbedBuilder embedBuilder = new EmbedBuilder();
 			int mod = 0;
             Match m = Regex.Match(message.Content, "([-+])(\\d+)");
 			if(m.Success)
@@ -62,7 +64,11 @@ namespace Agatha2
                 string resultKey = (resultValue < 0) ? $"{resultValue}" : $"+{resultValue}";
                 descriptiveResult = $"{resultKey}, {fateTiers[resultKey]}";
             }
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: ```{dice.SummarizePoolRoll(-2)} ({modString}) = {descriptiveResult}```");
+
+            embedBuilder.Description = descriptiveResult;
+            embedBuilder.AddField("Rolled", $"{dice.SummarizePoolRoll(-2)} ({modString})");
+			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
+            
         }
     }
 }

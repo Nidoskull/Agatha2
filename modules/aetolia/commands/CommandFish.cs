@@ -1,9 +1,11 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Linq;
 
 /*
  * Corresponding Mudlet alias for this command:
@@ -36,7 +38,6 @@ namespace Agatha2
             aliases = new List<string>(new string[] {"fish", "fsearch"});
         }
 
-
 		private bool TryAddMatch(Dictionary<FishingHole, string> matches, FishingHole fishingHole, string fishy, string searchText)
 		{
 			int foundAt = fishy.ToLower().IndexOf(searchText);
@@ -60,11 +61,18 @@ namespace Agatha2
 			}
 			else
 			{
+				EmbedBuilder embedBuilder = new EmbedBuilder();
+				embedBuilder.Title = "Search Results";
 				Dictionary<FishingHole, string> matches = new Dictionary<FishingHole, string>();
 				string searchText = message.Content.Substring(message_contents[0].Length+2).ToLower();
 				ModuleAetolia aetolia = (ModuleAetolia)parent;
 				foreach(FishingHole fishHole in aetolia.fishingHoles)
 				{
+					if(fishHole.holeId.Equals(searchText))
+					{
+						matches.Add(fishHole, "");
+						break;
+					}
 					if(!TryAddMatch(matches, fishHole, fishHole.holeName, searchText) && !TryAddMatch(matches, fishHole, fishHole.holeType, searchText))
 					{
 						foreach(string fishy in fishHole.containsFish)
@@ -77,16 +85,28 @@ namespace Agatha2
 					}
 				}
 
-				string result = $"No matches found.";
-				if(matches.Count != 0)
+				if(matches.Count == 0)
 				{
-					result = "Matches:";
+					embedBuilder.Description = "No matches found.";
+				}
+				else if(matches.Count == 1)
+				{
+					KeyValuePair<FishingHole, string> fishHole = matches.First();
+					embedBuilder.Title = fishHole.Key.holeName;
+					embedBuilder.AddField("Type", fishHole.Key.holeType);
+					embedBuilder.AddField("Vnum", fishHole.Key.vNum);
+					embedBuilder.AddField("Fish", string.Join(", ", fishHole.Key.containsFish.ToArray()));
+				}
+				else
+				{
+					string fishResults = "Multiple matches found:\n";
 					foreach(KeyValuePair<FishingHole, string> fishHole in matches)
 					{
-						result = $"{result}\n{fishHole.Key.holeName} - {fishHole.Key.holeType} - v{fishHole.Key.vNum} [{fishHole.Value.ToString()}]";
+						fishResults = $"{fishResults}\n{fishHole.Key.holeId}. {fishHole.Key.holeName} - {fishHole.Key.holeType} - v{fishHole.Key.vNum} [{fishHole.Value.ToString()}]";
 					}
+					embedBuilder.Description = $"{fishResults}\n\nSpecify an ID number or a more specific search string for detailed information on a fishing hole.";
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
 			}
         }
     }

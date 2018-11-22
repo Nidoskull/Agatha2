@@ -57,6 +57,13 @@ namespace Agatha2
 		public static int MarkovChance { get => _markovChance; set => _markovChance = value; }
 		public static ulong StreamChannelID { get => _streamChannelId; set => _streamChannelId = value; }
 
+		internal static string _sourceAuthor;
+		internal static string _sourceVersion;
+		internal static string _sourceLocation;
+		internal static string SourceAuthor { get => _sourceAuthor; set => _sourceAuthor = value; }
+		internal static string SourceVersion { get => _sourceVersion; set => _sourceVersion = value; }
+		internal static string SourceLocation { get => _sourceLocation; set => _sourceLocation = value; }
+
 		internal static bool IsAuthorized(SocketUser user)
 		{
 			return true;
@@ -83,6 +90,9 @@ namespace Agatha2
 
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
 			Token =             configTable.Get<string>("Token");
+			SourceAuthor =      configTable.Get<string>("SourceAuthor");
+			SourceVersion =     configTable.Get<string>("SourceVersion");
+			SourceLocation =    configTable.Get<string>("SourceLocation");
 			Awake =             configTable.Get<bool>("Awake");
 			CommandPrefix =     configTable.Get<string>("CommandPrefix");
 			MarkovChance =      configTable.Get<int>("MarkovChance");
@@ -129,6 +139,7 @@ namespace Agatha2
 			}
 			Console.WriteLine("Done.");
 
+			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
 			commands.Add(new CommandWakeup());

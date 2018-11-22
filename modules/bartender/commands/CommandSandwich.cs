@@ -22,7 +22,7 @@ namespace Agatha2
         public override async Task ExecuteCommand(SocketMessage message)
 		{
             ModuleBartender bartender = (ModuleBartender)parent;
-			string result = "Usage: ${usage}.";
+			string result = $"Usage: {usage}.";
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length == 1) 
 			{

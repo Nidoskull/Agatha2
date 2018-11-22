@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -15,33 +16,45 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
         {
-
+            EmbedBuilder embedBuilder = new EmbedBuilder();
 			string[] message_contents = message.Content.Substring(1).Split(" ");
-            string result = $"{Program.commands.Count} commands registered:";
+            string result = "";
 			if(message_contents.Length < 2)
             {
+                embedBuilder.Title = $"{Program.commands.Count} commands registered.";
                 foreach(BotCommand command in Program.commands)
                 {
                     string cmdName = command.aliases[0].ToString();
-                    result = $"{result}\n {cmdName} {new String(' ', 12 - cmdName.Length)} [{string.Join(", ", command.aliases.ToArray())}]";
+                    result = $"{result}\n{cmdName} [{string.Join(", ", command.aliases.ToArray())}]";
                 }
-                result = $"```{result}\nUse {Program.CommandPrefix}help [command] for more information on usage.```";
+                result = $"{result}\n\n**Use {Program.CommandPrefix}help [command] for more information on usage.**";
             }
             else 
             {
-                result = "Help for that command was not found.";
                 string checkCommandName = message_contents[1].ToLower();
+                bool foundCmd = false;
                 foreach(BotCommand command in Program.commands)
                 {
                     if(command.aliases.Contains(checkCommandName))
                     {   
+                        foundCmd = true;
                         string cmdName = command.aliases[0].ToString();
-                        result = $"```\n{cmdName} {new String(' ', 13 - cmdName.Length)} [{string.Join(", ", command.aliases.ToArray())}] ({Program.CommandPrefix}{command.usage.ToString()}):\n{command.description.ToString()}\n```";
+                        embedBuilder.Title = $"Helpfile for `{cmdName}` ({command.parent.moduleName} module).";
+                        embedBuilder.AddField("Aliases", $"`{string.Join("`, `", command.aliases.ToArray())}`");
+                        embedBuilder.AddField("Usage", $"`{Program.CommandPrefix}{command.usage}`");
+                        embedBuilder.AddField("Description", command.description.ToString());
                         break;
                     }
                 }
+                if(!foundCmd)
+                {
+                    embedBuilder.Title = $"Helpfile not found.";
+                    result = "Help for that command was not found.";
+                }
             }
-            await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");
+
+            embedBuilder.Description = result;
+            await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -22,17 +23,22 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
 		{
-			string responseMessage =  "";
+			EmbedBuilder embedBuilder = new EmbedBuilder();
+			bool foundDice = false;
 			foreach(Match m in Regex.Matches(message.Content.Substring(6), "(\\d*)(#*)d(\\d+)([+-]\\d+)*"))
 			{
 				DicePool dice = new DicePool(m);
-				responseMessage = $"{responseMessage}```{dice.SummarizeStandardRoll()}```\n";
+				embedBuilder.AddField(dice.Label, dice.SummarizeStandardRoll());
+				foundDice = true;
 			}
-			if(responseMessage.Equals(""))
+			if(!foundDice)
 			{
-				responseMessage = $"Dice syntax is `{Program.CommandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.";
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{Program.CommandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.");
 			}
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {responseMessage}");			
-        }
+			else
+			{
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
+			}
+		}
     }
 }

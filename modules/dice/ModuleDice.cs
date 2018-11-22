@@ -171,7 +171,7 @@ namespace Agatha2
 
         private string SummarizeRoll(bool show_total, int offset_results)
         {   
-			string resultString = $"{label} [ ";
+			string resultString = $"[ ";
             int total = 0;
 
 			foreach(Die die in dice)

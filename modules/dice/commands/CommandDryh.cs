@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -22,6 +23,7 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
         {
+			EmbedBuilder embedBuilder = new EmbedBuilder();
 			string responseMessage =  "";
 			Match m = Regex.Match(message.Content, "(\\d+) (\\d+) (\\d+) (\\d+)");
 			if(m.Success)
@@ -33,7 +35,6 @@ namespace Agatha2
 				DicePool painPool = new DicePool($"{m.Groups[4].ToString()}d6", "Pain");
 
 				int playerSuccess = 0;
-				string poolSummary = "";
 				DicePool dominantPool = pools[0];
 
 				foreach(DicePool entry in pools)
@@ -44,9 +45,9 @@ namespace Agatha2
 					{
 						dominantPool = entry;
 					}
-					poolSummary = $"{poolSummary}```{entry.SummarizePoolRoll(0)} = {success}```\n";
+					embedBuilder.AddField($"{entry.Label}", $"{entry.SummarizePoolRoll(0)} = {success}");
 				}
-				poolSummary = $"{poolSummary}```{painPool.SummarizePoolRoll(0)} = {painPool.CountAtOrBelow(3)}```\n";
+				embedBuilder.AddField($"{painPool.Label}", $"{painPool.SummarizePoolRoll(0)} = {painPool.CountAtOrBelow(3)}");
 
 				if(painPool.HighestValue() > dominantPool.HighestValue())
 				{
@@ -54,14 +55,13 @@ namespace Agatha2
 				}
 				string winString = (playerSuccess >= painPool.CountAtOrBelow(3)) ? "wins" : "loses";
 				string successNoun = (playerSuccess == 1) ? "success" : "successes";
-				responseMessage = $"{poolSummary}**The player {winString}** the conflict with {playerSuccess} {successNoun} versus {painPool.CountAtOrBelow(3)}. **{dominantPool.Label} dominates** with a {dominantPool.HighestValue()}.";
+				embedBuilder.Description = $"**The player {winString}** the conflict with {playerSuccess} {successNoun} versus {painPool.CountAtOrBelow(3)}. **{dominantPool.Label} dominates** with a {dominantPool.HighestValue()}.";
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);		
 			}
-
-			if(responseMessage.Equals(""))
+			else
 			{
-				responseMessage = $"Dice syntax is `{Program.CommandPrefix}dryh [Discipline] [Exhaustion] [Madness] [Pain]`.";
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{Program.CommandPrefix}dryh [Discipline] [Exhaustion] [Madness] [Pain]`.");		
 			}
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {responseMessage}");		
         }
     }
 }

@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -30,13 +31,10 @@ namespace Agatha2
                 JToken jData = twitch.RetrieveUserIdFromUserName(streamer);
                 if(jData != null && jData.HasValues)
                 {
-                    String lineOne = $"{message.Author.Mention}: {jData["display_name"].ToString()} - http://twitch.tv/{streamer}";
-                    String desc = jData["description"].ToString();
-                    if(desc == null || desc == "")
-                    {
-                        desc = "No description supplied.";
-                    }
-                    await message.Channel.SendMessageAsync($"{lineOne}\n`{desc}`");
+                    EmbedBuilder embedBuilder = new EmbedBuilder();
+                    embedBuilder.ImageUrl = jData["profile_image_url"].ToString();
+                    embedBuilder.Description = $"**[{jData["display_name"].ToString()}](http://twitch.tv/{streamer})**\n{jData["description"].ToString()}";
+                    await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, embedBuilder);
                 }
                 else
                 {

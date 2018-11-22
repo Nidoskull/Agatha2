@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -24,6 +25,7 @@ namespace Agatha2
             ModuleAetolia aetolia = (ModuleAetolia)parent;
 			string result = "Authentication or network error.";
 			HttpWebResponse aetInfo = aetolia.GetAPIResponse("characters");
+			EmbedBuilder embedBuilder = new EmbedBuilder();
 			if(aetInfo != null)
 				{
 				var s = aetInfo.GetResponseStream();
@@ -72,10 +74,11 @@ namespace Agatha2
 
 					}
 
-                    result = $"```{result}.\nThere {playerTerm} total online.```";
+                    result = $"{result}.\n\n**There {playerTerm} total online.**";
 				}
 			}
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");		
+			embedBuilder.Description = result;
+			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);		
         }
     }
 }

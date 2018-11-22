@@ -13,6 +13,7 @@ namespace Agatha2
     {
         internal string holeName;
         internal string holeType;
+        internal string holeId;
         internal string vNum;
         internal List<string> containsFish;
         public FishingHole(string _name, string _type, string _vnum, List<string> _fish)
@@ -71,7 +72,9 @@ namespace Agatha2
                 string holeName = reader["fishingHoleName"].ToString();
                 string holeType = reader["fishingHoleType"].ToString();
                 string holeVnum = reader["fishingHoleVnum"].ToString();
-                fishingHoles.Add(new FishingHole(holeName, holeType, holeVnum, tmpFish[holeName]));
+                FishingHole fishHole = new FishingHole(holeName, holeType, holeVnum, tmpFish[holeName]);
+                fishingHoles.Add(fishHole);
+                fishHole.holeId = fishingHoles.Count.ToString();
             }
             Console.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}

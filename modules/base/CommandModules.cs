@@ -1,3 +1,4 @@
+using Discord;
 using Discord.WebSocket;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,16 +15,18 @@ namespace Agatha2
         }
         public override async Task ExecuteCommand(SocketMessage message)
         {
-            string result = $"{Program.modules.Count} modules loaded:";
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            string result = $"{Program.modules.Count} modules loaded.";
     		string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length < 2)
             {
+                string moduleList = "";
                 foreach(BotModule module in Program.modules)
                 {
                     string tmpModName = module.moduleName.ToString();
-                    result = $"{result}\n {tmpModName}";
+                    moduleList = $"{moduleList}{tmpModName}\n";
                 }
-                result = $"```{result}\nUse {Program.CommandPrefix}module [module] for more information.```";
+                embedBuilder.AddField("Modules", moduleList);
             }
             else 
             {
@@ -33,20 +36,26 @@ namespace Agatha2
                 {
                     if(module.moduleName.ToLower().Equals(checkModuleName))
                     {   
-                        result = $"--- {module.moduleName} ---\n{module.description}\n\nCommands:";
+                        embedBuilder.Title = module.moduleName;
+                        result = module.description;
+                        string cmds = "";
                         foreach(BotCommand command in Program.commands)
                         {
                             if(command.parent == module)
                             {
-                                result = $"{result}\n {command.aliases[0].ToString()}";
+                                cmds = $"{cmds}{command.aliases[0].ToString()}\n";
                             }
                         }
-                        result = $"```{result}```";
+                        if(!cmds.Equals(""))
+                        {
+                            embedBuilder.AddField("Commands", cmds);
+                        }
                         break;
                     }
                 }
             }
-            await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");
+            embedBuilder.Description = result;
+            await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
         }
     }
 }

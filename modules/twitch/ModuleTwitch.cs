@@ -41,7 +41,7 @@ namespace Agatha2
                 streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
             }
             Console.WriteLine("Done loading streamers. Initializing poll timer.");
-			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(1));
+			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
 			CancellationTokenSource source = new CancellationTokenSource();
 			Action action = (() => 
 			{
@@ -106,12 +106,12 @@ namespace Agatha2
         }
         internal JToken RetrieveUserIdFromUserName(String streamer)
         {
-            Console.WriteLine($"Retrieving streamer info for {streamer}.");
-            var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/users?login={streamer}");
-            request.Method = "Get";
-            request.Timeout = 12000;
-            request.ContentType = "application/vnd.twitchtv.v5+json";
-            request.Headers.Add("Client-ID", Program.StreamAPIClientID);
+                Console.WriteLine($"Retrieving streamer info for {streamer}.");
+                var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/users?login={streamer}");
+                request.Method = "Get";
+                request.Timeout = 12000;
+                request.ContentType = "application/vnd.twitchtv.v5+json";
+                request.Headers.Add("Client-ID", Program.StreamAPIClientID);
 
             try
             {
