@@ -55,7 +55,7 @@ namespace Agatha2
                     embedBuilder.Title = "Unknown module.";
                     embedBuilder.Description = "Module not found.";
                 } 
-                else if(message_contents.Length >= 2 && (message_contents[2].ToLower().Equals("enable") || message_contents[2].ToLower().Equals("disable")))
+                else if(message_contents.Length >= 3 && (message_contents[2].ToLower().Equals("enable") || message_contents[2].ToLower().Equals("disable")))
                 {
                     embedBuilder.Title = foundModule.moduleName;                    
                     if(!Program.IsAuthorized(message.Author))
