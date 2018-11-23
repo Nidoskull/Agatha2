@@ -12,15 +12,15 @@ namespace Agatha2
 {
 	internal class CommandDrink : BotCommand
 	{
-        public CommandDrink()
-        {
-            usage = "drink | drink add [beverage|garnish|vessel] thing";
-            description = "Whips up a random drink for your enjoyment.";
-            aliases = new List<string>(new string[] {"drink"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
-            ModuleBartender bartender = (ModuleBartender)parent;
+		public CommandDrink()
+		{
+			usage = "drink | drink add [beverage|garnish|vessel] thing";
+			description = "Whips up a random drink for your enjoyment.";
+			aliases = new List<string>() {"drink"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
+			ModuleBartender bartender = (ModuleBartender)parent;
 			string result = $"Usage: {usage}";
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length == 1) 
@@ -48,5 +48,5 @@ namespace Agatha2
 			}
 			await message.Channel.SendMessageAsync(result);
 		}
-    }
+	}
 }

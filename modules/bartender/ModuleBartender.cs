@@ -12,23 +12,23 @@ namespace Agatha2
 	{
 		internal Dictionary<string, List<string>> _bartending;
 		internal Dictionary<string, List<string>> _sandwiches;
-		internal List<string> validDrinkFields = new List<string>(new string[] {"vessel","beverage","garnish"});
-		internal List<string> validSandwichFields = new List<string>(new string[] {"plate","bread","filling","garnish"});
+		internal List<string> validDrinkFields = new List<string>() {"vessel","beverage","garnish"};
+		internal List<string> validSandwichFields = new List<string>() {"plate","bread","filling","garnish"};
 		internal Dictionary<string, List<string>> BartendingData { get => _bartending; set => _bartending = value; }
 		internal Dictionary<string, List<string>> SandwichData { get => _sandwiches; set => _sandwiches = value; }
 
-        public ModuleBartender()
-        {
-            moduleName = "Bartender";
-            description = "Provides randomly generated food and drink. May or may not be edible.";
-        }
+		public ModuleBartender()
+		{
+			moduleName = "Bartender";
+			description = "Provides randomly generated food and drink. May or may not be edible.";
+		}
 
 		public override void StartModule()
 		{
 		}
 
-        public override bool Register(List<BotCommand> commands)
-        {
+		public override bool Register(List<BotCommand> commands)
+		{
 
 			BartendingData = new Dictionary<string, List<string>>();
 			BartendingData.Add("vessel",   new List<string>(File.ReadAllLines("data/bartending_vessels.txt")));
@@ -41,16 +41,16 @@ namespace Agatha2
 			SandwichData.Add("filling", new List<string>(File.ReadAllLines("data/sandwich_fillings.txt")));
 			SandwichData.Add("garnish", new List<string>(File.ReadAllLines("data/sandwich_garnishes.txt")));
 
-            commands.Add(new CommandDrink());
-            commands.Add(new CommandDwink());
-            commands.Add(new CommandSandwich());
+			commands.Add(new CommandDrink());
+			commands.Add(new CommandDwink());
+			commands.Add(new CommandSandwich());
 
-            return true;
-        }
+			return true;
+		}
  		public void SaveSandwichData()
 		{
-			System.IO.File.WriteAllLines("data/sandwich_plates.txt",    SandwichData["plate"]);
-			System.IO.File.WriteAllLines("data/sandwich_breads.txt",    SandwichData["bread"]);
+			System.IO.File.WriteAllLines("data/sandwich_plates.txt",	SandwichData["plate"]);
+			System.IO.File.WriteAllLines("data/sandwich_breads.txt",	SandwichData["bread"]);
 			System.IO.File.WriteAllLines("data/sandwich_fillings.txt",  SandwichData["filling"]);
 			System.IO.File.WriteAllLines("data/sandwich_garnishes.txt", SandwichData["garnish"]);
 
@@ -63,6 +63,6 @@ namespace Agatha2
 		}
 		public override void ListenTo(SocketMessage message)
 		{
-        }
-    }
+		}
+	}
 }

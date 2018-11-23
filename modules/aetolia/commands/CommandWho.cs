@@ -14,15 +14,15 @@ namespace Agatha2
 {
 	internal class CommandWho : BotCommand
 	{
-        public CommandWho()
-        {
-            usage = "who";
-            description = "Shows a list of characters currently logged in to Aetolia.";
-            aliases = new List<string>(new string[] {"who", "qw"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
-            ModuleAetolia aetolia = (ModuleAetolia)parent;
+		public CommandWho()
+		{
+			usage = "who";
+			description = "Shows a list of characters currently logged in to Aetolia.";
+			aliases = new List<string>() {"who", "qw"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
+			ModuleAetolia aetolia = (ModuleAetolia)parent;
 			string result = "Authentication or network error.";
 			HttpWebResponse aetInfo = aetolia.GetAPIResponse("characters");
 			EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -74,11 +74,11 @@ namespace Agatha2
 
 					}
 
-                    result = $"{result}.\n\n**There {playerTerm} total online.**";
+					result = $"{result}.\n\n**There {playerTerm} total online.**";
 				}
 			}
 			embedBuilder.Description = result;
 			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);		
-        }
-    }
+		}
+	}
 }

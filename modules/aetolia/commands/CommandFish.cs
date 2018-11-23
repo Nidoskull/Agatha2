@@ -15,7 +15,7 @@ local dumpFile = io.open(dumpPath, "w")
 
 dumpFile:write("DROP TABLE fishing_holes;\nDROP TABLE fish_types;")
 dumpFile:write("\nCREATE TABLE fishing_holes (fishingHoleName TEXT PRIMARY_KEY, fishingHoleType TEXT NOT NULL, fishingHoleVnum TEXT NOT NULL);")
-dumpFile:write("\nCREATE TABLE fish_types    (fishName TEXT NOT NULL, fishingHoleName TEXT NOT NULL);")
+dumpFile:write("\nCREATE TABLE fish_types	(fishName TEXT NOT NULL, fishingHoleName TEXT NOT NULL);")
 saved_data.fishing_holes = saved_data.fishing_holes or {}
 for k,v in pairs(saved_data.fishing_holes) do
 	dumpFile:write("\n\nINSERT INTO fishing_holes (fishingHoleName, fishingHoleType, fishingHoleVnum) VALUES ('" .. v.name:gsub("'","''") .. "' ,'" .. v.type:gsub("'","''") .. "', '" .. v.rooms[1] .. "');")
@@ -31,12 +31,12 @@ namespace Agatha2
 {
 	internal class CommandFish : BotCommand
 	{
-        public CommandFish()
-        {
-            usage = "fish <string to search for>";
-            description = "Shows information about Aetolian fishing holes.";
-            aliases = new List<string>(new string[] {"fish", "fsearch"});
-        }
+		public CommandFish()
+		{
+			usage = "fish <string to search for>";
+			description = "Shows information about Aetolian fishing holes.";
+			aliases = new List<string>() {"fish", "fsearch"};
+		}
 
 		private bool TryAddMatch(Dictionary<FishingHole, string> matches, FishingHole fishingHole, string fishy, string searchText)
 		{
@@ -52,8 +52,8 @@ namespace Agatha2
 			return false;
 		}
 
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length < 2)
 			{
@@ -108,6 +108,6 @@ namespace Agatha2
 				}
 				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
 			}
-        }
-    }
+		}
+	}
 }

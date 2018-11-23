@@ -12,11 +12,11 @@ namespace Agatha2
 
 	internal abstract class BotModule
 	{
-        internal string moduleName;
-        public List<BotCommand> commands;
+		internal string moduleName;
+		public List<BotCommand> commands;
 		public List<UInt64> enabledForGuilds = new List<UInt64>();
-        public string description;
-        public abstract bool Register(List<BotCommand> commands);
+		public string description;
+		public abstract bool Register(List<BotCommand> commands);
 		public virtual void ListenTo(SocketMessage message) {}
 		public virtual void StartModule() {}
 
@@ -50,21 +50,21 @@ namespace Agatha2
 			}
 			System.IO.File.WriteAllLines($"data/{moduleName}_guilds.txt", guildIDs);
 		}
-    }
+	}
 
 	internal abstract class BotCommand
 	{
-        internal List<string> aliases;
-        internal string usage;
-        internal string description;
-        internal BotModule parent;
+		internal List<string> aliases;
+		internal string usage;
+		internal string description;
+		internal BotModule parent;
 
-        public void Register(BotModule _parent)
-        {
-            parent = _parent;
-        }
-        public abstract Task ExecuteCommand(SocketMessage message);
-    }
+		public void Register(BotModule _parent)
+		{
+			parent = _parent;
+		}
+		public abstract Task ExecuteCommand(SocketMessage message);
+	}
 	
 	public class Program
 	{
@@ -97,9 +97,9 @@ namespace Agatha2
 
 		internal static bool IsAuthorized(SocketUser user)
 		{
-            var guildUser = user as SocketGuildUser;
-            var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "bot wrangler");
-            return (guildUser.Roles.Contains(role));
+			var guildUser = user as SocketGuildUser;
+			var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "bot wrangler");
+			return (guildUser.Roles.Contains(role));
 		}
 
 		internal static int Clamp(int value, int min, int max)  
@@ -122,12 +122,12 @@ namespace Agatha2
 		{
 
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
-			Token =             configTable.Get<string>("Token");
-			SourceAuthor =      configTable.Get<string>("SourceAuthor");
-			SourceVersion =     configTable.Get<string>("SourceVersion");
-			SourceLocation =    configTable.Get<string>("SourceLocation");
-			CommandPrefix =     configTable.Get<string>("CommandPrefix");
-			MarkovChance =      configTable.Get<int>("MarkovChance");
+			Token =			 configTable.Get<string>("Token");
+			SourceAuthor =	  configTable.Get<string>("SourceAuthor");
+			SourceVersion =	 configTable.Get<string>("SourceVersion");
+			SourceLocation =	configTable.Get<string>("SourceLocation");
+			CommandPrefix =	 configTable.Get<string>("CommandPrefix");
+			MarkovChance =	  configTable.Get<int>("MarkovChance");
 			StreamAPIClientID = configTable.Get<string>("StreamAPIClientID");
 			string streamID =   configTable.Get<string>("StreamChannelID");
 			StreamChannelID =   Convert.ToUInt64(streamID);

@@ -15,11 +15,11 @@ namespace Agatha2
    		private bool hasDictionaryChanged = false;
 		private Dictionary<string, List<string>> markovDict;
 
-        public ModuleMarkov()
-        {
-            moduleName = "Markov";
-            description = "Listens to chatter and produces Markov string responses.";
-        }
+		public ModuleMarkov()
+		{
+			moduleName = "Markov";
+			description = "Listens to chatter and produces Markov string responses.";
+		}
 		public override void StartModule()
 		{
 			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
@@ -30,9 +30,9 @@ namespace Agatha2
 			}
 			);
 			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-        }
-        public override bool Register(List<BotCommand> commands)
-        {
+		}
+		public override bool Register(List<BotCommand> commands)
+		{
 			Console.WriteLine("Deserializing Markov dictionary.");
 			try
 			{
@@ -46,9 +46,9 @@ namespace Agatha2
 				Console.WriteLine(ex);
 				markovDict = new Dictionary<string, List<string>>();
 			}
-            commands.Add(new CommandReplyrate());
-            return true;
-        }
+			commands.Add(new CommandReplyrate());
+			return true;
+		}
 
 		private void TrySaveDictionary()
 		{
@@ -133,5 +133,5 @@ namespace Agatha2
 				}
 			}
 		}
-    }
+	}
 }

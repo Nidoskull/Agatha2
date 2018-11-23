@@ -15,13 +15,13 @@ namespace Agatha2
 {
 	internal class CommandRoll : BotCommand
 	{
-        public CommandRoll()
-        {
-            usage = "roll [1-100]d[1-100]<+/-[modifier]>";
-            description = "Rolls dice in a 'standard' schema (d6, d20, etc).";
-            aliases = new List<string>(new string[] {"roll", "dice", "d"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
+		public CommandRoll()
+		{
+			usage = "roll [1-100]d[1-100]<+/-[modifier]>";
+			description = "Rolls dice in a 'standard' schema (d6, d20, etc).";
+			aliases = new List<string>() {"roll", "dice", "d"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			bool foundDice = false;
@@ -40,5 +40,5 @@ namespace Agatha2
 				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
 			}
 		}
-    }
+	}
 }

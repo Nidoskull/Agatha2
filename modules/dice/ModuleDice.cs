@@ -11,65 +11,65 @@ namespace Agatha2
 {
 	internal class ModuleDice : BotModule
 	{
-        public ModuleDice()
-        {
-            moduleName = "Dice";
-            description = "Provides several dice-rolling functions.";
-        }
-        public override bool Register(List<BotCommand> commands)
-        {
-            commands.Add(new CommandFate());
-            commands.Add(new CommandDryh());
-            commands.Add(new CommandRoll());
-            return true;
-        }
+		public ModuleDice()
+		{
+			moduleName = "Dice";
+			description = "Provides several dice-rolling functions.";
+		}
+		public override bool Register(List<BotCommand> commands)
+		{
+			commands.Add(new CommandFate());
+			commands.Add(new CommandDryh());
+			commands.Add(new CommandRoll());
+			return true;
+		}
 		public override void ListenTo(SocketMessage message)
 		{
-        }
+		}
 		public override void StartModule()
 		{
 		}
-    }
+	}
 
 	internal class Die  
 	{
-        private int sides;
-        private int result;
-        public int Result { get => result; set => result = value; }
+		private int sides;
+		private int result;
+		public int Result { get => result; set => result = value; }
 
-        public Die(int _sides)
-        {
-            sides = Program.Clamp(_sides, 1, 100);
-            Roll();
-        }
-        public void Roll()
-        {
-            result = Program.rand.Next(0, sides)+1;
-        }
-    }
+		public Die(int _sides)
+		{
+			sides = Program.Clamp(_sides, 1, 100);
+			Roll();
+		}
+		public void Roll()
+		{
+			result = Program.rand.Next(0, sides)+1;
+		}
+	}
 
-    internal class DicePool
-    {
-        private List<Die> dice = new List<Die>();
-        private int modifier = 0;
-        private bool individualRolls = false;
-        private string label;
-        public string Label { get => label; set => label = value; } 
+	internal class DicePool
+	{
+		private List<Die> dice = new List<Die>();
+		private int modifier = 0;
+		private bool individualRolls = false;
+		private string label;
+		public string Label { get => label; set => label = value; } 
 
-        public DicePool(string _input, string _label)
-        {
-            label = _label;
-            ParseDice(Regex.Match(_input, "(\\d*)(#*)d(\\d+)([+-]\\d+)*"));
-        }
+		public DicePool(string _input, string _label)
+		{
+			label = _label;
+			ParseDice(Regex.Match(_input, "(\\d*)(#*)d(\\d+)([+-]\\d+)*"));
+		}
 
-        public DicePool(Match match)
-        {
-            label = match.Groups[0].ToString();
-            ParseDice(match);
-        }
+		public DicePool(Match match)
+		{
+			label = match.Groups[0].ToString();
+			ParseDice(match);
+		}
 
-        private void ParseDice(Match m)
-        {
+		private void ParseDice(Match m)
+		{
 			string dieMatch = m.Groups[0].ToString();
 			string dieCountField = m.Groups[1].ToString();
 			string dieSidesField = m.Groups[3].ToString();
@@ -80,16 +80,16 @@ namespace Agatha2
 
 			if(dieCountField.Equals("")) 
 			{
-                dice.Add(new Die(dieSides));
-            }
-            else
-            {
+				dice.Add(new Die(dieSides));
+			}
+			else
+			{
 				try
 				{
-                    for(int i = 1; i <= Program.Clamp(Convert.ToInt32(dieCountField), 1, 100); i++)
-                    {
-                        dice.Add(new Die(dieSides));
-                    }
+					for(int i = 1; i <= Program.Clamp(Convert.ToInt32(dieCountField), 1, 100); i++)
+					{
+						dice.Add(new Die(dieSides));
+					}
 				}
 				catch
 				{
@@ -118,77 +118,77 @@ namespace Agatha2
 					modifier = 0;
 				}
 			}
-        }
+		}
 
-        public int CountAtOrBelow(int value)
-        {
-            int total = 0;
-            foreach(Die die in dice)
-            {
-                if(die.Result <= value)
-                {
-                    total++;
-                }
-            }
-            return total;
-        }
+		public int CountAtOrBelow(int value)
+		{
+			int total = 0;
+			foreach(Die die in dice)
+			{
+				if(die.Result <= value)
+				{
+					total++;
+				}
+			}
+			return total;
+		}
 
-        public int CountAtOrAbove(int value)
-        {
-            int total = 0;
-            foreach(Die die in dice)
-            {
-                if(die.Result >= value)
-                {
-                    total++;
-                }
-            }
-            return total;
-        }
+		public int CountAtOrAbove(int value)
+		{
+			int total = 0;
+			foreach(Die die in dice)
+			{
+				if(die.Result >= value)
+				{
+					total++;
+				}
+			}
+			return total;
+		}
 
-        public int HighestValue()
-        {
-            int total = 0;
-            foreach(Die die in dice)
-            {
-                if(die.Result >= total)
-                {
-                    total = die.Result;
-                }
-            }
-            return total;
-        }
+		public int HighestValue()
+		{
+			int total = 0;
+			foreach(Die die in dice)
+			{
+				if(die.Result >= total)
+				{
+					total = die.Result;
+				}
+			}
+			return total;
+		}
 
-        public string SummarizePoolRoll(int offset)
-        {
-            return SummarizeRoll(false, offset);
-        }
+		public string SummarizePoolRoll(int offset)
+		{
+			return SummarizeRoll(false, offset);
+		}
 
-        public string SummarizeStandardRoll()
-        {
-            return SummarizeRoll(true, 0);
-        }
+		public string SummarizeStandardRoll()
+		{
+			return SummarizeRoll(true, 0);
+		}
 
-        private string SummarizeRoll(bool show_total, int offset_results)
-        {   
+		private string SummarizeRoll(bool show_total, int offset_results)
+		{   
 			string resultString = $"[ ";
-            int total = 0;
+			int total = 0;
 
 			foreach(Die die in dice)
-            {
-                resultString = $"{resultString}{die.Result + offset_results} ";
-                total += die.Result + offset_results;
-                if(individualRolls && modifier != 0)
-                {
-                    resultString = $"{resultString}({die.Result + offset_results + modifier}) ";
-                    total += modifier;
-                }
-            }
-            if(!individualRolls)
-            {
-                total += modifier;
-            }
-            return show_total ? $"{resultString}] = {total}" : $"{resultString}]";
-        }
-    }
+			{
+				resultString = $"{resultString}{die.Result + offset_results} ";
+				total += die.Result + offset_results;
+				if(individualRolls && modifier != 0)
+				{
+					resultString = $"{resultString}({die.Result + offset_results + modifier}) ";
+					total += modifier;
+				}
+			}
+			if(!individualRolls)
+			{
+				total += modifier;
+			}
+			return show_total ? $"{resultString}] = {total}" : $"{resultString}]";
+		}
+	}
 }

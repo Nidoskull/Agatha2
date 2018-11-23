@@ -13,15 +13,15 @@ namespace Agatha2
 {
 	internal class CommandHonours : BotCommand
 	{
-        public CommandHonours()
-        {
-            usage = "honours <character>";
-            description = "Shows information about an Aetolia character.";
-            aliases = new List<string>(new string[] {"honours", "honors"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
-            ModuleAetolia aetolia = (ModuleAetolia)parent;
+		public CommandHonours()
+		{
+			usage = "honours <character>";
+			description = "Shows information about an Aetolia character.";
+			aliases = new List<string>() {"honours", "honors"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
+			ModuleAetolia aetolia = (ModuleAetolia)parent;
 			string result = "There is no such person, I'm afraid.";
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length < 2)
@@ -71,6 +71,6 @@ namespace Agatha2
 				}
 			}
 			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {result}");	
-        }
-    }
+		}
+	}
 }

@@ -15,14 +15,14 @@ namespace Agatha2
 {
 	internal class CommandDryh : BotCommand
 	{
-        public CommandDryh()
-        {
-            usage = "dryh <Discipline #> <Exhaustion #> <Madness #> <Pain #>";
-            description = "Rolls dice in the Don't Rest Your Head schema.";
-            aliases = new List<string>(new string[] {"dryh"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
+		public CommandDryh()
+		{
+			usage = "dryh <Discipline #> <Exhaustion #> <Madness #> <Pain #>";
+			description = "Rolls dice in the Don't Rest Your Head schema.";
+			aliases = new List<string>() {"dryh"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			Match m = Regex.Match(message.Content, "(\\d+) (\\d+) (\\d+) (\\d+)");
 			if(m.Success)
@@ -61,6 +61,6 @@ namespace Agatha2
 			{
 				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{Program.CommandPrefix}dryh [Discipline] [Exhaustion] [Madness] [Pain]`.");		
 			}
-        }
-    }
+		}
+	}
 }

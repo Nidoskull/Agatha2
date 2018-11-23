@@ -13,15 +13,15 @@ namespace Agatha2
 {
 	internal class CommandReplyrate : BotCommand
 	{
-        public CommandReplyrate()
-        {
-            usage = "replyrate <#>";
-            description = "Sets the percentage replyrate of the Markov module.";
-            aliases = new List<string>(new string[] {"replyrate"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
-            if(Program.IsAuthorized(message.Author))
+		public CommandReplyrate()
+		{
+			usage = "replyrate <#>";
+			description = "Sets the percentage replyrate of the Markov module.";
+			aliases = new List<string>() {"replyrate"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
+			if(Program.IsAuthorized(message.Author))
 			{
 				try
 				{
@@ -45,6 +45,6 @@ namespace Agatha2
 			{
 				await message.Channel.SendMessageAsync($"{message.Author.Mention}: You are not authorized, insect.");
 			}
-        }
-    }
+		}
+	}
 }

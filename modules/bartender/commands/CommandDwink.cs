@@ -12,16 +12,16 @@ namespace Agatha2
 {
 	internal class CommandDwink : BotCommand
 	{
-        public CommandDwink()
-        {
-            usage = "dwink";
-            description = "Whips up a wandom dwink fow youw enjoyment. :3c";
-            aliases = new List<string>(new string[] {"dwink"});
-        }
-        public override async Task ExecuteCommand(SocketMessage message)
-        {
+		public CommandDwink()
+		{
+			usage = "dwink";
+			description = "Whips up a wandom dwink fow youw enjoyment. :3c";
+			aliases = new List<string>() {"dwink"};
+		}
+		public override async Task ExecuteCommand(SocketMessage message)
+		{
 			List<string> drinkParts = new List<string>();
-            ModuleBartender bartender = (ModuleBartender)parent;
+			ModuleBartender bartender = (ModuleBartender)parent;
 			foreach(string drinkPart in bartender.validDrinkFields) 
 			{
 				drinkParts.Add(bartender.BartendingData[drinkPart][Program.rand.Next(bartender.BartendingData[drinkPart].Count)]);
@@ -70,5 +70,5 @@ namespace Agatha2
 			result = $"{owotext} :3c";			
 			await message.Channel.SendMessageAsync(result);
 		}
-    }
+	}
 }

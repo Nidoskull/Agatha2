@@ -15,41 +15,41 @@ namespace Agatha2
 {
 	internal class ModuleWarframe : BotModule
 	{
-        private static List<string> hekPostStrings;
+		private static List<string> hekPostStrings;
 		private static List<string> ordisPostStrings;
 		private static List<string> vorPostStrings;
 
-        public ModuleWarframe()
-        {
-            moduleName = "Warframe";
-            description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
-        }
+		public ModuleWarframe()
+		{
+			moduleName = "Warframe";
+			description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
+		}
 
 		public override void StartModule()
 		{
 		}
-        public override bool Register(List<BotCommand> commands)
-        {
-            vorPostStrings =   new List<string>(File.ReadAllLines("data/vor_strings.txt"));
+		public override bool Register(List<BotCommand> commands)
+		{
+			vorPostStrings =   new List<string>(File.ReadAllLines("data/vor_strings.txt"));
 			hekPostStrings =   new List<string>(File.ReadAllLines("data/hek_strings.txt"));
 			ordisPostStrings = new List<string>(File.ReadAllLines("data/ordis_strings.txt"));
-            return true;
+			return true;
 		}
 		public override void ListenTo(SocketMessage message)
 		{
-        	string searchSpace =  message.Content.ToLower();
-            if(searchSpace.Contains("hek"))
-            {
-                Task.Run( () => message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
-            }
-            else if(searchSpace.Contains("operator"))
-            {
-                Task.Run( () => message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
-            }
-            else if(searchSpace.Contains("look at them"))
-            {
-                Task.Run( () => message.Channel.SendMessageAsync(vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
-            }
-        }
-    }
+			string searchSpace =  message.Content.ToLower();
+			if(searchSpace.Contains("hek"))
+			{
+				Task.Run( () => message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
+			}
+			else if(searchSpace.Contains("operator"))
+			{
+				Task.Run( () => message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
+			}
+			else if(searchSpace.Contains("look at them"))
+			{
+				Task.Run( () => message.Channel.SendMessageAsync(vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
+			}
+		}
+	}
 }
