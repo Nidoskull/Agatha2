@@ -120,7 +120,7 @@ namespace Agatha2
 				lastString = token;
 			}
 			string searchSpace =  message.Content.ToLower();
-			if(Program.rand.Next(100) <= Program.MarkovChance || searchSpace.Contains("agatha"))
+			if((Program.MarkovChance > 0 && Program.rand.Next(100) <= Program.MarkovChance) || searchSpace.Contains("agatha"))
 			{
 				string[] tokens = message.Content.Split(" ");
 				if(tokens.Length > 0)
