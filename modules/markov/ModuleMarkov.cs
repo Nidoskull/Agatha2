@@ -20,7 +20,7 @@ namespace Agatha2
             moduleName = "Markov";
             description = "Listens to chatter and produces Markov string responses.";
         }
-		public override async Task StartModule()
+		public override void StartModule()
 		{
 			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
 			CancellationTokenSource source = new CancellationTokenSource();
@@ -38,6 +38,7 @@ namespace Agatha2
 			{
 				using (var file = File.OpenRead("data/markov.bin")) {
 					markovDict = Serializer.Deserialize<Dictionary<string, List<string>>>(file);
+					Console.WriteLine(markovDict.ToString());
 				}
 			}
 			catch (FileNotFoundException ex)
@@ -70,7 +71,7 @@ namespace Agatha2
 				int max_tokens = 30;
 				string token = initialToken;
 				result = $"{token}";
-				while(max_tokens > 0 && markovDict.ContainsKey(token) && markovDict[token].Count > 0)
+				while(max_tokens > 0 && markovDict.ContainsKey(token) && markovDict[token] != null && markovDict[token].Count > 0)
 				{
 					token = markovDict[token][Program.rand.Next(markovDict[token].Count)];
 					result += $" {token}";
@@ -86,18 +87,30 @@ namespace Agatha2
 			return result;
 		}
 
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
 			string lastString = null;
 			foreach(string token in message.Content.Split(" "))
 			{
+				if(markovDict == null)
+				{
+					return;
+				}
 				if(!markovDict.ContainsKey(token))
 				{
 					markovDict.Add(token, new List<string>());
 					hasDictionaryChanged = true;
 				}
-				if(lastString != null)
+				if(lastString != null && lastString != "")
 				{
+					if(markovDict.ContainsKey(lastString) && markovDict[lastString] == null)
+					{
+						markovDict.Remove(lastString);
+					}
+					if(!markovDict.ContainsKey(lastString))
+					{
+						markovDict.Add(lastString, new List<string>());
+					}
 					if(!markovDict[lastString].Contains(token))
 					{
 						markovDict[lastString].Add(token);
@@ -110,10 +123,13 @@ namespace Agatha2
 			if(Program.rand.Next(100) <= Program.MarkovChance || searchSpace.Contains("agatha"))
 			{
 				string[] tokens = message.Content.Split(" ");
-				string markovText = GetMarkovChain(tokens[Program.rand.Next(tokens.Length)]);
-				if(markovText != null && markovText != "") 
+				if(tokens.Length > 0)
 				{
-					await message.Channel.SendMessageAsync(markovText);
+					string markovText = GetMarkovChain(tokens[Program.rand.Next(tokens.Length)]);
+					if(markovText != null && markovText != "") 
+					{
+						Task.Run( () => message.Channel.SendMessageAsync(markovText));
+					}
 				}
 			}
 		}

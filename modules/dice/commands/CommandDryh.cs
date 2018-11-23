@@ -24,7 +24,6 @@ namespace Agatha2
         public override async Task ExecuteCommand(SocketMessage message)
         {
 			EmbedBuilder embedBuilder = new EmbedBuilder();
-			string responseMessage =  "";
 			Match m = Regex.Match(message.Content, "(\\d+) (\\d+) (\\d+) (\\d+)");
 			if(m.Success)
 			{

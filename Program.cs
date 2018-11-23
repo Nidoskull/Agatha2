@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
 using Nett;
+using System.Linq;
 
 namespace Agatha2
 {
@@ -13,10 +14,42 @@ namespace Agatha2
 	{
         internal string moduleName;
         public List<BotCommand> commands;
+		public List<UInt64> enabledForGuilds = new List<UInt64>();
         public string description;
         public abstract bool Register(List<BotCommand> commands);
-		public abstract Task ListenTo(SocketMessage message);
-		public abstract Task StartModule();
+		public virtual void ListenTo(SocketMessage message) {}
+		public virtual void StartModule() {}
+
+		public virtual void LoadGuildSettings()
+		{
+			if(File.Exists($"data/{moduleName}_guilds.txt"))
+			{
+				foreach(string guildId in File.ReadAllLines($"data/{moduleName}_guilds.txt"))
+				{
+					try
+					{
+						UInt64 guildIdSnowflake = Convert.ToUInt64(guildId);
+						if(guildIdSnowflake > 0)
+						{
+							enabledForGuilds.Add(guildIdSnowflake);
+						}
+					}
+					catch(Exception e)
+					{
+						Console.WriteLine($"Exception in module guild auth: {e.ToString()}.");
+					}
+				}
+			}
+		}
+		public virtual void SaveGuildSettings()
+		{
+			List<string> guildIDs = new List<string>();
+			foreach(UInt64 guildIdUlong in enabledForGuilds)
+			{
+				guildIDs.Add(guildIdUlong.ToString());
+			}
+			System.IO.File.WriteAllLines($"data/{moduleName}_guilds.txt", guildIDs);
+		}
     }
 
 	internal abstract class BotCommand
@@ -43,7 +76,6 @@ namespace Agatha2
 		internal static List<BotModule> modules;
 		public static DiscordSocketClient Client {get => _client; set => _client = value; }
 
-		private static bool _isAwake;
 		private static string _commandPrefix;
 		private static int _markovChance;
 		private static string _token;
@@ -51,7 +83,6 @@ namespace Agatha2
 		private static string _streamAPIClientID;
 
 		public static string Token { get => _token; set => _token = value; }
-		public static bool Awake { get => _isAwake; set => _isAwake = value; }
 		public static string CommandPrefix { get => _commandPrefix; set => _commandPrefix = value; }
 		public static string StreamAPIClientID { get => _streamAPIClientID; set => _streamAPIClientID = value; }
 		public static int MarkovChance { get => _markovChance; set => _markovChance = value; }
@@ -66,7 +97,9 @@ namespace Agatha2
 
 		internal static bool IsAuthorized(SocketUser user)
 		{
-			return true;
+            var guildUser = user as SocketGuildUser;
+            var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "bot wrangler");
+            return (guildUser.Roles.Contains(role));
 		}
 
 		internal static int Clamp(int value, int min, int max)  
@@ -93,7 +126,6 @@ namespace Agatha2
 			SourceAuthor =      configTable.Get<string>("SourceAuthor");
 			SourceVersion =     configTable.Get<string>("SourceVersion");
 			SourceLocation =    configTable.Get<string>("SourceLocation");
-			Awake =             configTable.Get<bool>("Awake");
 			CommandPrefix =     configTable.Get<string>("CommandPrefix");
 			MarkovChance =      configTable.Get<int>("MarkovChance");
 			StreamAPIClientID = configTable.Get<string>("StreamAPIClientID");
@@ -122,6 +154,7 @@ namespace Agatha2
 				List<BotCommand> tmpCmds = new List<BotCommand>();
 				if(module.Register(tmpCmds))
 				{
+					module.LoadGuildSettings();
 					foreach(BotCommand command in tmpCmds)
 					{
 						command.Register(module);
@@ -142,8 +175,6 @@ namespace Agatha2
 			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
-			commands.Add(new CommandWakeup());
-			commands.Add(new CommandShutup());
 			Console.WriteLine($"Registering {commands.Count} commands with aliases.");
 			commandAliases = new Dictionary<string, BotCommand>();
 
@@ -174,7 +205,16 @@ namespace Agatha2
 					string command = message.Content.Substring(1).Split(" ")[0].ToLower();
 					if(commandAliases.ContainsKey(command))
 					{
-						await commandAliases[command].ExecuteCommand(message);
+						BotCommand cmd = commandAliases[command];
+						SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
+						if(cmd.parent == null || cmd.parent.enabledForGuilds.Contains(guildChannel.Guild.Id))
+						{
+							await cmd.ExecuteCommand(message);
+						}
+						else
+						{
+							await message.Channel.SendMessageAsync("That module is disabled for this guild.");
+						}
 					}
 					else
 					{
@@ -182,11 +222,15 @@ namespace Agatha2
 					}
 					return;
 				}
-				else if(Program.Awake)
+				else
 				{
 					foreach(BotModule module in modules)
 					{
-						await module.ListenTo(message);
+						SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
+						if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
+						{
+							Task.Run( () => module.ListenTo(message));
+						}
 					}
 				}
 			} 	

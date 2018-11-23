@@ -23,10 +23,10 @@ namespace Agatha2
             commands.Add(new CommandRoll());
             return true;
         }
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
         }
-		public override async Task StartModule()
+		public override void StartModule()
 		{
 		}
     }

@@ -23,7 +23,7 @@ namespace Agatha2
             description = "Provides randomly generated food and drink. May or may not be edible.";
         }
 
-		public override async Task StartModule()
+		public override void StartModule()
 		{
 		}
 
@@ -61,7 +61,7 @@ namespace Agatha2
 			System.IO.File.WriteAllLines("data/bartending_garnishes.txt", BartendingData["garnish"]);
 			System.IO.File.WriteAllLines("data/bartending_beverages.txt", BartendingData["beverage"]);
 		}
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
         }
     }

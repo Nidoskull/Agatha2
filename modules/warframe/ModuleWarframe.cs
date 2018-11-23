@@ -25,7 +25,7 @@ namespace Agatha2
             description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
         }
 
-		public override async Task StartModule()
+		public override void StartModule()
 		{
 		}
         public override bool Register(List<BotCommand> commands)
@@ -35,20 +35,20 @@ namespace Agatha2
 			ordisPostStrings = new List<string>(File.ReadAllLines("data/ordis_strings.txt"));
             return true;
 		}
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
         	string searchSpace =  message.Content.ToLower();
             if(searchSpace.Contains("hek"))
             {
-                await message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]);
+                Task.Run( () => message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
             }
             else if(searchSpace.Contains("operator"))
             {
-                await message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]);
+                Task.Run( () => message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
             }
             else if(searchSpace.Contains("look at them"))
             {
-                await message.Channel.SendMessageAsync(vorPostStrings[Program.rand.Next(vorPostStrings.Count)]);	
+                Task.Run( () => message.Channel.SendMessageAsync(vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
             }
         }
     }

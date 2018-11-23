@@ -35,7 +35,7 @@ namespace Agatha2
 
         private string fishDbPath = "data/aetfish.db";
         public List<FishingHole> fishingHoles;
-		public override async Task StartModule()
+		public override void StartModule()
 		{
             Console.WriteLine("Loading Aetolia fish database.");
             if(!File.Exists(fishDbPath))
@@ -87,6 +87,7 @@ namespace Agatha2
             commands.Add(new CommandHonours());
             commands.Add(new CommandWho());
             commands.Add(new CommandFish());
+            commands.Add(new CommandAltprompt());
             return true;
         }
 
@@ -112,7 +113,7 @@ namespace Agatha2
             }
 			return s;
 		}
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
         }
     }

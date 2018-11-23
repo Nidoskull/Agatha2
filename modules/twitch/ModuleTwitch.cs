@@ -27,7 +27,7 @@ namespace Agatha2
             description = "A module for watching for and looking up Twitch streamers.";
         }
 
-		public override async Task StartModule()
+		public override void StartModule()
 		{
             Console.WriteLine("Starting Twitch polling.");
             var logFile = File.ReadAllLines("data/streamers.txt");
@@ -135,11 +135,11 @@ namespace Agatha2
             }
             catch(WebException e)
             {
-                Console.WriteLine("Streamer does not exist.");
+                Console.WriteLine(e.ToString());
             }
             return null;
         }
-		public override async Task ListenTo(SocketMessage message)
+		public override void ListenTo(SocketMessage message)
 		{
         }
     }
