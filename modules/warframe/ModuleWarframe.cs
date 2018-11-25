@@ -42,7 +42,7 @@ namespace Agatha2
 			{
 				Task.Run( () => message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
 			}
-			else if(searchSpace.Contains("operator"))
+			else if(searchSpace.Contains("ordis"))
 			{
 				Task.Run( () => message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
 			}

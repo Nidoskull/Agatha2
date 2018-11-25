@@ -31,10 +31,33 @@ namespace Agatha2
 				JToken jData = twitch.RetrieveUserIdFromUserName(streamer);
 				if(jData != null && jData.HasValues)
 				{
-					EmbedBuilder embedBuilder = new EmbedBuilder();
-					embedBuilder.ImageUrl = jData["profile_image_url"].ToString();
-					embedBuilder.Description = $"**[{jData["display_name"].ToString()}](http://twitch.tv/{streamer})**\n{jData["description"].ToString()}";
-					await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, embedBuilder);
+					var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/streams?user_id={twitch.streamNametoID[streamer]}");
+					request.Method = "Get";
+					request.Timeout = 12000;
+					request.ContentType = "application/vnd.twitchtv.v5+json";
+					request.Headers.Add("Client-ID", Program.StreamAPIClientID);
+
+					try
+					{
+						JToken jsonStream = null;
+						using (var s = request.GetResponse().GetResponseStream())
+						{
+							using (var sr = new System.IO.StreamReader(s))
+							{
+								var jsonObject = JObject.Parse(sr.ReadToEnd());
+								var tmp = jsonObject["data"];
+								if(tmp.HasValues)
+								{
+									jsonStream = tmp[0];
+								}
+							}
+						}
+						await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, twitch.MakeAuthorEmbed(jData, jsonStream));
+					}
+					catch(WebException e)
+					{
+						Console.WriteLine($"Stream error: {e}");
+					}
 				}
 				else
 				{
