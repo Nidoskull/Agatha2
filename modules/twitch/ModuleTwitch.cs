@@ -103,54 +103,61 @@ namespace Agatha2
 			IMessageChannel channel = message == null ? Program.Client.GetChannel(Program.StreamChannelID) as IMessageChannel : message.Channel;
 			foreach(string streamer in streamers)
 			{
-				Console.WriteLine($"Looking up user id {streamer}");
-				var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/streams?user_id={streamer}");
-				request.Method = "Get";
-				request.Timeout = 12000;
-				request.ContentType = "application/vnd.twitchtv.v5+json";
-				request.Headers.Add("Client-ID", Program.StreamAPIClientID);
-
 				try
 				{
-					using (var s = request.GetResponse().GetResponseStream())
-					{
-						using (var sr = new System.IO.StreamReader(s))
-						{
-							var jsonObject = JObject.Parse(sr.ReadToEnd());
-							JToken jsonStream = jsonObject["data"];
-							if(jsonStream.HasValues)
-							{
-								jsonStream = jsonStream[0];
-							}
+					Console.WriteLine($"Looking up user id {streamer}");
+					var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/streams?user_id={streamer}");
+					request.Method = "Get";
+					request.Timeout = 12000;
+					request.ContentType = "application/vnd.twitchtv.v5+json";
+					request.Headers.Add("Client-ID", Program.StreamAPIClientID);
 
-							JToken jData = RetrieveUserIdFromUserName(streamIDtoUserName[streamer]);
-							if(jData != null && jData.HasValues)
+					try
+					{
+						using (var s = request.GetResponse().GetResponseStream())
+						{
+							using (var sr = new System.IO.StreamReader(s))
 							{
-								EmbedBuilder embedBuilder = null;
-								string streamAnnounce = "";
-								if(!streamStatus[streamer] && jsonStream.HasValues)
+								var jsonObject = JObject.Parse(sr.ReadToEnd());
+								JToken jsonStream = jsonObject["data"];
+								if(jsonStream.HasValues)
 								{
-									streamStatus[streamer] = true;
-									streamAnnounce = $"{jData["display_name"].ToString()} has started streaming.";
-									embedBuilder = MakeAuthorEmbed(jData, jsonStream);
+									jsonStream = jsonStream[0];
 								}
-								else if(streamStatus[streamer] && !jsonStream.HasValues)
+
+								JToken jData = RetrieveUserIdFromUserName(streamIDtoUserName[streamer]);
+								if(jData != null && jData.HasValues)
 								{
-									streamStatus[streamer] = false;
-									streamAnnounce = $"{jData["display_name"].ToString()} has stopped streaming.";
-									embedBuilder = MakeAuthorEmbed(jData, jsonStream);
-								}
-								if(embedBuilder != null)
-								{
-									await message.Channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+									EmbedBuilder embedBuilder = null;
+									string streamAnnounce = "";
+									if(!streamStatus[streamer] && jsonStream.HasValues)
+									{
+										streamStatus[streamer] = true;
+										streamAnnounce = $"{jData["display_name"].ToString()} has started streaming.";
+										embedBuilder = MakeAuthorEmbed(jData, jsonStream);
+									}
+									else if(streamStatus[streamer] && !jsonStream.HasValues)
+									{
+										streamStatus[streamer] = false;
+										streamAnnounce = $"{jData["display_name"].ToString()} has stopped streaming.";
+										embedBuilder = MakeAuthorEmbed(jData, jsonStream);
+									}
+									if(embedBuilder != null)
+									{
+										await message.Channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+									}
 								}
 							}
 						}
 					}
+					catch(WebException e)
+					{
+						Console.WriteLine(e);
+					}
 				}
-				catch(WebException e)
+				catch(Exception e)
 				{
-					Console.WriteLine(e);
+					await message.Channel.SendMessageAsync($"I tried to poll {streamer} for stream info, but I got an exception instead. ({e.Message})");
 				}
 			}
 		}
