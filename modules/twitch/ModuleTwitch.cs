@@ -43,7 +43,7 @@ namespace Agatha2
 				streamNametoID.Add(streamer, streamerID);
 				streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
 			}
-			Console.WriteLine("Done loading streamers. Initializing poll timer.");
+			Console.WriteLine("Done loading streamers."); /* Initializing poll timer.");
 			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
 			CancellationTokenSource source = new CancellationTokenSource();
 			Action action = (() => 
@@ -53,6 +53,7 @@ namespace Agatha2
 			);
 			pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
 			Console.WriteLine("Stream poller initialized.");
+			*/
 		}
 
 		public override bool Register(List<BotCommand> commands)

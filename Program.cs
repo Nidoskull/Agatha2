@@ -201,40 +201,47 @@ namespace Agatha2
 
 			if(!message.Author.IsBot)
 			{
-				if(message.Content.Length > 1 && message.Content.StartsWith(CommandPrefix) && !message.Content.Substring(1,1).Equals(CommandPrefix))
+				try
 				{
-					string command = message.Content.Substring(1).Split(" ")[0].ToLower();
-					if(commandAliases.ContainsKey(command))
+					if(message.Content.Length > 1 && message.Content.StartsWith(CommandPrefix) && !message.Content.Substring(1,1).Equals(CommandPrefix))
 					{
-						BotCommand cmd = commandAliases[command];
-						SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
-						if(cmd.parent == null || cmd.parent.enabledForGuilds.Contains(guildChannel.Guild.Id))
+						string command = message.Content.Substring(1).Split(" ")[0].ToLower();
+						if(commandAliases.ContainsKey(command))
 						{
-							await cmd.ExecuteCommand(message);
+							BotCommand cmd = commandAliases[command];
+							SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
+							if(cmd.parent == null || cmd.parent.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							{
+								await cmd.ExecuteCommand(message);
+							}
+							else
+							{
+								await message.Channel.SendMessageAsync("That module is disabled for this guild.");
+							}
 						}
 						else
 						{
-							await message.Channel.SendMessageAsync("That module is disabled for this guild.");
+							await message.Channel.SendMessageAsync("Unknown command, insect.");
 						}
+						return;
 					}
 					else
 					{
-						await message.Channel.SendMessageAsync("Unknown command, insect.");
-					}
-					return;
-				}
-				else
-				{
-					foreach(BotModule module in modules)
-					{
-						SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
-						if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
+						foreach(BotModule module in modules)
 						{
-							Task.Run( () => module.ListenTo(message));
+							SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
+							if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							{
+								Task.Run( () => module.ListenTo(message));
+							}
 						}
 					}
 				}
-			} 	
+				catch(Exception e)
+				{
+					Console.WriteLine($"Unhandled exception in command input - {e.Message}.")
+				}
+			}
 		}
 	}
 }
