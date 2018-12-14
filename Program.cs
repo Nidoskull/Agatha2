@@ -239,7 +239,7 @@ namespace Agatha2
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine($"Unhandled exception in command input - {e.Message}.")
+					Console.WriteLine($"Unhandled exception in command input - {e.Message}.");
 				}
 			}
 		}
