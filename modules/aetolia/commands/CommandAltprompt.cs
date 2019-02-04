@@ -32,8 +32,6 @@ namespace Agatha2
 		public override async Task ExecuteCommand(SocketMessage message)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
-
-
 			string aetHis = "Their";
 			string aethis = "their";
 			string aetHe =  "They";

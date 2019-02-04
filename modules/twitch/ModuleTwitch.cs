@@ -145,7 +145,7 @@ namespace Agatha2
 									}
 									if(embedBuilder != null)
 									{
-										await message.Channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+										await channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
 									}
 								}
 							}

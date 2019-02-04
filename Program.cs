@@ -81,7 +81,9 @@ namespace Agatha2
 		private static string _token;
 		private static ulong _streamChannelId;
 		private static string _streamAPIClientID;
+		private static ulong _warframeChannelId;
 
+		public static ulong WarframeFeedChannel { get => _warframeChannelId; set => _warframeChannelId = value; }
 		public static string Token { get => _token; set => _token = value; }
 		public static string CommandPrefix { get => _commandPrefix; set => _commandPrefix = value; }
 		public static string StreamAPIClientID { get => _streamAPIClientID; set => _streamAPIClientID = value; }
@@ -131,6 +133,8 @@ namespace Agatha2
 			StreamAPIClientID = configTable.Get<string>("StreamAPIClientID");
 			string streamID =   configTable.Get<string>("StreamChannelID");
 			StreamChannelID =   Convert.ToUInt64(streamID);
+			string warframeFeedId = configTable.Get<string>("WarframeFeedChannelID");
+			WarframeFeedChannel = Convert.ToUInt64(warframeFeedId);
 
 			Client = new DiscordSocketClient();
 			Client.Log += Log;
