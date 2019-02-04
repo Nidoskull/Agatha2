@@ -1,0 +1,1668 @@
+{
+    "nodes": [
+        {
+            "name": "Apollodorus",
+            "node_id": "SolNode94",
+            "planet_id": 0
+        },
+        {
+            "name": "Augustus",
+            "node_id": "SolNode16",
+            "planet_id": 1
+        },
+        {
+            "name": "Caelus",
+            "node_id": "SolNode907",
+            "planet_id": 2
+        },
+        {
+            "name": "casta",
+            "node_id": "SolNode149",
+            "planet_id": 4
+        },
+        {
+            "name": "erpo",
+            "node_id": "SolNode903",
+            "planet_id": 5
+        },
+        {
+            "name": "kelpie",
+            "node_id": "SolNode188",
+            "planet_id": 6
+        },
+        {
+            "name": "carme",
+            "node_id": "SolNode74",
+            "planet_id": 7
+        },
+        {
+            "name": "solium",
+            "node_id": "SolNode173",
+            "planet_id": 8
+        },
+        {
+            "name": "oceanum",
+            "node_id": "SolNode102",
+            "planet_id": 9
+        },
+        {
+            "name": "valefor",
+            "node_id": "SolNode216",
+            "planet_id": 10
+        },
+        {
+            "name": "spear",
+            "node_id": "SolNode46",
+            "planet_id": 1
+        },
+        {
+            "name": "dione",
+            "node_id": "SolNode67",
+            "planet_id": 11
+        },
+        {
+            "name": "salacia",
+            "node_id": "SolNode908",
+            "planet_id": 12
+        },
+        {
+            "name": "ker",
+            "node_id": "SolNode141",
+            "planet_id": 4
+        },
+        {
+            "name": "skyresh",
+            "node_id": "SettlementNode2",
+            "planet_id": 13
+        },
+        {
+            "name": "minthe",
+            "node_id": "SolNode38",
+            "planet_id": 9
+        },
+        {
+            "name": "paimon",
+            "node_id": "SolNode212",
+            "planet_id": 10
+        },
+        {
+            "name": "kappa",
+            "node_id": "SolNode177",
+            "planet_id": 6
+        },
+        {
+            "name": "helene",
+            "node_id": "SolNode42",
+            "planet_id": 11
+        },
+        {
+            "name": "suisei",
+            "node_id": "SolNode225",
+            "planet_id": 0
+        },
+        {
+            "name": "Amelthea",
+            "node_id": "solnode97",
+            "planet_id": 7
+        },
+        {
+            "name": "titan",
+            "node_id": "SolNode96",
+            "planet_id": 11
+        },
+        {
+            "name": "thebe",
+            "node_id": "SolNode10",
+            "planet_id": 7
+        },
+        {
+            "name": "cinxia",
+            "node_id": "solnode147",
+            "planet_id": 4
+        },
+        {
+            "name": "ophelia",
+            "node_id": "solnode69",
+            "planet_id": 2
+        },
+        {
+            "name": "cypress",
+            "node_id": "SolNode56",
+            "planet_id": 9
+        },
+        {
+            "name": "abaddon",
+            "node_id": "SolNode203",
+            "planet_id": 10
+        },
+        {
+            "name": "proteus",
+            "node_id": "SolNode17",
+            "planet_id": 12
+        },
+        {
+            "name": "isos",
+            "node_id": "SolNode162",
+            "planet_id": 8
+        },
+        {
+            "name": "galilea",
+            "node_id": "SolNode905",
+            "planet_id": 7
+        },
+        {
+            "name": "adrastea",
+            "node_id": "SolNode88",
+            "planet_id": 7
+        },
+        {
+            "name": "cerberus",
+            "node_id": "SolNode43",
+            "planet_id": 9
+        },
+        {
+            "name": "cytherean",
+            "node_id": "SolNode23",
+            "planet_id": 3
+        },
+        {
+            "name": "telesto",
+            "node_id": "SolNode20",
+            "planet_id": 11
+        },
+        {
+            "name": "outer terminus",
+            "node_id": "SolNode72",
+            "planet_id": 9
+        },
+        {
+            "name": "sharpless",
+            "node_id": "SettlementNode15",
+            "planet_id": 13
+        },
+        {
+            "name": "ares",
+            "node_id": "SolNode113",
+            "planet_id": 1
+        },
+        {
+            "name": "ishtar",
+            "node_id": "SolNode61",
+            "planet_id": 3
+        },
+        {
+            "name": "ludi",
+            "node_id": "SolNode138",
+            "planet_id": 4
+        },
+        {
+            "name": "rhea",
+            "node_id": "SolNode18",
+            "planet_id": 11
+        },
+        {
+            "name": "kiste",
+            "node_id": "SolNode140",
+            "planet_id": 4
+        },
+        {
+            "name": "tikoloshe",
+            "node_id": "SolNode192",
+            "planet_id": 6
+        },
+        {
+            "name": "narcissus",
+            "node_id": "SolNode21",
+            "planet_id": 9
+        },
+        {
+            "name": "lex",
+            "node_id": "solnode139",
+            "planet_id": 4
+        },
+        {
+            "name": "marid",
+            "node_id": "SolNode191",
+            "planet_id": 6
+        },
+        {
+            "name": "hydra",
+            "node_id": "SolNode76",
+            "planet_id": 9
+        },
+        {
+            "name": "larissa",
+            "node_id": "solnode49",
+            "planet_id": 12
+        },
+        {
+            "name": "baal",
+            "node_id": "solnode205",
+            "planet_id": 10
+        },
+        {
+            "name": "thon",
+            "node_id": "SolNode135",
+            "planet_id": 4
+        },
+        {
+            "name": "berehynia",
+            "node_id": "SolNode185",
+            "planet_id": 6
+        },
+        {
+            "name": "selkie",
+            "node_id": "SolNode187",
+            "planet_id": 6
+        },
+        {
+            "name": "naga",
+            "node_id": "solnode189",
+            "planet_id": 6
+        },
+        {
+            "name": "sorath",
+            "node_id": "solnode214",
+            "planet_id": 10
+        },
+        {
+            "name": "triton",
+            "node_id": "SolNode78",
+            "planet_id": 12
+        },
+        {
+            "name": "linea",
+            "node_id": "SolNode109",
+            "planet_id": 3
+        },
+        {
+            "name": "hydron",
+            "node_id": "SolNode195",
+            "planet_id": 6
+        },
+        {
+            "name": "io",
+            "node_id": "SolNode125",
+            "planet_id": 7
+        },
+        {
+            "name": "orias",
+            "node_id": "SolNode217",
+            "planet_id": 10
+        },
+        {
+            "name": "v prime",
+            "node_id": "SolNode123",
+            "planet_id": 3
+        },
+        {
+            "name": "bode",
+            "node_id": "SolNode132",
+            "planet_id": 4
+        },
+        {
+            "name": "lares",
+            "node_id": "SolNode130",
+            "planet_id": 0
+        },
+        {
+            "name": "elion",
+            "node_id": "SolNode12",
+            "planet_id": 0
+        },
+        {
+            "name": "terminus",
+            "node_id": "SolNode103",
+            "planet_id": 0
+        },
+        {
+            "name": "m prime",
+            "node_id": "SolNode28",
+            "planet_id": 0
+        },
+        {
+            "name": "tolstoj",
+            "node_id": "solnode108",
+            "planet_id": 0
+        },
+        {
+            "name": "neruda",
+            "node_id": "SolNode221",
+            "planet_id": 0
+        },
+        {
+            "name": "eminescu",
+            "node_id": "SolNode222",
+            "planet_id": 0
+        },
+        {
+            "name": "boethius",
+            "node_id": "SolNode223",
+            "planet_id": 0
+        },
+        {
+            "name": "odin",
+            "node_id": "SolNode224",
+            "planet_id": 0
+        },
+        {
+            "name": "pantheon",
+            "node_id": "SolNode226",
+            "planet_id": 0
+        },
+        {
+            "name": "verdi",
+            "node_id": "solnode227",
+            "planet_id": 0
+        },
+        {
+            "name": "caloris",
+            "node_id": "solnode119",
+            "planet_id": 0
+        },
+        {
+            "name": "aphrodite",
+            "node_id": "SolNode2",
+            "planet_id": 3
+        },
+        {
+            "name": "vesper",
+            "node_id": "SolNode71",
+            "planet_id": 3
+        },
+        {
+            "name": "e gate",
+            "node_id": "SolNode128",
+            "planet_id": 3
+        },
+        {
+            "name": "fossa",
+            "node_id": "SolNode104",
+            "planet_id": 3
+        },
+        {
+            "name": "unda",
+            "node_id": "SolNode66",
+            "planet_id": 3
+        },
+        {
+            "name": "malva",
+            "node_id": "ClanNode1",
+            "planet_id": 3
+        },
+        {
+            "name": "tessera",
+            "node_id": "SolNode22",
+            "planet_id": 3
+        },
+        {
+            "name": "kiliken",
+            "node_id": "SolNode101",
+            "planet_id": 3
+        },
+        {
+            "name": "romula",
+            "node_id": "ClanNode0",
+            "planet_id": 3
+        },
+        {
+            "name": "montes",
+            "node_id": "SolNode902",
+            "planet_id": 3
+        },
+        {
+            "name": "tethra",
+            "node_id": "EventNode1",
+            "planet_id": 3
+        },
+        {
+            "name": "venera",
+            "node_id": "SolNode107",
+            "planet_id": 3
+        },
+        {
+            "name": "mantle",
+            "node_id": "SolNode63",
+            "planet_id": 5
+        },
+        {
+            "name": "e prime",
+            "node_id": "SolNode27",
+            "planet_id": 5
+        },
+        {
+            "name": "cambria",
+            "node_id": "SolNode79",
+            "planet_id": 5
+        },
+        {
+            "name": "everest",
+            "node_id": "SolNode39",
+            "planet_id": 5
+        },
+        {
+            "name": "pacific",
+            "node_id": "SolNode15",
+            "planet_id": 5
+        },
+        {
+            "name": "lith",
+            "node_id": "SolNode26",
+            "planet_id": 5
+        },
+        {
+            "name": "mariana",
+            "node_id": "SolNode89",
+            "planet_id": 5
+        },
+        {
+            "name": "gaia",
+            "node_id": "SolNode85",
+            "planet_id": 5
+        },
+        {
+            "name": "eurasia",
+            "node_id": "SolNode59",
+            "planet_id": 5
+        },
+        {
+            "name": "cervantes",
+            "node_id": "SolNode75",
+            "planet_id": 5
+        },
+        {
+            "name": "oro",
+            "node_id": "SolNode24",
+            "planet_id": 5
+        },
+        {
+            "name": "coba",
+            "node_id": "ClanNode2",
+            "planet_id": 5
+        },
+        {
+            "name": "tikal",
+            "node_id": "ClanNode3",
+            "planet_id": 5
+        },
+        {
+            "name": "arcadia",
+            "node_id": "SolNode35",
+            "planet_id": 1
+        },
+        {
+            "name": "olympus",
+            "node_id": "SolNode30",
+            "planet_id": 1
+        },
+        {
+            "name": "vallis",
+            "node_id": "SolNode68",
+            "planet_id": 1
+        },
+        {
+            "name": "hellas",
+            "node_id": "SolNode58",
+            "planet_id": 1
+        },
+        {
+            "name": "alator",
+            "node_id": "SolNode106",
+            "planet_id": 1
+        },
+        {
+            "name": "arval",
+            "node_id": "SolNode41",
+            "planet_id": 1
+        },
+        {
+            "name": "ultor",
+            "node_id": "SolNode14",
+            "planet_id": 1
+        },
+        {
+            "name": "ara",
+            "node_id": "SolNode45",
+            "planet_id": 1
+        },
+        {
+            "name": "silvanus",
+            "node_id": "SolNode54",
+            "planet_id": 1
+        },
+        {
+            "name": "martialis",
+            "node_id": "SolNode36",
+            "planet_id": 1
+        },
+        {
+            "name": "kadesh",
+            "node_id": "ClanNode8",
+            "planet_id": 1
+        },
+        {
+            "name": "war",
+            "node_id": "SolNode99",
+            "planet_id": 1
+        },
+        {
+            "name": "gradivus",
+            "node_id": "SolNode65",
+            "planet_id": 1
+        },
+        {
+            "name": "wahiba",
+            "node_id": "ClanNode9",
+            "planet_id": 1
+        },
+        {
+            "name": "quirinus",
+            "node_id": "SolNode115",
+            "planet_id": 1
+        },
+        {
+            "name": "tharsis",
+            "node_id": "SolNode11",
+            "planet_id": 1
+        },
+        {
+            "name": "syrtis",
+            "node_id": "SolNode904",
+            "planet_id": 1
+        },
+        {
+            "name": "ganymede",
+            "node_id": "SolNode87",
+            "planet_id": 7
+        },
+        {
+            "name": "metis",
+            "node_id": "SolNode126",
+            "planet_id": 7
+        },
+        {
+            "name": "elara",
+            "node_id": "SolNode100",
+            "planet_id": 7
+        },
+        {
+            "name": "callisto",
+            "node_id": "SolNode25",
+            "planet_id": 7
+        },
+        {
+            "name": "carpo",
+            "node_id": "SolNode121",
+            "planet_id": 7
+        },
+        {
+            "name": "themisto",
+            "node_id": "SolNode53",
+            "planet_id": 7
+        },
+        {
+            "name": "sinai",
+            "node_id": "ClanNode4",
+            "planet_id": 7
+        },
+        {
+            "name": "bres",
+            "node_id": "EventNode4",
+            "planet_id": 7
+        },
+        {
+            "name": "ananke",
+            "node_id": "SolNode73",
+            "planet_id": 7
+        },
+        {
+            "name": "cameria",
+            "node_id": "ClanNode5",
+            "planet_id": 7
+        },
+        {
+            "name": "hyperion",
+            "node_id": "SolNode110",
+            "planet_id": 11
+        },
+        {
+            "name": "epimetheus",
+            "node_id": "SolNode7",
+            "planet_id": 11
+        },
+        {
+            "name": "enceladus",
+            "node_id": "SolNode19",
+            "planet_id": 11
+        },
+        {
+            "name": "mimas",
+            "node_id": "SolNode44",
+            "planet_id": 11
+        },
+        {
+            "name": "iapetus",
+            "node_id": "SolNode91",
+            "planet_id": 11
+        },
+        {
+            "name": "janus",
+            "node_id": "SolNode47",
+            "planet_id": 11
+        },
+        {
+            "name": "keeler",
+            "node_id": "SolNode93",
+            "planet_id": 11
+        },
+        {
+            "name": "tethys",
+            "node_id": "SolNode32",
+            "planet_id": 11
+        },
+        {
+            "name": "phoebe",
+            "node_id": "SolNode80",
+            "planet_id": 11
+        },
+        {
+            "name": "pallene",
+            "node_id": "SolNode37",
+            "planet_id": 11
+        },
+        {
+            "name": "aegaeon",
+            "node_id": "SolNode86",
+            "planet_id": 11
+        },
+        {
+            "name": "methone",
+            "node_id": "SolNode55",
+            "planet_id": 11
+        },
+        {
+            "name": "cassini",
+            "node_id": "SolNode70",
+            "planet_id": 11
+        },
+        {
+            "name": "anthe",
+            "node_id": "SolNode31",
+            "planet_id": 11
+        },
+        {
+            "name": "numa",
+            "node_id": "SolNode50",
+            "planet_id": 11
+        },
+        {
+            "name": "calypso",
+            "node_id": "SolNode82",
+            "planet_id": 11
+        },
+        {
+            "name": "pandora",
+            "node_id": "SolNode906",
+            "planet_id": 11
+        },
+        {
+            "name": "piscinas",
+            "node_id": "ClanNode13",
+            "planet_id": 11
+        },
+        {
+            "name": "caracol",
+            "node_id": "ClanNode12",
+            "planet_id": 11
+        },
+        {
+            "name": "oberon",
+            "node_id": "SolNode29",
+            "planet_id": 2
+        },
+        {
+            "name": "ariel",
+            "node_id": "SolNode33",
+            "planet_id": 2
+        },
+        {
+            "name": "titania",
+            "node_id": "SolNode105",
+            "planet_id": 2
+        },
+        {
+            "name": "umbriel",
+            "node_id": "SolNode64",
+            "planet_id": 2
+        },
+        {
+            "name": "cordelia",
+            "node_id": "SolNode3",
+            "planet_id": 2
+        },
+        {
+            "name": "miranda",
+            "node_id": "SolNode90",
+            "planet_id": 2
+        },
+        {
+            "name": "portia",
+            "node_id": "SolNode52",
+            "planet_id": 2
+        },
+        {
+            "name": "cressida",
+            "node_id": "SolNode83",
+            "planet_id": 2
+        },
+        {
+            "name": "juliet",
+            "node_id": "SolNode111",
+            "planet_id": 2
+        },
+        {
+            "name": "desdemona",
+            "node_id": "SolNode98",
+            "planet_id": 2
+        },
+        {
+            "name": "cupid",
+            "node_id": "SolNode77",
+            "planet_id": 2
+        },
+        {
+            "name": "rosalind",
+            "node_id": "SolNode9",
+            "planet_id": 2
+        },
+        {
+            "name": "bianca",
+            "node_id": "SolNode13",
+            "planet_id": 2
+        },
+        {
+            "name": "prospero",
+            "node_id": "SolNode40",
+            "planet_id": 2
+        },
+        {
+            "name": "perdita",
+            "node_id": "SolNode5",
+            "planet_id": 2
+        },
+        {
+            "name": "mab",
+            "node_id": "SolNode116",
+            "planet_id": 2
+        },
+        {
+            "name": "setebos",
+            "node_id": "SolNode112",
+            "planet_id": 2
+        },
+        {
+            "name": "caliban",
+            "node_id": "SolNode60",
+            "planet_id": 2
+        },
+        {
+            "name": "puck",
+            "node_id": "SolNode114",
+            "planet_id": 2
+        },
+        {
+            "name": "ur",
+            "node_id": "ClanNode16",
+            "planet_id": 2
+        },
+        {
+            "name": "sycorax",
+            "node_id": "SolNode34",
+            "planet_id": 2
+        },
+        {
+            "name": "stephano",
+            "node_id": "SolNode122",
+            "planet_id": 2
+        },
+        {
+            "name": "trinculo",
+            "node_id": "SolNode124",
+            "planet_id": 2
+        },
+        {
+            "name": "assur",
+            "node_id": "ClanNode17",
+            "planet_id": 2
+        },
+        {
+            "name": "thalassa",
+            "node_id": "SolNode95",
+            "planet_id": 12
+        },
+        {
+            "name": "naiad",
+            "node_id": "SolNode117",
+            "planet_id": 12
+        },
+        {
+            "name": "galatea",
+            "node_id": "SolNode1",
+            "planet_id": 12
+        },
+        {
+            "name": "despina",
+            "node_id": "SolNode6",
+            "planet_id": 12
+        },
+        {
+            "name": "sao",
+            "node_id": "SolNode57",
+            "planet_id": 12
+        },
+        {
+            "name": "halimede",
+            "node_id": "SolNode120",
+            "planet_id": 12
+        },
+        {
+            "name": "neso",
+            "node_id": "SolNode62",
+            "planet_id": 12
+        },
+        {
+            "name": "psamathe",
+            "node_id": "SolNode127",
+            "planet_id": 12
+        },
+        {
+            "name": "laomedeia",
+            "node_id": "SolNode118",
+            "planet_id": 12
+        },
+        {
+            "name": "nereid",
+            "node_id": "SolNode84",
+            "planet_id": 12
+        },
+        {
+            "name": "yursa",
+            "node_id": "ClanNode20",
+            "planet_id": 12
+        },
+        {
+            "name": "kelashin",
+            "node_id": "ClanNode21",
+            "planet_id": 12
+        },
+        {
+            "name": "acheron",
+            "node_id": "SolNode4",
+            "planet_id": 9
+        },
+        {
+            "name": "regna",
+            "node_id": "SolNode48",
+            "planet_id": 9
+        },
+        {
+            "name": "charon",
+            "node_id": "SolNode92",
+            "planet_id": 9
+        },
+        {
+            "name": "hades",
+            "node_id": "SolNode51",
+            "planet_id": 9
+        },
+        {
+            "name": "nix",
+            "node_id": "SolNode8",
+            "planet_id": 9
+        },
+        {
+            "name": "palus",
+            "node_id": "SolNode81",
+            "planet_id": 9
+        },
+        {
+            "name": "sechura",
+            "node_id": "ClanNode24",
+            "planet_id": 9
+        },
+        {
+            "name": "hieracon",
+            "node_id": "ClanNode25",
+            "planet_id": 9
+        },
+        {
+            "name": "olla",
+            "node_id": "SolNode136",
+            "planet_id": 4
+        },
+        {
+            "name": "pallas",
+            "node_id": "SolNode131",
+            "planet_id": 4
+        },
+        {
+            "name": "vedic",
+            "node_id": "SolNode133",
+            "planet_id": 4
+        },
+        {
+            "name": "varro",
+            "node_id": "SolNode134",
+            "planet_id": 4
+        },
+        {
+            "name": "nuovo",
+            "node_id": "SolNode137",
+            "planet_id": 4
+        },
+        {
+            "name": "hapke",
+            "node_id": "SolNode142",
+            "planet_id": 4
+        },
+        {
+            "name": "gefion",
+            "node_id": "SolNode143",
+            "planet_id": 4
+        },
+        {
+            "name": "exta",
+            "node_id": "SolNode144",
+            "planet_id": 4
+        },
+        {
+            "name": "cerium",
+            "node_id": "SolNode148",
+            "planet_id": 4
+        },
+        {
+            "name": "albedo",
+            "node_id": "SolNode150",
+            "planet_id": 4
+        },
+        {
+            "name": "egeria",
+            "node_id": "SolNode145",
+            "planet_id": 4
+        },
+        {
+            "name": "draco",
+            "node_id": "SolNode146",
+            "planet_id": 4
+        },
+        {
+            "name": "gabii",
+            "node_id": "ClanNode23",
+            "planet_id": 4
+        },
+        {
+            "name": "seimeni",
+            "node_id": "ClanNode22",
+            "planet_id": 4
+        },
+        {
+            "name": "cyath",
+            "node_id": "SolNode156",
+            "planet_id": 8
+        },
+        {
+            "name": "cosis",
+            "node_id": "SolNode155",
+            "planet_id": 8
+        },
+        {
+            "name": "candiru",
+            "node_id": "SolNode154",
+            "planet_id": 8
+        },
+        {
+            "name": "ascar",
+            "node_id": "SolNode152",
+            "planet_id": 8
+        },
+        {
+            "name": "giardia",
+            "node_id": "SolNode157",
+            "planet_id": 8
+        },
+        {
+            "name": "acanth",
+            "node_id": "SolNode151",
+            "planet_id": 8
+        },
+        {
+            "name": "brugia",
+            "node_id": "SolNode153",
+            "planet_id": 8
+        },
+        {
+            "name": "jordas golem assassinate",
+            "node_id": "SolNode701",
+            "planet_id": 8
+        },
+        {
+            "name": "mutualist alad v assassinate",
+            "node_id": "SolNode705",
+            "planet_id": 8
+        },
+        {
+            "name": "lepis",
+            "node_id": "SolNode159",
+            "planet_id": 8
+        },
+        {
+            "name": "kala-azar",
+            "node_id": "SolNode164",
+            "planet_id": 8
+        },
+        {
+            "name": "hymeno",
+            "node_id": "SolNode161",
+            "planet_id": 8
+        },
+        {
+            "name": "gnathos",
+            "node_id": "SolNode158",
+            "planet_id": 8
+        },
+        {
+            "name": "histo",
+            "node_id": "SolNode160",
+            "planet_id": 8
+        },
+        {
+            "name": "sporid",
+            "node_id": "SolNode165",
+            "planet_id": 8
+        },
+        {
+            "name": "ixodes",
+            "node_id": "SolNode163",
+            "planet_id": 8
+        },
+        {
+            "name": "saxis",
+            "node_id": "SolNode171",
+            "planet_id": 8
+        },
+        {
+            "name": "phalan",
+            "node_id": "SolNode168",
+            "planet_id": 8
+        },
+        {
+            "name": "oestrus",
+            "node_id": "SolNode167",
+            "planet_id": 8
+        },
+        {
+            "name": "ranova",
+            "node_id": "SolNode170",
+            "planet_id": 8
+        },
+        {
+            "name": "psoro",
+            "node_id": "SolNode169",
+            "planet_id": 8
+        },
+        {
+            "name": "nimus",
+            "node_id": "SolNode166",
+            "planet_id": 8
+        },
+        {
+            "name": "akkad",
+            "node_id": "ClanNode18",
+            "planet_id": 8
+        },
+        {
+            "name": "sparga",
+            "node_id": "SolNode174",
+            "planet_id": 8
+        },
+        {
+            "name": "xini",
+            "node_id": "SolNode172",
+            "planet_id": 8
+        },
+        {
+            "name": "viver",
+            "node_id": "SolNode176",
+            "planet_id": 8
+        },
+        {
+            "name": "zabala",
+            "node_id": "ClanNode19",
+            "planet_id": 8
+        },
+        {
+            "name": "naeglar",
+            "node_id": "SolNode175",
+            "planet_id": 8
+        },
+        {
+            "name": "rusalka",
+            "node_id": "SolNode184",
+            "planet_id": 6
+        },
+        {
+            "name": "camenae",
+            "node_id": "SolNode182",
+            "planet_id": 6
+        },
+        {
+            "name": "adaro",
+            "node_id": "SolNode181",
+            "planet_id": 6
+        },
+        {
+            "name": "vodyanoi",
+            "node_id": "SolNode183",
+            "planet_id": 6
+        },
+        {
+            "name": "hyosube",
+            "node_id": "SolNode178",
+            "planet_id": 6
+        },
+        {
+            "name": "undine",
+            "node_id": "SolNode180",
+            "planet_id": 6
+        },
+        {
+            "name": "jengu",
+            "node_id": "SolNode179",
+            "planet_id": 6
+        },
+        {
+            "name": "nakki",
+            "node_id": "SolNode190",
+            "planet_id": 6
+        },
+        {
+            "name": "phithale",
+            "node_id": "SolNode186",
+            "planet_id": 6
+        },
+        {
+            "name": "yam",
+            "node_id": "SolNode199",
+            "planet_id": 6
+        },
+        {
+            "name": "ponaturi",
+            "node_id": "SolNode194",
+            "planet_id": 6
+        },
+        {
+            "name": "merrow",
+            "node_id": "SolNode193",
+            "planet_id": 6
+        },
+        {
+            "name": "charybdis",
+            "node_id": "SolNode196",
+            "planet_id": 6
+        },
+        {
+            "name": "graeae",
+            "node_id": "SolNode197",
+            "planet_id": 6
+        },
+        {
+            "name": "scylla",
+            "node_id": "SolNode198",
+            "planet_id": 6
+        },
+        {
+            "name": "tiamat",
+            "node_id": "SolNode201",
+            "planet_id": 6
+        },
+        {
+            "name": "yemaja",
+            "node_id": "SolNode202",
+            "planet_id": 6
+        },
+        {
+            "name": "amarna",
+            "node_id": "ClanNode14",
+            "planet_id": 6
+        },
+        {
+            "name": "veles",
+            "node_id": "SolNode200",
+            "planet_id": 6
+        },
+        {
+            "name": "sangeru",
+            "node_id": "ClanNode15",
+            "planet_id": 6
+        },
+        {
+            "name": "gamygyn",
+            "node_id": "SolNode207",
+            "planet_id": 10
+        },
+        {
+            "name": "armaros",
+            "node_id": "SolNode204",
+            "planet_id": 10
+        },
+        {
+            "name": "morax",
+            "node_id": "SolNode209",
+            "planet_id": 10
+        },
+        {
+            "name": "eligor",
+            "node_id": "SolNode206",
+            "planet_id": 10
+        },
+        {
+            "name": "lillith",
+            "node_id": "SolNode208",
+            "planet_id": 10
+        },
+        {
+            "name": "naamah",
+            "node_id": "SolNode210",
+            "planet_id": 10
+        },
+        {
+            "name": "ose",
+            "node_id": "SolNode211",
+            "planet_id": 10
+        },
+        {
+            "name": "valac",
+            "node_id": "SolNode215",
+            "planet_id": 10
+        },
+        {
+            "name": "shax",
+            "node_id": "SolNode213",
+            "planet_id": 10
+        },
+        {
+            "name": "zagan",
+            "node_id": "SolNode218",
+            "planet_id": 10
+        },
+        {
+            "name": "larzac",
+            "node_id": "ClanNode6",
+            "planet_id": 10
+        },
+        {
+            "name": "beleth",
+            "node_id": "SolNode219",
+            "planet_id": 10
+        },
+        {
+            "name": "kokabiel",
+            "node_id": "SolNode220",
+            "planet_id": 10
+        },
+        {
+            "name": "cholistan",
+            "node_id": "ClanNode7",
+            "planet_id": 10
+        },
+        {
+            "name": "teshub",
+            "node_id": "SolNode400",
+            "planet_id": 14
+        },
+        {
+            "name": "hepit",
+            "node_id": "SolNode401",
+            "planet_id": 14
+        },
+        {
+            "name": "taranis",
+            "node_id": "SolNode402",
+            "planet_id": 14
+        },
+        {
+            "name": "tiwaz",
+            "node_id": "SolNode403",
+            "planet_id": 14
+        },
+        {
+            "name": "stribog",
+            "node_id": "SolNode404",
+            "planet_id": 14
+        },
+        {
+            "name": "ani",
+            "node_id": "SolNode405",
+            "planet_id": 14
+        },
+        {
+            "name": "ukko",
+            "node_id": "SolNode406",
+            "planet_id": 14
+        },
+        {
+            "name": "oxomoco",
+            "node_id": "SolNode407",
+            "planet_id": 14
+        },
+        {
+            "name": "belenus",
+            "node_id": "SolNode408",
+            "planet_id": 14
+        },
+        {
+            "name": "mot",
+            "node_id": "SolNode409",
+            "planet_id": 14
+        },
+        {
+            "name": "aten",
+            "node_id": "SolNode410",
+            "planet_id": 14
+        },
+        {
+            "name": "marduk",
+            "node_id": "SolNode411",
+            "planet_id": 14
+        },
+        {
+            "name": "mithra",
+            "node_id": "SolNode412",
+            "planet_id": 14
+        },
+        {
+            "name": "limtoc",
+            "node_id": "SettlementNode6",
+            "planet_id": 13
+        },
+        {
+            "name": "roche",
+            "node_id": "SettlementNode1",
+            "planet_id": 13
+        },
+        {
+            "name": "hall",
+            "node_id": "SettlementNode7",
+            "planet_id": 13
+        },
+        {
+            "name": "grildrig",
+            "node_id": "SettlementNode5",
+            "planet_id": 13
+        },
+        {
+            "name": "stickney",
+            "node_id": "SettlementNode3",
+            "planet_id": 13
+        },
+        {
+            "name": "drunlo",
+            "node_id": "SettlementNode4",
+            "planet_id": 13
+        },
+        {
+            "name": "d'arrest",
+            "node_id": "SettlementNode13",
+            "planet_id": 13
+        },
+        {
+            "name": "monolith",
+            "node_id": "SettlementNode12",
+            "planet_id": 13
+        },
+        {
+            "name": "kepler",
+            "node_id": "SettlementNode10",
+            "planet_id": 13
+        },
+        {
+            "name": "reldresal",
+            "node_id": "SettlementNode8",
+            "planet_id": 13
+        },
+        {
+            "name": "gulliver",
+            "node_id": "SettlementNode11",
+            "planet_id": 13
+        },
+        {
+            "name": "shklovsky",
+            "node_id": "SettlementNode14",
+            "planet_id": 13
+        },
+        {
+            "name": "clustril",
+            "node_id": "SettlementNode9",
+            "planet_id": 13
+        },
+        {
+            "name": "wendell",
+            "node_id": "SettlementNode16",
+            "planet_id": 13
+        },
+        {
+            "name": "todd",
+            "node_id": "SettlementNode19",
+            "planet_id": 13
+        },
+        {
+            "name": "flimnap",
+            "node_id": "SettlementNode17",
+            "planet_id": 13
+        },
+        {
+            "name": "memphis",
+            "node_id": "ClanNode10",
+            "planet_id": 13
+        },
+        {
+            "name": "iliad",
+            "node_id": "SettlementNode20",
+            "planet_id": 13
+        },
+        {
+            "name": "opik",
+            "node_id": "SettlementNode18",
+            "planet_id": 13
+        },
+        {
+            "name": "zeugma",
+            "node_id": "ClanNode11",
+            "planet_id": 13
+        },
+        {
+            "name": "capture",
+            "node_id": "SolNode706",
+            "planet_id": 15
+        },
+        {
+            "name": "defense",
+            "node_id": "SolNode707",
+            "planet_id": 15
+        },
+        {
+            "name": "exterminate",
+            "node_id": "SolNode708",
+            "planet_id": 15
+        },
+        {
+            "name": "sabotage",
+            "node_id": "SolNode710",
+            "planet_id": 15
+        },
+        {
+            "name": "survival",
+            "node_id": "SolNode711",
+            "planet_id": 15
+        },
+        {
+            "name": "assassinate",
+            "node_id": "SolNode712",
+            "planet_id": 15
+        },
+        {
+            "name": "plato",
+            "node_id": "SolNode300",
+            "planet_id": 16
+        },
+        {
+            "name": "pavlov",
+            "node_id": "SolNode306",
+            "planet_id": 16
+        },
+        {
+            "name": "tycho",
+            "node_id": "SolNode302",
+            "planet_id": 16
+        },
+        {
+            "name": "st\u00f6fler",
+            "node_id": "SolNode305",
+            "planet_id": 16
+        },
+        {
+            "name": "copernicus",
+            "node_id": "SolNode304",
+            "planet_id": 16
+        },
+        {
+            "name": "grimaldi",
+            "node_id": "SolNode301",
+            "planet_id": 16
+        },
+        {
+            "name": "zeipel",
+            "node_id": "SolNode307",
+            "planet_id": 16
+        },
+        {
+            "name": "mobile defense",
+            "node_id": "SolNode709",
+            "planet_id": 15
+        },
+        {
+            "name": "koro",
+            "node_id": "SolNode741",
+            "planet_id": 17
+        },
+        {
+            "name": "nabuk",
+            "node_id": "SolNode742",
+            "planet_id": 17
+        },
+        {
+            "name": "rotuma",
+            "node_id": "SolNode743",
+            "planet_id": 17
+        },
+        {
+            "name": "taveuni",
+            "node_id": "SolNode744",
+            "planet_id": 17
+        },
+        {
+            "name": "tamu",
+            "node_id": "SolNode745",
+            "planet_id": 17
+        },
+        {
+            "name": "dakata",
+            "node_id": "SolNode746",
+            "planet_id": 17
+        },
+        {
+            "name": "pago",
+            "node_id": "SolNode747",
+            "planet_id": 17
+        },
+        {
+            "name": "garus",
+            "node_id": "SolNode748",
+            "planet_id": 17
+        }
+    ],
+    "planets": [
+        {
+            "name": "Mercury",
+            "planet_id": 0
+        },
+        {
+            "name": "Mars",
+            "planet_id": 1
+        },
+        {
+            "name": "Uranus",
+            "planet_id": 2
+        },
+        {
+            "name": "Venus",
+            "planet_id": 3
+        },
+        {
+            "name": "ceres",
+            "planet_id": 4
+        },
+        {
+            "name": "earth",
+            "planet_id": 5
+        },
+        {
+            "name": "sedna",
+            "planet_id": 6
+        },
+        {
+            "name": "jupiter",
+            "planet_id": 7
+        },
+        {
+            "name": "eris",
+            "planet_id": 8
+        },
+        {
+            "name": "pluto",
+            "planet_id": 9
+        },
+        {
+            "name": "europa",
+            "planet_id": 10
+        },
+        {
+            "name": "saturn",
+            "planet_id": 11
+        },
+        {
+            "name": "neptune",
+            "planet_id": 12
+        },
+        {
+            "name": "phobos",
+            "planet_id": 13
+        },
+        {
+            "name": "void",
+            "planet_id": 14
+        },
+        {
+            "name": "derelict",
+            "planet_id": 15
+        },
+        {
+            "name": "moon",
+            "planet_id": 16
+        },
+        {
+            "name": "kuva fortress",
+            "planet_id": 17
+        }
+	]
+}
