@@ -40,13 +40,12 @@ namespace Agatha2
 			tokensToStrings.Add("fc_infestation",    "Infestation");
 			tokensToStrings.Add("fc_corpus",         "Corpus");
 			tokensToStrings.Add("fc_orokin",         "Orokin");
-			tokensToStrings.Add("/lotus/types/items/miscitems/voidteardrop",                             "Void Traces");
-			tokensToStrings.Add("/lotus/types/items/miscitems/eventium",                                 "Synthula");
- 			tokensToStrings.Add("/lotus/storeitems/upgrades/mods/fusionbundles/alertfusionbundlesmall",  "50 x Endo");
- 			tokensToStrings.Add("/lotus/storeitems/upgrades/mods/fusionbundles/alertfusionbundlemedium", "100 x Endo");
-			tokensToStrings.Add("/lotus/storeitems/types/recipes/weapons/plasmaswordblueprint",          "Plasma Sword Blueprint");
-			tokensToStrings.Add("/lotus/storeitems/upgrades/mods/shotgun/dualstat/acceleratedblastmod",  "Accelerated Blast");
 
+			JObject items = JObject.Parse(File.ReadAllText("data/warframe_items.json"));
+			foreach(KeyValuePair<string, JToken> item in items)
+			{
+				tokensToStrings.Add(item.Key.ToLower(), item.Value.ToString());
+			}
 			JObject planets = JObject.Parse(File.ReadAllText("data/warframe_nodes.json"));
 			Dictionary<int, string> planetIds = new Dictionary<int, string>();
 			foreach(JToken planet in planets["planets"])
