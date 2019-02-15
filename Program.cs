@@ -115,18 +115,6 @@ namespace Agatha2
 
 		public static void Main(string[] args)
 		{
- 			new Program().MainAsync().GetAwaiter().GetResult();
-		}
-
-		private Task Log(LogMessage msg)
-		{
-			Console.WriteLine(msg.ToString());
-			return Task.CompletedTask;
-		}
-
-		public async Task MainAsync()
-		{
-
 			// Load config.
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
 			Token =                 configTable.Get<string>("Token");
@@ -212,6 +200,17 @@ namespace Agatha2
 				}
 			}
 			Console.WriteLine("Done.");
+			new Program().MainAsync().GetAwaiter().GetResult();
+		}
+
+		private Task Log(LogMessage msg)
+		{
+			Console.WriteLine(msg.ToString());
+			return Task.CompletedTask;
+		}
+
+		public async Task MainAsync()
+		{
 			while(true)
 			{
 				try
