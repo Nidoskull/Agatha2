@@ -38,7 +38,6 @@ namespace Agatha2
 			{
 				using (var file = File.OpenRead("data/markov.bin")) {
 					markovDict = Serializer.Deserialize<Dictionary<string, List<string>>>(file);
-					Console.WriteLine(markovDict.ToString());
 				}
 			}
 			catch (FileNotFoundException ex)

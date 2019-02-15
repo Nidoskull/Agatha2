@@ -212,13 +212,21 @@ namespace Agatha2
 				}
 			}
 			Console.WriteLine("Done.");
-			Console.WriteLine("Logging in client.");
-
-			await Client.LoginAsync(TokenType.Bot, Token);
-
-			Console.WriteLine("Starting main loop.");
-			await Client.StartAsync();
-			await Task.Delay(-1);
+			while(true)
+			{
+				try
+				{
+					Console.WriteLine("Logging in client.");
+					await Client.LoginAsync(TokenType.Bot, Token);
+					Console.WriteLine("Starting main loop.");
+					await Client.StartAsync();
+					await Task.Delay(-1);
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine($"Core loop exception: {e.Message}.");
+				}
+			}
 		}
 		private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
