@@ -14,7 +14,6 @@ namespace Agatha2
 	internal abstract class BotModule
 	{
 		internal string moduleName;
-		public List<BotCommand> commands;
 		public List<UInt64> enabledForGuilds = new List<UInt64>();
 		public string description;
 		public abstract bool Register(List<BotCommand> commands);
@@ -285,7 +284,7 @@ namespace Agatha2
 							SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
 							if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
 							{
-								Task.Run( () => module.ListenTo(message));
+								await Task.Run( () => module.ListenTo(message));
 							}
 						}
 					}

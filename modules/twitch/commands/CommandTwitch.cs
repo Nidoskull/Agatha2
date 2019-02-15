@@ -24,7 +24,6 @@ namespace Agatha2
 		{
 			ModuleTwitch twitch = (ModuleTwitch)parent;
 			string[] message_contents = message.Content.Substring(1).Split(" ");
-			string msg = "No user supplied for lookup.";
 			if(message_contents.Length >= 2)
 			{
 				String streamer = message_contents[1];

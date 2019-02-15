@@ -21,6 +21,7 @@ namespace Agatha2
 		}
 		public override async Task ExecuteCommand(SocketMessage message)
 		{
+			await message.Channel.SendMessageAsync("Not implemented, sorry.");
 		}
 	}
 }

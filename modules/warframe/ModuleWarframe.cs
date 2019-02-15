@@ -65,7 +65,6 @@ namespace Agatha2
 		public override void StartModule()
 		{
 			Console.WriteLine("Starting Warframe world state polling.");
-			CheckAlerts();
 			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(1));
 			CancellationTokenSource source = new CancellationTokenSource();
 			Action action = (() => 
