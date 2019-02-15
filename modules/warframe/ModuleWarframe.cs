@@ -28,24 +28,12 @@ namespace Agatha2
 			moduleName = "Warframe";
 			description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
 
-			tokensToStrings.Add("mt_excavate",       "Excavation");
-			tokensToStrings.Add("mt_sabotage",       "Sabotage");
-			tokensToStrings.Add("mt_capture",        "Capture");
-			tokensToStrings.Add("mt_survival",       "Survival");
-			tokensToStrings.Add("mt_extermination",  "Exterminate");
-			tokensToStrings.Add("mt_mobile_defense", "Mobile Defense");
-			tokensToStrings.Add("mt_territory",      "Interception");
-			tokensToStrings.Add("mt_intel",          "Spy");
-			tokensToStrings.Add("fc_grineer",        "Grineer");
-			tokensToStrings.Add("fc_infestation",    "Infestation");
-			tokensToStrings.Add("fc_corpus",         "Corpus");
-			tokensToStrings.Add("fc_orokin",         "Orokin");
-
 			JObject items = JObject.Parse(File.ReadAllText("data/warframe_items.json"));
 			foreach(KeyValuePair<string, JToken> item in items)
 			{
 				tokensToStrings.Add(item.Key.ToLower(), item.Value.ToString());
 			}
+
 			JObject planets = JObject.Parse(File.ReadAllText("data/warframe_nodes.json"));
 			Dictionary<int, string> planetIds = new Dictionary<int, string>();
 			foreach(JToken planet in planets["planets"])

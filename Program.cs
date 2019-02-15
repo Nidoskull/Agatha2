@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections.Generic;
 using Nett;
 using System.Linq;
+using Discord.Rest;
 
 namespace Agatha2
 {
@@ -82,8 +83,11 @@ namespace Agatha2
 		private static ulong _streamChannelId;
 		private static string _streamAPIClientID;
 		private static ulong _warframeChannelId;
+		private static Dictionary<string, string> emoji_to_role = new Dictionary<string, string>();
+		private static ulong _roleMessageId;
 
 		public static ulong WarframeFeedChannel { get => _warframeChannelId; set => _warframeChannelId = value; }
+		public static ulong RoleMessageId { get => _roleMessageId; set => _roleMessageId = value; }
 		public static string Token { get => _token; set => _token = value; }
 		public static string CommandPrefix { get => _commandPrefix; set => _commandPrefix = value; }
 		public static string StreamAPIClientID { get => _streamAPIClientID; set => _streamAPIClientID = value; }
@@ -123,25 +127,41 @@ namespace Agatha2
 		public async Task MainAsync()
 		{
 
+			// Load config.
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
-			Token =			 configTable.Get<string>("Token");
-			SourceAuthor =	  configTable.Get<string>("SourceAuthor");
-			SourceVersion =	 configTable.Get<string>("SourceVersion");
-			SourceLocation =	configTable.Get<string>("SourceLocation");
-			CommandPrefix =	 configTable.Get<string>("CommandPrefix");
-			MarkovChance =	  configTable.Get<int>("MarkovChance");
-			StreamAPIClientID = configTable.Get<string>("StreamAPIClientID");
-			string streamID =   configTable.Get<string>("StreamChannelID");
-			StreamChannelID =   Convert.ToUInt64(streamID);
-			string warframeFeedId = configTable.Get<string>("WarframeFeedChannelID");
-			WarframeFeedChannel = Convert.ToUInt64(warframeFeedId);
+			Token =                 configTable.Get<string>("Token");
+			SourceAuthor =          configTable.Get<string>("SourceAuthor");
+			SourceVersion =         configTable.Get<string>("SourceVersion");
+			SourceLocation =        configTable.Get<string>("SourceLocation");
+			CommandPrefix =         configTable.Get<string>("CommandPrefix");
+			MarkovChance =          configTable.Get<int>("MarkovChance");
+			StreamAPIClientID =     configTable.Get<string>("StreamAPIClientID");
+			try
+			{
+				string streamID =       configTable.Get<string>("StreamChannelID");
+				StreamChannelID =       Convert.ToUInt64(streamID);
+				string roleMessageId =  configTable.Get<string>("RoleMessageId");
+				RoleMessageId =         Convert.ToUInt64(roleMessageId);
+				string warframeFeedId = configTable.Get<string>("WarframeFeedChannelID");
+				WarframeFeedChannel =   Convert.ToUInt64(warframeFeedId);
+			} 
+			catch(Exception e)
+			{
+				Console.WriteLine($"Exception when loading Discord IDs from config: {e.Message}.");
+			}
 
+			// Set up emoji/role list.
+			emoji_to_role.Add("🔪", "operator");
+
+			// Create client.
 			Client = new DiscordSocketClient();
 			Client.Log += Log;
 			Client.MessageReceived += MessageReceived;
+			Client.ReactionAdded += ReactionAdded;
+			Client.ReactionRemoved += ReactionRemoved;
 
+			// Load all modules.
 			Console.WriteLine("Loading modules.");
-
 			modules = new List<BotModule>();
 			modules.Add(new ModuleAetolia());
 			modules.Add(new ModuleBartender());
@@ -200,9 +220,30 @@ namespace Agatha2
 			await Client.StartAsync();
 			await Task.Delay(-1);
 		}
+		private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		{
+			if(reaction.MessageId == RoleMessageId && emoji_to_role.ContainsKey(reaction.Emote.ToString()))
+			{
+				IGuildUser user = (IGuildUser)cache.Value.Author;
+				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+				var role = guildChannel.Guild.Roles.FirstOrDefault(x => x.Name == emoji_to_role[reaction.Emote.ToString()]);
+				await user.RemoveRoleAsync(role);
+			}
+		}
+
+		private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		{
+			if(reaction.MessageId == RoleMessageId && emoji_to_role.ContainsKey(reaction.Emote.ToString()))
+			{
+				IGuildUser user = (IGuildUser)cache.Value.Author;
+				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+				var role = guildChannel.Guild.Roles.FirstOrDefault(x => x.Name == emoji_to_role[reaction.Emote.ToString()]);
+				await user.AddRoleAsync(role);
+			}
+		}
+
 		private async Task MessageReceived(SocketMessage message)
 		{
-
 			if(!message.Author.IsBot)
 			{
 				try

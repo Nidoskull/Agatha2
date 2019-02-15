@@ -373,5 +373,17 @@
     "/Lotus/Types/StoreItems/Boosters/CreditBooster3DayStoreItem": "3 Day Credit Booster",
     "/Lotus/Types/StoreItems/Boosters/ResourceAmount3DayStoreItem": "3 day Resource Booster",
     "/Lotus/Types/StoreItems/Packages/KavatColorPackNexus": "Nexus Gene-Masking Kit",
-    "/Lotus/Types/StoreItems/Packages/VTEosArmourBundle": "Eos Prime Armor Set"
+    "/Lotus/Types/StoreItems/Packages/VTEosArmourBundle": "Eos Prime Armor Set",
+    "mt_excavate": "Excavation",
+    "mt_sabotage": "Sabotage",
+    "mt_capture": "Capture",
+    "mt_survival": "Survival",
+    "mt_extermination": "Exterminate",
+    "mt_mobile_defense": "Mobile Defense",
+    "mt_territory": "Interception",
+    "mt_intel": "Spy",
+    "fc_grineer": "Grineer",
+    "fc_infestation": "Infestation",
+    "fc_corpus": "Corpus",
+    "fc_orokin": "Orokin"
 }
