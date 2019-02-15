@@ -141,13 +141,6 @@ namespace Agatha2
 			// Set up emoji/role list.
 			emoji_to_role.Add("🔪", "operator");
 
-			// Create client.
-			Client = new DiscordSocketClient();
-			Client.Log += Log;
-			Client.MessageReceived += MessageReceived;
-			Client.ReactionAdded += ReactionAdded;
-			Client.ReactionRemoved += ReactionRemoved;
-
 			// Load all modules.
 			Console.WriteLine("Loading modules.");
 			modules = new List<BotModule>();
@@ -211,6 +204,14 @@ namespace Agatha2
 
 		public async Task MainAsync()
 		{
+
+			// Create client.
+			Client = new DiscordSocketClient();
+			Client.Log += Log;
+			Client.MessageReceived += MessageReceived;
+			Client.ReactionAdded += ReactionAdded;
+			Client.ReactionRemoved += ReactionRemoved;
+
 			while(true)
 			{
 				try
