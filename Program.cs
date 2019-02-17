@@ -137,9 +137,12 @@ namespace Agatha2
 				Task.Run( () => module.StartModule());
 			}
 			Console.WriteLine("Done.");
+
 			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
+			commands.Add(new CommandGuild());
+
 			Console.WriteLine($"Registering {commands.Count} commands with aliases.");
 			foreach(BotCommand cmd in commands)
 			{
