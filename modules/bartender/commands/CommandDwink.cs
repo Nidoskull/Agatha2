@@ -12,13 +12,13 @@ namespace Agatha2
 {
 	internal class CommandDwink : BotCommand
 	{
-		public CommandDwink()
+		internal CommandDwink()
 		{
 			usage = "dwink";
 			description = "Whips up a wandom dwink fow youw enjoyment. :3c";
 			aliases = new List<string>() {"dwink"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			List<string> drinkParts = new List<string>();
 			ModuleBartender bartender = (ModuleBartender)parent;

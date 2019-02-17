@@ -13,13 +13,13 @@ namespace Agatha2
 {
 	internal class CommandSS13status : BotCommand
 	{
-		public CommandSS13status()
+		internal CommandSS13status()
 		{
 			usage = "ss13status <url | server alias>";
 			description = "Shows information about an SS13 server using a compatible API.";
 			aliases = new List<string>() {"ss13status","ss13"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			await message.Channel.SendMessageAsync("Not implemented, sorry.");
 		}

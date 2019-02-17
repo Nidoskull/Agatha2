@@ -13,13 +13,13 @@ namespace Agatha2
 {
 	internal class CommandChum : BotCommand
 	{
-		public CommandChum()
+		internal CommandChum()
 		{
 			usage = "chum";
 			description = "Creates a random Homestuck character, including land and consorts.";
 			aliases = new List<string>() {"chum"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			ModuleChumhandle chum = (ModuleChumhandle)parent;

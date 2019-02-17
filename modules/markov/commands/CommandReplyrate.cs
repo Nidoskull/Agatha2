@@ -13,23 +13,24 @@ namespace Agatha2
 {
 	internal class CommandReplyrate : BotCommand
 	{
-		public CommandReplyrate()
+		internal CommandReplyrate()
 		{
 			usage = "replyrate <#>";
 			description = "Sets the percentage replyrate of the Markov module.";
 			aliases = new List<string>() {"replyrate"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
-			if(Program.IsAuthorized(message.Author))
+			if(Program.IsAuthorized(message.Author, guild.guildId))
 			{
+				ModuleMarkov markov = (ModuleMarkov)parent;
 				try
 				{
 					int newReplyRate = Convert.ToInt32(message.Content.Substring(11));
 					if(newReplyRate >= 0 && newReplyRate <= 100)
 					{
-						Program.MarkovChance = newReplyRate;
-						await message.Channel.SendMessageAsync($"{message.Author.Mention}: Reply rate is now {Program.MarkovChance}.");
+						markov.markovChance = newReplyRate;
+						await message.Channel.SendMessageAsync($"{message.Author.Mention}: Reply rate is now {markov.markovChance}.");
 					}
 					else
 					{

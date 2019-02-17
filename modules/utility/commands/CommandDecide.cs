@@ -15,13 +15,13 @@ namespace Agatha2
 	{
 		private List<string> choiceSplitters = new List<string>() {"|", ","," or "};
 		private List<string> endings = new List<string>() {".","!","?"};
-		public CommandDecide()
+		internal CommandDecide()
 		{
 			usage = "decide option 1|option 2|...|option n";
 			description = "Picks between some options. Use | or , to delineate choices.";
 			aliases = new List<string>() {"decide", "pick", "choose"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			string messageText = message.Content.Substring(message.Content.Split(" ")[0].Length);
 

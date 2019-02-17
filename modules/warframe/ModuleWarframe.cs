@@ -10,6 +10,8 @@ using System.Linq;
 using System.Reactive.Linq;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using Nett;
+using Newtonsoft.Json;
 
 namespace Agatha2
 {
@@ -22,19 +24,23 @@ namespace Agatha2
 		private static List<string> ordisPostStrings;
 		private static List<string> vorPostStrings;
 		private Dictionary<string, string> tokensToStrings = new Dictionary<string, string>();
+		private Dictionary<UInt64, UInt64> warframeChannelIds = new Dictionary<UInt64, UInt64>();
 
-		public ModuleWarframe()
+		internal ModuleWarframe()
 		{
 			moduleName = "Warframe";
 			description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
+		}
 
-			JObject items = JObject.Parse(File.ReadAllText("data/warframe_items.json"));
+		internal override void LoadConfig()
+		{
+			JObject items = JObject.Parse(File.ReadAllText(@"modules\warframe\data\items.json"));
 			foreach(KeyValuePair<string, JToken> item in items)
 			{
 				tokensToStrings.Add(item.Key.ToLower(), item.Value.ToString());
 			}
 
-			JObject planets = JObject.Parse(File.ReadAllText("data/warframe_nodes.json"));
+			JObject planets = JObject.Parse(File.ReadAllText(@"modules\warframe\data\nodes.json"));
 			Dictionary<int, string> planetIds = new Dictionary<int, string>();
 			foreach(JToken planet in planets["planets"])
 			{
@@ -45,6 +51,20 @@ namespace Agatha2
 			{
 				string node_name = node["name"].ToString().Substring(0, 1).ToUpper() + node["name"].ToString().Substring(1).ToLower();
 				nodes.Add(node["node_id"].ToString(), $"{node_name} ({planetIds[(int)node["planet_id"]]})");
+			}
+			if(File.Exists(@"modules\warframe\data\channel_ids.json"))
+			{
+				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules\warframe\data\channel_ids.json")))
+				{
+					try
+					{
+						warframeChannelIds.Add((UInt64)Convert.ToInt64(guildAndChannel.Key), (UInt64)Convert.ToInt64(guildAndChannel.Value));
+					}
+					catch(Exception e)
+					{
+						Console.WriteLine($"Exception when loading stream channel config: {e.Message}");
+					}
+				}
 			}
 		}
 
@@ -62,7 +82,7 @@ namespace Agatha2
 			}
 			return token;
 		}
-		public override void StartModule()
+		internal override void StartModule()
 		{
 			Console.WriteLine("Starting Warframe world state polling.");
 			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(1));
@@ -75,11 +95,10 @@ namespace Agatha2
 			pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
 		}
 
-		public void CheckAlerts()
+		internal void CheckAlerts()
 		{
 
-			IMessageChannel channel = Program.Client.GetChannel(Program.WarframeFeedChannel) as IMessageChannel;
-			if(channel == null)
+			if(warframeChannelIds.Count <= 0)
 			{
 				return;
 			}
@@ -232,7 +251,14 @@ namespace Agatha2
 									embedBuilder.AddField($"{alertInfo["Header"]} - {alertInfo["Mission Type"]} ({alertInfo["Faction"]})", $"{alertInfo["Level"]}. Expires in {alertInfo["Expires"]}.\nRewards:{alertInfo["Rewards"]}");
 								}
 							}
-							channel.SendMessageAsync($"There are new mission alerts available, Tenno.", false, embedBuilder);
+							foreach(KeyValuePair<UInt64, UInt64> channelId in warframeChannelIds)
+							{
+								IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
+								if(channel != null)
+								{
+									channel.SendMessageAsync($"There are new mission alerts available, Tenno.", false, embedBuilder);
+								}
+							}
 						}
 					}
 				}
@@ -243,15 +269,15 @@ namespace Agatha2
 			}
 		}
 
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
-			vorPostStrings =   new List<string>(File.ReadAllLines("data/vor_strings.txt"));
-			hekPostStrings =   new List<string>(File.ReadAllLines("data/hek_strings.txt"));
-			ordisPostStrings = new List<string>(File.ReadAllLines("data/ordis_strings.txt"));
+			vorPostStrings =   new List<string>(File.ReadAllLines(@"modules\warframe\data\vor_strings.txt"));
+			hekPostStrings =   new List<string>(File.ReadAllLines(@"modules\warframe\data\hek_strings.txt"));
+			ordisPostStrings = new List<string>(File.ReadAllLines(@"modules\warframe\data\ordis_strings.txt"));
 			commands.Add(new CommandAlerts());
 			return true;
 		}
-		public override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message)
 		{
 			string searchSpace =  message.Content.ToLower();
 			if(searchSpace.Contains("hek"))

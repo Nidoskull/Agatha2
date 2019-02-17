@@ -1,0 +1,35 @@
+black
+blue
+fuschia
+gold
+green
+hot pink
+indigo
+lavender
+midnight blue
+multi-colored
+olive green
+orange
+pearl white
+pink
+red
+silver
+sky blue
+steel grey
+teal
+violet
+orange
+white
+yellow
+forest green
+translucent
+vermillion
+turquoise
+cerulean
+rainbow
+cyan
+magenta
+mustard yellow
+neon yellow
+brown
+beige

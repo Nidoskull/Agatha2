@@ -31,7 +31,7 @@ namespace Agatha2
 {
 	internal class CommandFish : BotCommand
 	{
-		public CommandFish()
+		internal CommandFish()
 		{
 			usage = "fish <string to search for>";
 			description = "Shows information about Aetolian fishing holes.";
@@ -52,7 +52,7 @@ namespace Agatha2
 			return false;
 		}
 
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length < 2)

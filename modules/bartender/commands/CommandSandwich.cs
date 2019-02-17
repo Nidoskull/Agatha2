@@ -12,14 +12,14 @@ namespace Agatha2
 {
 	internal class CommandSandwich : BotCommand
 	{
-		public CommandSandwich()
+		internal CommandSandwich()
 		{
 			usage = "sandwich | sandwich add [bread|plate|filling|garnish] thing";
 			description = "Whips up a random sandwich for your enjoyment.";
 			aliases = new List<string>() {"sandwich"};
 		}
 
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleBartender bartender = (ModuleBartender)parent;
 			string result = $"Usage: {usage}.";

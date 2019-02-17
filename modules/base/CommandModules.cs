@@ -8,13 +8,13 @@ namespace Agatha2
 {
 	internal class CommandModules : BotCommand
 	{
-		public CommandModules()
+		internal CommandModules()
 		{
 			usage = "modules";
 			description = "Lists all registered modules.";
 			aliases = new List<string>() {"modules", "module"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
 			EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -26,7 +26,7 @@ namespace Agatha2
 				foreach(BotModule module in Program.modules)
 				{
 					string tmpModName = module.moduleName.ToString();
-					if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
+					if(guild.enabledModules.Contains(tmpModName))
 					{
 						moduleList = $"{moduleList}{tmpModName}\n";
 					}
@@ -44,11 +44,11 @@ namespace Agatha2
 				foreach(BotModule module in Program.modules)
 				{
 					if(module.moduleName.ToLower().Equals(checkModuleName))
-					{   
+					{
 						foundModule = module;
 						break;
 					}
-				}				
+				}
 
 				if(foundModule == null)
 				{
@@ -58,7 +58,7 @@ namespace Agatha2
 				else if(message_contents.Length >= 3 && (message_contents[2].ToLower().Equals("enable") || message_contents[2].ToLower().Equals("disable")))
 				{
 					embedBuilder.Title = foundModule.moduleName;					
-					if(!Program.IsAuthorized(message.Author))
+					if(!Program.IsAuthorized(message.Author, guildChannel.Guild.Id))
 					{
 						embedBuilder.Description = "This command can only be used by a bot admin, sorry.";
 					}
@@ -67,24 +67,20 @@ namespace Agatha2
 						bool enableModule = message_contents[2].ToLower().Equals("enable");
 						if(enableModule)
 						{
-							if(foundModule.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							if(Program.EnableModuleForGuild(foundModule, guildChannel.Guild.Id))
 							{
-								embedBuilder.Description = $"Module {foundModule.moduleName} is already enabled for this guild.";
+								embedBuilder.Description = $"Enabled module {foundModule.moduleName} for this guild.";
 							}
 							else
 							{
-								embedBuilder.Description = $"Enabled module {foundModule.moduleName} for this guild.";
-								foundModule.enabledForGuilds.Add(guildChannel.Guild.Id);
-								foundModule.SaveGuildSettings();
+								embedBuilder.Description = $"Module {foundModule.moduleName} is already enabled for this guild.";
 							}
 						}
 						else
 						{
-							if(foundModule.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							if(Program.DisableModuleForGuild(foundModule, guildChannel.Guild.Id))
 							{
 								embedBuilder.Description = $"Disabled module {foundModule.moduleName} for this guild.";
-								foundModule.enabledForGuilds.Remove(guildChannel.Guild.Id);
-								foundModule.SaveGuildSettings();
 							}
 							else
 							{
@@ -95,7 +91,7 @@ namespace Agatha2
 				}
 				else 
 				{
-					if(foundModule.enabledForGuilds.Contains(guildChannel.Guild.Id))
+					if(guild.enabledModules.Contains(foundModule.moduleName))
 					{
 						embedBuilder.Title = $"{foundModule.moduleName} (enabled for this guild)";
 					}

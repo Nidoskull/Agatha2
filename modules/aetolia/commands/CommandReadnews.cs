@@ -13,13 +13,13 @@ namespace Agatha2
 {
 	internal class CommandReadnews : BotCommand
 	{
-		public CommandReadnews()
+		internal CommandReadnews()
 		{
 			usage = "readnews <section|random> <#|random>";
 			description = "Shows a post from an Aetolian news board. Use nstat to check for post numbers.";
 			aliases = new List<string>() {"readnews"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleAetolia aetolia = (ModuleAetolia)parent;
   			string[] message_contents = message.Content.Substring(1).Split(" ");

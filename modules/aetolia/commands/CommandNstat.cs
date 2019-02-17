@@ -13,13 +13,13 @@ namespace Agatha2
 {
 	internal class CommandNstat : BotCommand
 	{
-		public CommandNstat()
+		internal CommandNstat()
 		{
 			usage = "nstat";
 			description = "Lists Aetolian news sections and post counts for use with the readnews command.";
 			aliases = new List<string>() {"nstat"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleAetolia aetolia = (ModuleAetolia)parent;
 			HttpWebResponse aetInfo = aetolia.GetAPIResponse("news");
@@ -37,7 +37,7 @@ namespace Agatha2
 						result = $"{result}\n {x["name"]}:{padding}{x["total"]} posts.";
 					}
 					result = $"{result}\n-----------------------------------------------------------";
-					result = $"{result}\n Read individual posts using {Program.CommandPrefix}READNEWS [SECTION] [NUMBER].";
+					result = $"{result}\n Read individual posts using {guild.commandPrefix}READNEWS [SECTION] [NUMBER].";
 					result = $"{result}\n-----------------------------------------------------------\n```";
 				}
 			}

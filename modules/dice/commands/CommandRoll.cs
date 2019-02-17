@@ -15,13 +15,13 @@ namespace Agatha2
 {
 	internal class CommandRoll : BotCommand
 	{
-		public CommandRoll()
+		internal CommandRoll()
 		{
 			usage = "roll [1-100]d[1-100]<+/-[modifier]>";
 			description = "Rolls dice in a 'standard' schema (d6, d20, etc).";
 			aliases = new List<string>() {"roll", "dice", "d"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			bool foundDice = false;
@@ -33,7 +33,7 @@ namespace Agatha2
 			}
 			if(!foundDice)
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{Program.CommandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.");
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{guild.commandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.");
 			}
 			else
 			{

@@ -12,12 +12,12 @@ namespace Agatha2
 {
 	internal class ModuleUtility : BotModule
 	{
-		public ModuleUtility()
+		internal ModuleUtility()
 		{
 			moduleName = "Utility";
 			description = "Miscellaneous utility commands.";
 		}
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
 			commands.Add(new CommandDecide());
 			return true;

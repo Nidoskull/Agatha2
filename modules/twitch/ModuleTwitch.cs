@@ -11,6 +11,7 @@ using System.Reactive.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using Nett;
 
 namespace Agatha2
 {
@@ -22,41 +23,72 @@ namespace Agatha2
 		private Dictionary<String, String> streamIDToDisplayName;
 		internal Dictionary<String, String> streamNametoID;
 		private List<String> streamers;
+		private Dictionary<UInt64, UInt64> streamChannelIds = new Dictionary<UInt64, UInt64>();
+		internal string streamAPIClientID;
 
-		public ModuleTwitch()
+		internal ModuleTwitch()
 		{
 			moduleName = "Twitch";
 			description = "A module for watching for and looking up Twitch streamers.";
 		}
 
-		public override void StartModule()
+		internal override void LoadConfig()
+		{
+			if(File.Exists(@"modules\twitch\data\config.tml"))
+			{
+				TomlTable configTable = Toml.ReadFile(@"modules\twitch\data\config.tml");
+				streamAPIClientID = configTable.Get<string>("StreamAPIClientID");
+			}
+			if(File.Exists(@"modules\twitch\data\channel_ids.json"))
+			{
+				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules\twitch\data\channel_ids.json")))
+				{
+					try
+					{
+						streamChannelIds.Add((UInt64)Convert.ToInt64(guildAndChannel.Key), (UInt64)Convert.ToInt64(guildAndChannel.Value));
+					}
+					catch(Exception e)
+					{
+						Console.WriteLine($"Exception when loading stream channel config: {e.Message}");
+					}
+				}
+			}
+		}
+		internal override void StartModule()
 		{
 			Console.WriteLine("Starting Twitch polling.");
-			var logFile = File.ReadAllLines("data/streamers.txt");
-			foreach(String streamer in new List<string>(logFile))
+			var logFile = File.ReadAllLines(@"modules\twitch\data\streamers.txt");
+			try
 			{
-				JToken jData = RetrieveUserIdFromUserName(streamer);
-				string streamerID = jData["id"].ToString();
-				streamers.Add(streamerID);
-				streamStatus.Add(streamerID, false);
-				streamIDtoUserName.Add(streamerID, streamer);
-				streamNametoID.Add(streamer, streamerID);
-				streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
+				foreach(String streamer in new List<string>(logFile))
+				{
+					JToken jData = RetrieveUserIdFromUserName(streamer);
+					string streamerID = jData["id"].ToString();
+					streamers.Add(streamerID);
+					streamStatus.Add(streamerID, false);
+					streamIDtoUserName.Add(streamerID, streamer);
+					streamNametoID.Add(streamer, streamerID);
+					streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
+				}
+				Console.WriteLine("Done loading streamers."); /* Initializing poll timer.");
+				IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
+				CancellationTokenSource source = new CancellationTokenSource();
+				Action action = (() => 
+				{
+					PollStreamers(null);
+				}
+				);
+				pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
+				Console.WriteLine("Stream poller initialized.");
+				*/
 			}
-			Console.WriteLine("Done loading streamers."); /* Initializing poll timer.");
-			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
-			CancellationTokenSource source = new CancellationTokenSource();
-			Action action = (() => 
+			catch(Exception e)
 			{
-				PollStreamers(null);
+				Console.WriteLine($"Exception when loading Twitch module: {e.Message}");
 			}
-			);
-			pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-			Console.WriteLine("Stream poller initialized.");
-			*/
 		}
 
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
 			streamStatus = new Dictionary<String, Boolean>();
 			streamIDtoUserName = new Dictionary<String, String>();
@@ -101,7 +133,6 @@ namespace Agatha2
 		internal async Task PollStreamers(SocketMessage message)
 		{
 			Console.WriteLine("Polling streamers.");
-			IMessageChannel channel = message == null ? Program.Client.GetChannel(Program.StreamChannelID) as IMessageChannel : message.Channel;
 			foreach(string streamer in streamers)
 			{
 				try
@@ -111,7 +142,7 @@ namespace Agatha2
 					request.Method = "Get";
 					request.Timeout = 12000;
 					request.ContentType = "application/vnd.twitchtv.v5+json";
-					request.Headers.Add("Client-ID", Program.StreamAPIClientID);
+					request.Headers.Add("Client-ID", streamAPIClientID);
 
 					try
 					{
@@ -145,7 +176,11 @@ namespace Agatha2
 									}
 									if(embedBuilder != null)
 									{
-										await channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+										foreach(KeyValuePair<UInt64, UInt64> streamChannel in streamChannelIds)
+										{
+											IMessageChannel channel = Program.Client.GetChannel(streamChannel.Value) as IMessageChannel;
+											await channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+										}
 									}
 								}
 							}
@@ -169,7 +204,7 @@ namespace Agatha2
 			request.Method = "Get";
 			request.Timeout = 12000;
 			request.ContentType = "application/vnd.twitchtv.v5+json";
-			request.Headers.Add("Client-ID", Program.StreamAPIClientID);
+			request.Headers.Add("Client-ID", streamAPIClientID);
 
 			try
 			{

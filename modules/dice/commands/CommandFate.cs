@@ -16,7 +16,7 @@ namespace Agatha2
 	internal class CommandFate : BotCommand
 	{
 		private static Dictionary<string, string> fateTiers;
-		public CommandFate()
+		internal CommandFate()
 		{
 			usage = "fate <+/->#";
 			description = "Rolls dice in the FATE schema.";
@@ -33,7 +33,7 @@ namespace Agatha2
 			fateTiers.Add("+6", "Fantastic!");
 			fateTiers.Add("+7", "Epic!");
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			int mod = 0;

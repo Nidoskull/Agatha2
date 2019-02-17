@@ -14,13 +14,13 @@ namespace Agatha2
 {
 	internal class CommandTwitch : BotCommand
 	{
-		public CommandTwitch()
+		internal CommandTwitch()
 		{
 			usage = "twitch";
 			description = "Look up a Twitch streamer.";
 			aliases = new List<string>() {"twitch"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleTwitch twitch = (ModuleTwitch)parent;
 			string[] message_contents = message.Content.Substring(1).Split(" ");
@@ -34,7 +34,7 @@ namespace Agatha2
 					request.Method = "Get";
 					request.Timeout = 12000;
 					request.ContentType = "application/vnd.twitchtv.v5+json";
-					request.Headers.Add("Client-ID", Program.StreamAPIClientID);
+					request.Headers.Add("Client-ID", twitch.streamAPIClientID);
 
 					try
 					{

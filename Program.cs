@@ -7,49 +7,44 @@ using System.Collections.Generic;
 using Nett;
 using System.Linq;
 using Discord.Rest;
+using Newtonsoft.Json;
 
 namespace Agatha2
 {
 
+	internal class GuildConfig
+	{
+		internal string adminRole = "bot wrangler";
+		internal UInt64 guildId;
+		internal List<string> enabledModules = new List<string>();
+		internal string commandPrefix = ".";
+
+		public string AdminRole { get => adminRole; set => adminRole = value; }
+		public UInt64 GuildId { get => guildId; set => guildId = value; }
+		public List<string> EnabledModules { get => enabledModules; set => enabledModules = value; }
+		public string CommandPrefix { get => commandPrefix; set => commandPrefix = value; }
+
+		internal void Save()
+		{
+			string savePath = @"data\guilds";
+			if(!Directory.Exists(savePath))
+			{
+				Directory.CreateDirectory(savePath);
+			}
+			File.WriteAllText($"{savePath}\\{guildId}.json", JsonConvert.SerializeObject((GuildConfig)this));
+		}
+	}
+	
 	internal abstract class BotModule
 	{
 		internal string moduleName;
-		public List<UInt64> enabledForGuilds = new List<UInt64>();
-		public string description;
-		public abstract bool Register(List<BotCommand> commands);
-		public virtual void ListenTo(SocketMessage message) {}
-		public virtual void StartModule() {}
-
-		public virtual void LoadGuildSettings()
-		{
-			if(File.Exists($"data/{moduleName}_guilds.txt"))
-			{
-				foreach(string guildId in File.ReadAllLines($"data/{moduleName}_guilds.txt"))
-				{
-					try
-					{
-						UInt64 guildIdSnowflake = Convert.ToUInt64(guildId);
-						if(guildIdSnowflake > 0)
-						{
-							enabledForGuilds.Add(guildIdSnowflake);
-						}
-					}
-					catch(Exception e)
-					{
-						Console.WriteLine($"Exception in module guild auth: {e.ToString()}.");
-					}
-				}
-			}
-		}
-		public virtual void SaveGuildSettings()
-		{
-			List<string> guildIDs = new List<string>();
-			foreach(UInt64 guildIdUlong in enabledForGuilds)
-			{
-				guildIDs.Add(guildIdUlong.ToString());
-			}
-			System.IO.File.WriteAllLines($"data/{moduleName}_guilds.txt", guildIDs);
-		}
+		internal string description;
+		internal abstract bool Register(List<BotCommand> commands);
+		internal virtual void ListenTo(SocketMessage message) {}
+		internal virtual void StartModule() {}
+		internal virtual void ReactionAdded(SocketGuild guild, SocketReaction reaction) {}
+		internal virtual void ReactionRemoved(SocketGuild guild, SocketReaction reaction) {}
+		internal virtual void LoadConfig() {}
 	}
 
 	internal abstract class BotCommand
@@ -59,39 +54,23 @@ namespace Agatha2
 		internal string description;
 		internal BotModule parent;
 
-		public void Register(BotModule _parent)
+		internal void Register(BotModule _parent)
 		{
 			parent = _parent;
 		}
-		public abstract Task ExecuteCommand(SocketMessage message);
+		internal abstract Task ExecuteCommand(SocketMessage message, GuildConfig guild);
 	}
 	
-	public class Program
+	internal class Program
 	{
 		internal static Random rand = new Random();
 		private static DiscordSocketClient _client;
-
-		internal static List<BotCommand> commands;
-		internal static Dictionary<string, BotCommand> commandAliases;
-		internal static List<BotModule> modules;
-		public static DiscordSocketClient Client {get => _client; set => _client = value; }
-
-		private static string _commandPrefix;
-		private static int _markovChance;
-		private static string _token;
-		private static ulong _streamChannelId;
-		private static string _streamAPIClientID;
-		private static ulong _warframeChannelId;
-		private static Dictionary<string, string> emoji_to_role = new Dictionary<string, string>();
-		private static ulong _roleMessageId;
-
-		public static ulong WarframeFeedChannel { get => _warframeChannelId; set => _warframeChannelId = value; }
-		public static ulong RoleMessageId { get => _roleMessageId; set => _roleMessageId = value; }
-		public static string Token { get => _token; set => _token = value; }
-		public static string CommandPrefix { get => _commandPrefix; set => _commandPrefix = value; }
-		public static string StreamAPIClientID { get => _streamAPIClientID; set => _streamAPIClientID = value; }
-		public static int MarkovChance { get => _markovChance; set => _markovChance = value; }
-		public static ulong StreamChannelID { get => _streamChannelId; set => _streamChannelId = value; }
+		internal static List<BotCommand> commands = new List<BotCommand>();
+		internal static Dictionary<UInt64, GuildConfig> guilds = new Dictionary<UInt64, GuildConfig>();
+		internal static Dictionary<string, BotCommand> commandAliases = new Dictionary<string, BotCommand>();
+		internal static List<BotModule> modules = new List<BotModule>();
+		internal static DiscordSocketClient Client {get => _client; set => _client = value; }
+		internal static string token;
 
 		internal static string _sourceAuthor;
 		internal static string _sourceVersion;
@@ -100,10 +79,11 @@ namespace Agatha2
 		internal static string SourceVersion { get => _sourceVersion; set => _sourceVersion = value; }
 		internal static string SourceLocation { get => _sourceLocation; set => _sourceLocation = value; }
 
-		internal static bool IsAuthorized(SocketUser user)
+		internal static bool IsAuthorized(SocketUser user, UInt64 guildId)
 		{
+			GuildConfig guild = GetGuildConfig(guildId);
 			var guildUser = user as SocketGuildUser;
-			var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "bot wrangler");
+			var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == guild.adminRole);
 			return (guildUser.Roles.Contains(role));
 		}
 
@@ -112,37 +92,17 @@ namespace Agatha2
 			return (value < min) ? min : (value > max) ? max : value;  
 		}
 
-		public static void Main(string[] args)
+		internal static void Main(string[] args)
 		{
 			// Load config.
 			TomlTable configTable = Toml.ReadFile("data/config.tml");
-			Token =                 configTable.Get<string>("Token");
+			token =                 configTable.Get<string>("Token");
 			SourceAuthor =          configTable.Get<string>("SourceAuthor");
 			SourceVersion =         configTable.Get<string>("SourceVersion");
 			SourceLocation =        configTable.Get<string>("SourceLocation");
-			CommandPrefix =         configTable.Get<string>("CommandPrefix");
-			MarkovChance =          configTable.Get<int>("MarkovChance");
-			StreamAPIClientID =     configTable.Get<string>("StreamAPIClientID");
-			try
-			{
-				string streamID =       configTable.Get<string>("StreamChannelID");
-				StreamChannelID =       Convert.ToUInt64(streamID);
-				string roleMessageId =  configTable.Get<string>("RoleMessageId");
-				RoleMessageId =         Convert.ToUInt64(roleMessageId);
-				string warframeFeedId = configTable.Get<string>("WarframeFeedChannelID");
-				WarframeFeedChannel =   Convert.ToUInt64(warframeFeedId);
-			} 
-			catch(Exception e)
-			{
-				Console.WriteLine($"Exception when loading Discord IDs from config: {e.Message}.");
-			}
-
-			// Set up emoji/role list.
-			emoji_to_role.Add("🔪", "operator");
 
 			// Load all modules.
 			Console.WriteLine("Loading modules.");
-			modules = new List<BotModule>();
 			modules.Add(new ModuleAetolia());
 			modules.Add(new ModuleBartender());
 			modules.Add(new ModuleChumhandle());
@@ -151,15 +111,16 @@ namespace Agatha2
 			modules.Add(new ModuleTwitch());
 			modules.Add(new ModuleUtility());
 			modules.Add(new ModuleWarframe());
-
+			foreach(BotModule module in modules)
+			{
+				module.LoadConfig();
+			}
 			Console.WriteLine($"Registering {modules.Count} modules.");
-			commands = new List<BotCommand>();
 			foreach(BotModule module in modules)
 			{
 				List<BotCommand> tmpCmds = new List<BotCommand>();
 				if(module.Register(tmpCmds))
 				{
-					module.LoadGuildSettings();
 					foreach(BotCommand command in tmpCmds)
 					{
 						command.Register(module);
@@ -176,13 +137,10 @@ namespace Agatha2
 				Task.Run( () => module.StartModule());
 			}
 			Console.WriteLine("Done.");
-
 			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
 			Console.WriteLine($"Registering {commands.Count} commands with aliases.");
-			commandAliases = new Dictionary<string, BotCommand>();
-
 			foreach(BotCommand cmd in commands)
 			{
 				foreach(string alias in cmd.aliases)
@@ -192,6 +150,27 @@ namespace Agatha2
 				}
 			}
 			Console.WriteLine("Done.");
+
+			// Load guild configuration.
+			if(!Directory.Exists(@"data\guilds"))
+			{
+				Directory.CreateDirectory(@"data\guilds");
+			}
+			foreach (var f in (from file in Directory.EnumerateFiles(@"data\guilds", "*.json", SearchOption.AllDirectories) select new { File = file }))
+			{
+				Console.WriteLine($"Loading guild config from {f.File}.");
+				try
+				{
+					GuildConfig guild = JsonConvert.DeserializeObject<GuildConfig>(File.ReadAllText(f.File));
+					guilds.Add(guild.guildId, guild);
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine($"Exception when loading guild config: {e.Message}");
+				}
+			}
+			Console.WriteLine("Done.");
+
 			new Program().MainAsync().GetAwaiter().GetResult();
 		}
 
@@ -201,7 +180,7 @@ namespace Agatha2
 			return Task.CompletedTask;
 		}
 
-		public async Task MainAsync()
+		internal async Task MainAsync()
 		{
 
 			// Create client.
@@ -216,7 +195,7 @@ namespace Agatha2
 				try
 				{
 					Console.WriteLine("Logging in client.");
-					await Client.LoginAsync(TokenType.Bot, Token);
+					await Client.LoginAsync(TokenType.Bot, token);
 					Console.WriteLine("Starting main loop.");
 					await Client.StartAsync();
 					await Task.Delay(-1);
@@ -229,23 +208,29 @@ namespace Agatha2
 		}
 		private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
-			if(reaction.MessageId == RoleMessageId && emoji_to_role.ContainsKey(reaction.Emote.ToString()))
+			IGuildUser user = (IGuildUser)cache.Value.Author;
+			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+			GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
+			foreach(BotModule module in modules)
 			{
-				IGuildUser user = (IGuildUser)cache.Value.Author;
-				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
-				var role = guildChannel.Guild.Roles.FirstOrDefault(x => x.Name == emoji_to_role[reaction.Emote.ToString()]);
-				await user.RemoveRoleAsync(role);
+				if(guild.enabledModules.Contains(module.moduleName))
+				{
+					await Task.Run( () => module.ReactionRemoved(guildChannel.Guild, reaction));
+				}
 			}
 		}
 
 		private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
-			if(reaction.MessageId == RoleMessageId && emoji_to_role.ContainsKey(reaction.Emote.ToString()))
+			IGuildUser user = (IGuildUser)cache.Value.Author;
+			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+			GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
+			foreach(BotModule module in modules)
 			{
-				IGuildUser user = (IGuildUser)cache.Value.Author;
-				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
-				var role = guildChannel.Guild.Roles.FirstOrDefault(x => x.Name == emoji_to_role[reaction.Emote.ToString()]);
-				await user.AddRoleAsync(role);
+				if(guild.enabledModules.Contains(module.moduleName))
+				{
+					await Task.Run( () => module.ReactionAdded(guildChannel.Guild, reaction));
+				}
 			}
 		}
 
@@ -255,16 +240,17 @@ namespace Agatha2
 			{
 				try
 				{
-					if(message.Content.Length > 1 && message.Content.StartsWith(CommandPrefix) && !message.Content.Substring(1,1).Equals(CommandPrefix))
+					SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
+					GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
+					if(message.Content.Length > 1 && message.Content.StartsWith(guild.commandPrefix) && !message.Content.Substring(1,1).Equals(guild.commandPrefix))
 					{
 						string command = message.Content.Substring(1).Split(" ")[0].ToLower();
 						if(commandAliases.ContainsKey(command))
 						{
 							BotCommand cmd = commandAliases[command];
-							SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
-							if(cmd.parent == null || cmd.parent.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							if(cmd.parent == null || guild.enabledModules.Contains(cmd.parent.moduleName))
 							{
-								await cmd.ExecuteCommand(message);
+								await cmd.ExecuteCommand(message, guild);
 							}
 							else
 							{
@@ -281,8 +267,7 @@ namespace Agatha2
 					{
 						foreach(BotModule module in modules)
 						{
-							SocketGuildChannel guildChannel = message.Channel as SocketGuildChannel;
-							if(module.enabledForGuilds.Contains(guildChannel.Guild.Id))
+							if(guild.enabledModules.Contains(module.moduleName))
 							{
 								await Task.Run( () => module.ListenTo(message));
 							}
@@ -294,6 +279,42 @@ namespace Agatha2
 					Console.WriteLine($"Unhandled exception in command input - {e.Message}.");
 				}
 			}
+		}
+
+		internal static GuildConfig GetGuildConfig(UInt64 guildId)
+		{
+			if(!guilds.ContainsKey(guildId))
+			{
+				GuildConfig guild = new GuildConfig();
+				guild.guildId = guildId;
+				guilds.Add(guild.guildId, guild);
+				Console.WriteLine($"Created GuildConfig for guild {guildId}.");
+			}
+			return guilds[guildId];
+		}
+
+		internal static bool EnableModuleForGuild(BotModule module, UInt64 guildId)
+		{
+			GuildConfig guild = GetGuildConfig(guildId);
+			if(!guild.enabledModules.Contains(module.moduleName))
+			{
+				guild.enabledModules.Add(module.moduleName);
+				guild.Save();
+				return true;
+			}
+			return false;
+		}
+
+		internal static bool DisableModuleForGuild(BotModule module, UInt64 guildId)
+		{
+			GuildConfig guild = GetGuildConfig(guildId);
+			if(guild.enabledModules.Contains(module.moduleName))
+			{
+				guild.enabledModules.Remove(module.moduleName);
+				guild.Save();
+				return true;
+			}
+			return false;
 		}
 	}
 }

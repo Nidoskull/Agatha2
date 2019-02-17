@@ -8,13 +8,13 @@ namespace Agatha2
 {
 	internal class CommandHelp : BotCommand
 	{
-		public CommandHelp()
+		internal CommandHelp()
 		{
 			usage = "help";
 			description = "Lists all registered commands along with usage.";
 			aliases = new List<string>() {"help", "commands"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			string[] message_contents = message.Content.Substring(1).Split(" ");
@@ -27,7 +27,7 @@ namespace Agatha2
 					string cmdName = command.aliases[0].ToString();
 					result = $"{result}\n{cmdName} [{string.Join(", ", command.aliases.ToArray())}]";
 				}
-				result = $"{result}\n\n**Use {Program.CommandPrefix}help [command] for more information on usage.**";
+				result = $"{result}\n\n**Use {guild.commandPrefix}help [command] for more information on usage.**";
 			}
 			else 
 			{
@@ -41,7 +41,7 @@ namespace Agatha2
 						string cmdName = command.aliases[0].ToString();
 						embedBuilder.Title = $"Helpfile for `{cmdName}` ({command.parent.moduleName} module).";
 						embedBuilder.AddField("Aliases", $"`{string.Join("`, `", command.aliases.ToArray())}`");
-						embedBuilder.AddField("Usage", $"`{Program.CommandPrefix}{command.usage}`");
+						embedBuilder.AddField("Usage", $"`{guild.commandPrefix}{command.usage}`");
 						embedBuilder.AddField("Description", command.description.ToString());
 						break;
 					}

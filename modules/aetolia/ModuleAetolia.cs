@@ -16,7 +16,7 @@ namespace Agatha2
 		internal string holeId;
 		internal string vNum;
 		internal List<string> containsFish;
-		public FishingHole(string _name, string _type, string _vnum, List<string> _fish)
+		internal FishingHole(string _name, string _type, string _vnum, List<string> _fish)
 		{
 				holeName = _name;
 				holeType = _type;
@@ -27,15 +27,15 @@ namespace Agatha2
 
 	internal class ModuleAetolia : BotModule
 	{
-		public ModuleAetolia()
+		internal ModuleAetolia()
 		{
 			moduleName = "Aetolia";
 			description = "A character lookup and news-reading module for the IRE MUD Aetolia: The Midnight Age.";
 		}
 
-		private string fishDbPath = "data/aetfish.db";
-		public List<FishingHole> fishingHoles;
-		public override void StartModule()
+		private string fishDbPath = @"modules\aetolia\data\fish.db";
+		internal List<FishingHole> fishingHoles;
+		internal override void StartModule()
 		{
 			Console.WriteLine("Loading Aetolia fish database.");
 			if(!File.Exists(fishDbPath))
@@ -79,7 +79,7 @@ namespace Agatha2
 			Console.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}
 
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
 			fishingHoles = new List<FishingHole>();
 			commands.Add(new CommandNstat());
@@ -113,7 +113,7 @@ namespace Agatha2
 			}
 			return s;
 		}
-		public override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message)
 		{
 		}
 	}

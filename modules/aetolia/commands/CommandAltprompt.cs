@@ -10,7 +10,7 @@ namespace Agatha2
 {
 	internal class CommandAltprompt : BotCommand
 	{
-		public CommandAltprompt()
+		internal CommandAltprompt()
 		{
 			usage = "altprompt";
 			description = "Builds a randomly generated alt to play.";
@@ -29,7 +29,7 @@ namespace Agatha2
 			}  
 			return shuffling;
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			string aetHis = "Their";

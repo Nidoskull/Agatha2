@@ -11,22 +11,22 @@ namespace Agatha2
 {
 	internal class ModuleDice : BotModule
 	{
-		public ModuleDice()
+		internal ModuleDice()
 		{
 			moduleName = "Dice";
 			description = "Provides several dice-rolling functions.";
 		}
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
 			commands.Add(new CommandFate());
 			commands.Add(new CommandDryh());
 			commands.Add(new CommandRoll());
 			return true;
 		}
-		public override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message)
 		{
 		}
-		public override void StartModule()
+		internal override void StartModule()
 		{
 		}
 	}
@@ -35,14 +35,14 @@ namespace Agatha2
 	{
 		private int sides;
 		private int result;
-		public int Result { get => result; set => result = value; }
+		internal int Result { get => result; set => result = value; }
 
-		public Die(int _sides)
+		internal Die(int _sides)
 		{
 			sides = Program.Clamp(_sides, 1, 100);
 			Roll();
 		}
-		public void Roll()
+		internal void Roll()
 		{
 			result = Program.rand.Next(0, sides)+1;
 		}
@@ -54,15 +54,15 @@ namespace Agatha2
 		private int modifier = 0;
 		private bool individualRolls = false;
 		private string label;
-		public string Label { get => label; set => label = value; } 
+		internal string Label { get => label; set => label = value; } 
 
-		public DicePool(string _input, string _label)
+		internal DicePool(string _input, string _label)
 		{
 			label = _label;
 			ParseDice(Regex.Match(_input, "(\\d*)(#*)d(\\d+)([+-]\\d+)*"));
 		}
 
-		public DicePool(Match match)
+		internal DicePool(Match match)
 		{
 			label = match.Groups[0].ToString();
 			ParseDice(match);
@@ -120,7 +120,7 @@ namespace Agatha2
 			}
 		}
 
-		public int CountAtOrBelow(int value)
+		internal int CountAtOrBelow(int value)
 		{
 			int total = 0;
 			foreach(Die die in dice)
@@ -133,7 +133,7 @@ namespace Agatha2
 			return total;
 		}
 
-		public int CountAtOrAbove(int value)
+		internal int CountAtOrAbove(int value)
 		{
 			int total = 0;
 			foreach(Die die in dice)
@@ -146,7 +146,7 @@ namespace Agatha2
 			return total;
 		}
 
-		public int HighestValue()
+		internal int HighestValue()
 		{
 			int total = 0;
 			foreach(Die die in dice)
@@ -159,12 +159,12 @@ namespace Agatha2
 			return total;
 		}
 
-		public string SummarizePoolRoll(int offset)
+		internal string SummarizePoolRoll(int offset)
 		{
 			return SummarizeRoll(false, offset);
 		}
 
-		public string SummarizeStandardRoll()
+		internal string SummarizeStandardRoll()
 		{
 			return SummarizeRoll(true, 0);
 		}

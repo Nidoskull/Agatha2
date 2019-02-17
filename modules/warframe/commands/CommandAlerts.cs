@@ -14,14 +14,14 @@ namespace Agatha2
 {
 	internal class CommandAlerts : BotCommand
 	{
-		public CommandAlerts()
+		internal CommandAlerts()
 		{
 			usage = "alerts";
 			description = "Get a list of current alerts from Warframe.";
 			aliases = new List<string>() {"alerts"};
 		}
 
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleWarframe wf = (ModuleWarframe)parent;
 			if(wf.alerts.Count <= 0)

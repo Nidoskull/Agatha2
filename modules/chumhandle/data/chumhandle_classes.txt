@@ -1,0 +1,14 @@
+Thief
+Rogue
+Heir
+Maid
+Page
+Knight
+Seer
+Mage
+Sylph
+Witch
+Bard
+Prince
+Muse
+Lord

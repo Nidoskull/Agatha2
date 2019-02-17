@@ -13,13 +13,13 @@ namespace Agatha2
 {
 	internal class CommandHonours : BotCommand
 	{
-		public CommandHonours()
+		internal CommandHonours()
 		{
 			usage = "honours <character>";
 			description = "Shows information about an Aetolia character.";
 			aliases = new List<string>() {"honours", "honors"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleAetolia aetolia = (ModuleAetolia)parent;
 			string result = "There is no such person, I'm afraid.";

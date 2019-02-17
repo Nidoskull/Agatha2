@@ -14,13 +14,13 @@ namespace Agatha2
 {
 	internal class CommandWho : BotCommand
 	{
-		public CommandWho()
+		internal CommandWho()
 		{
 			usage = "who";
 			description = "Shows a list of characters currently logged in to Aetolia.";
 			aliases = new List<string>() {"who", "qw"};
 		}
-		public override async Task ExecuteCommand(SocketMessage message)
+		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			ModuleAetolia aetolia = (ModuleAetolia)parent;
 			string result = "Authentication or network error.";

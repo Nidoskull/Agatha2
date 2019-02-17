@@ -14,13 +14,14 @@ namespace Agatha2
 	{
    		private bool hasDictionaryChanged = false;
 		private Dictionary<string, List<string>> markovDict;
+		internal int markovChance = 0;
 
-		public ModuleMarkov()
+		internal ModuleMarkov()
 		{
 			moduleName = "Markov";
 			description = "Listens to chatter and produces Markov string responses.";
 		}
-		public override void StartModule()
+		internal override void StartModule()
 		{
 			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
 			CancellationTokenSource source = new CancellationTokenSource();
@@ -31,7 +32,7 @@ namespace Agatha2
 			);
 			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
 		}
-		public override bool Register(List<BotCommand> commands)
+		internal override bool Register(List<BotCommand> commands)
 		{
 			Console.WriteLine("Deserializing Markov dictionary.");
 			try
@@ -61,7 +62,7 @@ namespace Agatha2
 			}
 		}
 
-		public string GetMarkovChain(string initialToken)
+		internal string GetMarkovChain(string initialToken)
 		{
 			string result = "";
 
@@ -86,7 +87,7 @@ namespace Agatha2
 			return result;
 		}
 
-		public override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message)
 		{
 			string lastString = null;
 			foreach(string token in message.Content.Split(" "))
@@ -119,7 +120,7 @@ namespace Agatha2
 				lastString = token;
 			}
 			string searchSpace =  message.Content.ToLower();
-			if((Program.MarkovChance > 0 && Program.rand.Next(100) <= Program.MarkovChance) || searchSpace.Contains("agatha"))
+			if((markovChance > 0 && Program.rand.Next(100) <= markovChance) || searchSpace.Contains("agatha"))
 			{
 				string[] tokens = message.Content.Split(" ");
 				if(tokens.Length > 0)
