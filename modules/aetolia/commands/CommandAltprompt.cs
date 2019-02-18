@@ -119,7 +119,7 @@ namespace Agatha2
 			result = $"{result}\n{aetHe} {aetIs} interested in {aetInterestOne}, {aetInterestTwo} and {aetInterestThree}.";
 			result = $"{result}\n{aetHis} friends describe {aethim} as {aetPersonalityOne}, {aetPersonalityTwo} and {aetPersonalityThree}.";  
 			embedBuilder.Description = result;
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);		
+			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());		
 		}
 	}
 }

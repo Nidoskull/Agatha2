@@ -106,7 +106,7 @@ namespace Agatha2
 					}
 					embedBuilder.Description = $"{fishResults}\n\nSpecify an ID number or a more specific search string for detailed information on a fishing hole.";
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
 			}
 		}
 	}

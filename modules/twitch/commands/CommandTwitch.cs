@@ -51,7 +51,7 @@ namespace Agatha2
 								}
 							}
 						}
-						await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, twitch.MakeAuthorEmbed(jData, jsonStream));
+						await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, twitch.MakeAuthorEmbed(jData, jsonStream).Build());
 					}
 					catch(WebException e)
 					{

@@ -38,7 +38,7 @@ namespace Agatha2
 						embedBuilder.AddField($"{alertInfo.Value["Header"]} - {alertInfo.Value["Mission Type"]} ({alertInfo.Value["Faction"]})", $"{alertInfo.Value["Level"]}. Expires in {alertInfo.Value["Expires"]}.\nRewards:{alertInfo.Value["Rewards"]}");
 					}
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
 			}
 		}
 	}

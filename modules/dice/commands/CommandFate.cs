@@ -67,7 +67,7 @@ namespace Agatha2
 
 			embedBuilder.Description = descriptiveResult;
 			embedBuilder.AddField("Rolled", $"{dice.SummarizePoolRoll(-2)} ({modString})");
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);
+			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
 			
 		}
 	}

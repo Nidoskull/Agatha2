@@ -4,10 +4,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="1.0.2"/>
-    <PackageReference Include="protobuf-net" Version="2.3.7"/>
-    <PackageReference Include="System.Reactive.Linq" Version="3.1.1"/>
-    <PackageReference Include="Nett" Version="0.9.0"/>
-    <PackageReference Include="System.Data.SQLite" Version="1.0.109.2"/>
+    <PackageReference Include="Discord.Net" Version="2.0.1" />
+    <PackageReference Include="protobuf-net" Version="2.4.0" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.1.2" />
+    <PackageReference Include="Nett" Version="0.10.1" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
   </ItemGroup>
 </Project>
