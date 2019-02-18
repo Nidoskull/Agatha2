@@ -179,7 +179,7 @@ namespace Agatha2
 										foreach(KeyValuePair<UInt64, UInt64> streamChannel in streamChannelIds)
 										{
 											IMessageChannel channel = Program.Client.GetChannel(streamChannel.Value) as IMessageChannel;
-											await channel.SendMessageAsync(streamAnnounce, false, embedBuilder);
+											await channel.SendMessageAsync(streamAnnounce, false, embedBuilder.Build());
 										}
 									}
 								}

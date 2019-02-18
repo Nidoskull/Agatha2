@@ -55,7 +55,7 @@ namespace Agatha2
 				string winString = (playerSuccess >= painPool.CountAtOrBelow(3)) ? "wins" : "loses";
 				string successNoun = (playerSuccess == 1) ? "success" : "successes";
 				embedBuilder.Description = $"**The player {winString}** the conflict with {playerSuccess} {successNoun} versus {painPool.CountAtOrBelow(3)}. **{dominantPool.Label} dominates** with a {dominantPool.HighestValue()}.";
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder);		
+				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());		
 			}
 			else
 			{

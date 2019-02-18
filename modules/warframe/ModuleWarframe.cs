@@ -256,7 +256,7 @@ namespace Agatha2
 								IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
 								if(channel != null)
 								{
-									channel.SendMessageAsync($"There are new mission alerts available, Tenno.", false, embedBuilder);
+									channel.SendMessageAsync($"There are new mission alerts available, Tenno.", false, embedBuilder.Build());
 								}
 							}
 						}
