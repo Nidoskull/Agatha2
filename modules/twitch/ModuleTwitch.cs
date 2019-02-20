@@ -34,14 +34,14 @@ namespace Agatha2
 
 		internal override void LoadConfig()
 		{
-			if(File.Exists(@"modules\twitch\data\config.tml"))
+			if(File.Exists(@"modules/twitch/data/config.tml"))
 			{
-				TomlTable configTable = Toml.ReadFile(@"modules\twitch\data\config.tml");
+				TomlTable configTable = Toml.ReadFile(@"modules/twitch/data/config.tml");
 				streamAPIClientID = configTable.Get<string>("StreamAPIClientID");
 			}
-			if(File.Exists(@"modules\twitch\data\channel_ids.json"))
+			if(File.Exists(@"modules/twitch/data/channel_ids.json"))
 			{
-				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules\twitch\data\channel_ids.json")))
+				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules/twitch/data/channel_ids.json")))
 				{
 					try
 					{
@@ -57,7 +57,7 @@ namespace Agatha2
 		internal override void StartModule()
 		{
 			Console.WriteLine("Starting Twitch polling.");
-			var logFile = File.ReadAllLines(@"modules\twitch\data\streamers.txt");
+			var logFile = File.ReadAllLines(@"modules/twitch/data/streamers.txt");
 			try
 			{
 				foreach(String streamer in new List<string>(logFile))

@@ -31,15 +31,15 @@ namespace Agatha2
 		{
 
 			BartendingData = new Dictionary<string, List<string>>();
-			BartendingData.Add("vessel",   new List<string>(File.ReadAllLines(@"modules\bartender\data\bartending_vessels.txt")));
-			BartendingData.Add("garnish",  new List<string>(File.ReadAllLines(@"modules\bartender\data\bartending_garnishes.txt")));
-			BartendingData.Add("beverage", new List<string>(File.ReadAllLines(@"modules\bartender\data\bartending_beverages.txt")));
+			BartendingData.Add("vessel",   new List<string>(File.ReadAllLines(@"modules/bartender/data/bartending_vessels.txt")));
+			BartendingData.Add("garnish",  new List<string>(File.ReadAllLines(@"modules/bartender/data/bartending_garnishes.txt")));
+			BartendingData.Add("beverage", new List<string>(File.ReadAllLines(@"modules/bartender/data/bartending_beverages.txt")));
 
 			SandwichData = new Dictionary<string, List<string>>();
-			SandwichData.Add("plate",   new List<string>(File.ReadAllLines(@"modules\bartender\data\sandwich_plates.txt")));
-			SandwichData.Add("bread",   new List<string>(File.ReadAllLines(@"modules\bartender\data\sandwich_breads.txt")));
-			SandwichData.Add("filling", new List<string>(File.ReadAllLines(@"modules\bartender\data\sandwich_fillings.txt")));
-			SandwichData.Add("garnish", new List<string>(File.ReadAllLines(@"modules\bartender\data\sandwich_garnishes.txt")));
+			SandwichData.Add("plate",   new List<string>(File.ReadAllLines(@"modules/bartender/data/sandwich_plates.txt")));
+			SandwichData.Add("bread",   new List<string>(File.ReadAllLines(@"modules/bartender/data/sandwich_breads.txt")));
+			SandwichData.Add("filling", new List<string>(File.ReadAllLines(@"modules/bartender/data/sandwich_fillings.txt")));
+			SandwichData.Add("garnish", new List<string>(File.ReadAllLines(@"modules/bartender/data/sandwich_garnishes.txt")));
 
 			commands.Add(new CommandDrink());
 			commands.Add(new CommandDwink());
@@ -49,17 +49,17 @@ namespace Agatha2
 		}
  		internal void SaveSandwichData()
 		{
-			System.IO.File.WriteAllLines(@"modules\bartender\data\sandwich_plates.txt",	SandwichData["plate"]);
-			System.IO.File.WriteAllLines(@"modules\bartender\data\sandwich_breads.txt",	SandwichData["bread"]);
-			System.IO.File.WriteAllLines(@"modules\bartender\data\sandwich_fillings.txt",  SandwichData["filling"]);
-			System.IO.File.WriteAllLines(@"modules\bartender\data\sandwich_garnishes.txt", SandwichData["garnish"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/sandwich_plates.txt",	SandwichData["plate"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/sandwich_breads.txt",	SandwichData["bread"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/sandwich_fillings.txt",  SandwichData["filling"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/sandwich_garnishes.txt", SandwichData["garnish"]);
 
 		}
 		internal void SaveBartendingData()
 		{
-			System.IO.File.WriteAllLines(@"modules\bartender\data\bartending_vessels.txt",   BartendingData["vessel"]);
-			System.IO.File.WriteAllLines(@"modules\bartender\data\bartending_garnishes.txt", BartendingData["garnish"]);
-			System.IO.File.WriteAllLines(@"modules\bartender\data\bartending_beverages.txt", BartendingData["beverage"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/bartending_vessels.txt",   BartendingData["vessel"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/bartending_garnishes.txt", BartendingData["garnish"]);
+			System.IO.File.WriteAllLines(@"modules/bartender/data/bartending_beverages.txt", BartendingData["beverage"]);
 		}
 		internal override void ListenTo(SocketMessage message)
 		{

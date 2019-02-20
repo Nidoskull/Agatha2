@@ -23,15 +23,15 @@ namespace Agatha2
 		internal override bool Register(List<BotCommand> commands)
 		{
 			chumStrings = new Dictionary<string, List<string>>();
-			chumStrings.Add("chum_prefix",	  new List<string>(File.ReadAllLines(@"modules\chumhandle\data\chumhandle_prefixes.txt")));
-			chumStrings.Add("chum_suffix",	  new List<string>(File.ReadAllLines(@"modules\chumhandle\data\chumhandle_suffixes.txt")));
-			chumStrings.Add("chum_aspect",	  new List<string>(File.ReadAllLines(@"modules\chumhandle\data\chumhandle_aspects.txt")));
-			chumStrings.Add("chum_class",	   new List<string>(File.ReadAllLines(@"modules\chumhandle\data\chumhandle_classes.txt")));
-			chumStrings.Add("chum_lands",	   new List<string>(File.ReadAllLines(@"modules\chumhandle\data\chumhandle_lands.txt")));
-			chumStrings.Add("consort_colour",   new List<string>(File.ReadAllLines(@"modules\chumhandle\data\consort_colours.txt")));
-			chumStrings.Add("consort_interest", new List<string>(File.ReadAllLines(@"modules\chumhandle\data\consort_interests.txt")));
-			chumStrings.Add("consort_quirk",	new List<string>(File.ReadAllLines(@"modules\chumhandle\data\consort_quirks.txt")));
-			chumStrings.Add("consort_type",	 new List<string>(File.ReadAllLines(@"modules\chumhandle\data\consort_types.txt")));
+			chumStrings.Add("chum_prefix",	  new List<string>(File.ReadAllLines(@"modules/chumhandle/data/chumhandle_prefixes.txt")));
+			chumStrings.Add("chum_suffix",	  new List<string>(File.ReadAllLines(@"modules/chumhandle/data/chumhandle_suffixes.txt")));
+			chumStrings.Add("chum_aspect",	  new List<string>(File.ReadAllLines(@"modules/chumhandle/data/chumhandle_aspects.txt")));
+			chumStrings.Add("chum_class",	   new List<string>(File.ReadAllLines(@"modules/chumhandle/data/chumhandle_classes.txt")));
+			chumStrings.Add("chum_lands",	   new List<string>(File.ReadAllLines(@"modules/chumhandle/data/chumhandle_lands.txt")));
+			chumStrings.Add("consort_colour",   new List<string>(File.ReadAllLines(@"modules/chumhandle/data/consort_colours.txt")));
+			chumStrings.Add("consort_interest", new List<string>(File.ReadAllLines(@"modules/chumhandle/data/consort_interests.txt")));
+			chumStrings.Add("consort_quirk",	new List<string>(File.ReadAllLines(@"modules/chumhandle/data/consort_quirks.txt")));
+			chumStrings.Add("consort_type",	 new List<string>(File.ReadAllLines(@"modules/chumhandle/data/consort_types.txt")));
 			commands.Add(new CommandChum());
 			return true;
 		}

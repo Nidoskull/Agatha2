@@ -34,13 +34,13 @@ namespace Agatha2
 
 		internal override void LoadConfig()
 		{
-			JObject items = JObject.Parse(File.ReadAllText(@"modules\warframe\data\items.json"));
+			JObject items = JObject.Parse(File.ReadAllText(@"modules/warframe/data/items.json"));
 			foreach(KeyValuePair<string, JToken> item in items)
 			{
 				tokensToStrings.Add(item.Key.ToLower(), item.Value.ToString());
 			}
 
-			JObject planets = JObject.Parse(File.ReadAllText(@"modules\warframe\data\nodes.json"));
+			JObject planets = JObject.Parse(File.ReadAllText(@"modules/warframe/data/nodes.json"));
 			Dictionary<int, string> planetIds = new Dictionary<int, string>();
 			foreach(JToken planet in planets["planets"])
 			{
@@ -52,9 +52,9 @@ namespace Agatha2
 				string node_name = node["name"].ToString().Substring(0, 1).ToUpper() + node["name"].ToString().Substring(1).ToLower();
 				nodes.Add(node["node_id"].ToString(), $"{node_name} ({planetIds[(int)node["planet_id"]]})");
 			}
-			if(File.Exists(@"modules\warframe\data\channel_ids.json"))
+			if(File.Exists(@"modules/warframe/data/channel_ids.json"))
 			{
-				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules\warframe\data\channel_ids.json")))
+				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(@"modules/warframe/data/channel_ids.json")))
 				{
 					try
 					{
@@ -271,9 +271,9 @@ namespace Agatha2
 
 		internal override bool Register(List<BotCommand> commands)
 		{
-			vorPostStrings =   new List<string>(File.ReadAllLines(@"modules\warframe\data\vor_strings.txt"));
-			hekPostStrings =   new List<string>(File.ReadAllLines(@"modules\warframe\data\hek_strings.txt"));
-			ordisPostStrings = new List<string>(File.ReadAllLines(@"modules\warframe\data\ordis_strings.txt"));
+			vorPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/vor_strings.txt"));
+			hekPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/hek_strings.txt"));
+			ordisPostStrings = new List<string>(File.ReadAllLines(@"modules/warframe/data/ordis_strings.txt"));
 			commands.Add(new CommandAlerts());
 			return true;
 		}

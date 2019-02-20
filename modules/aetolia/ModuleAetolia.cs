@@ -33,7 +33,7 @@ namespace Agatha2
 			description = "A character lookup and news-reading module for the IRE MUD Aetolia: The Midnight Age.";
 		}
 
-		private string fishDbPath = @"modules\aetolia\data\fish.db";
+		private string fishDbPath = @"modules/aetolia/data/fish.db";
 		internal List<FishingHole> fishingHoles;
 		internal override void StartModule()
 		{
