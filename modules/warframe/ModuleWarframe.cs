@@ -24,7 +24,7 @@ namespace Agatha2
 		private static List<string> ordisPostStrings;
 		private static List<string> vorPostStrings;
 		private Dictionary<string, string> tokensToStrings = new Dictionary<string, string>();
-		private Dictionary<UInt64, UInt64> warframeChannelIds = new Dictionary<UInt64, UInt64>();
+		private Dictionary<ulong, ulong> warframeChannelIds = new Dictionary<ulong, ulong>();
 
 		internal ModuleWarframe()
 		{
@@ -58,7 +58,7 @@ namespace Agatha2
 				{
 					try
 					{
-						warframeChannelIds.Add((UInt64)Convert.ToInt64(guildAndChannel.Key), (UInt64)Convert.ToInt64(guildAndChannel.Value));
+						warframeChannelIds.Add((ulong)Convert.ToInt64(guildAndChannel.Key), (ulong)Convert.ToInt64(guildAndChannel.Value));
 					}
 					catch(Exception e)
 					{
@@ -251,7 +251,7 @@ namespace Agatha2
 									embedBuilder.AddField($"{alertInfo["Header"]} - {alertInfo["Mission Type"]} ({alertInfo["Faction"]})", $"{alertInfo["Level"]}. Expires in {alertInfo["Expires"]}.\nRewards:{alertInfo["Rewards"]}");
 								}
 							}
-							foreach(KeyValuePair<UInt64, UInt64> channelId in warframeChannelIds)
+							foreach(KeyValuePair<ulong, ulong> channelId in warframeChannelIds)
 							{
 								IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
 								if(channel != null)

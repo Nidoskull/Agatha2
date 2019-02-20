@@ -23,7 +23,7 @@ namespace Agatha2
 		private Dictionary<String, String> streamIDToDisplayName;
 		internal Dictionary<String, String> streamNametoID;
 		private List<String> streamers;
-		private Dictionary<UInt64, UInt64> streamChannelIds = new Dictionary<UInt64, UInt64>();
+		private Dictionary<ulong, ulong> streamChannelIds = new Dictionary<ulong, ulong>();
 		internal string streamAPIClientID;
 
 		internal ModuleTwitch()
@@ -45,7 +45,7 @@ namespace Agatha2
 				{
 					try
 					{
-						streamChannelIds.Add((UInt64)Convert.ToInt64(guildAndChannel.Key), (UInt64)Convert.ToInt64(guildAndChannel.Value));
+						streamChannelIds.Add((ulong)Convert.ToInt64(guildAndChannel.Key), (ulong)Convert.ToInt64(guildAndChannel.Value));
 					}
 					catch(Exception e)
 					{
@@ -176,7 +176,7 @@ namespace Agatha2
 									}
 									if(embedBuilder != null)
 									{
-										foreach(KeyValuePair<UInt64, UInt64> streamChannel in streamChannelIds)
+										foreach(KeyValuePair<ulong, ulong> streamChannel in streamChannelIds)
 										{
 											IMessageChannel channel = Program.Client.GetChannel(streamChannel.Value) as IMessageChannel;
 											await channel.SendMessageAsync(streamAnnounce, false, embedBuilder.Build());

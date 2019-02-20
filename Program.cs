@@ -14,24 +14,24 @@ namespace Agatha2
 
 	internal class GuildConfig
 	{
+		internal ulong guildId;
 		internal string adminRole = "bot wrangler";
-		internal UInt64 guildId;
 		internal List<string> enabledModules = new List<string>();
 		internal string commandPrefix = ".";
 
 		public string AdminRole { get => adminRole; set => adminRole = value; }
-		public UInt64 GuildId { get => guildId; set => guildId = value; }
+		public ulong GuildId { get => guildId; set => guildId = value; }
 		public List<string> EnabledModules { get => enabledModules; set => enabledModules = value; }
 		public string CommandPrefix { get => commandPrefix; set => commandPrefix = value; }
 
 		internal void Save()
 		{
-			string savePath = @"data\guilds";
+			string savePath = @"data/guilds";
 			if(!Directory.Exists(savePath))
 			{
 				Directory.CreateDirectory(savePath);
 			}
-			File.WriteAllText($"{savePath}\\{guildId}.json", JsonConvert.SerializeObject((GuildConfig)this));
+			File.WriteAllText($"{savePath}/{guildId}.json", JsonConvert.SerializeObject((GuildConfig)this));
 		}
 	}
 	
@@ -66,7 +66,7 @@ namespace Agatha2
 		internal static Random rand = new Random();
 		private static DiscordSocketClient _client;
 		internal static List<BotCommand> commands = new List<BotCommand>();
-		internal static Dictionary<UInt64, GuildConfig> guilds = new Dictionary<UInt64, GuildConfig>();
+		internal static Dictionary<ulong, GuildConfig> guilds = new Dictionary<ulong, GuildConfig>();
 		internal static Dictionary<string, BotCommand> commandAliases = new Dictionary<string, BotCommand>();
 		internal static List<BotModule> modules = new List<BotModule>();
 		internal static DiscordSocketClient Client {get => _client; set => _client = value; }
@@ -79,7 +79,7 @@ namespace Agatha2
 		internal static string SourceVersion { get => _sourceVersion; set => _sourceVersion = value; }
 		internal static string SourceLocation { get => _sourceLocation; set => _sourceLocation = value; }
 
-		internal static bool IsAuthorized(SocketUser user, UInt64 guildId)
+		internal static bool IsAuthorized(SocketUser user, ulong guildId)
 		{
 			GuildConfig guild = GetGuildConfig(guildId);
 			var guildUser = user as SocketGuildUser;
@@ -155,11 +155,11 @@ namespace Agatha2
 			Console.WriteLine("Done.");
 
 			// Load guild configuration.
-			if(!Directory.Exists(@"data\guilds"))
+			if(!Directory.Exists(@"data/guilds"))
 			{
-				Directory.CreateDirectory(@"data\guilds");
+				Directory.CreateDirectory(@"data/guilds");
 			}
-			foreach (var f in (from file in Directory.EnumerateFiles(@"data\guilds", "*.json", SearchOption.AllDirectories) select new { File = file }))
+			foreach (var f in (from file in Directory.EnumerateFiles(@"data/guilds", "*.json", SearchOption.AllDirectories) select new { File = file }))
 			{
 				Console.WriteLine($"Loading guild config from {f.File}.");
 				try
@@ -284,7 +284,7 @@ namespace Agatha2
 			}
 		}
 
-		internal static GuildConfig GetGuildConfig(UInt64 guildId)
+		internal static GuildConfig GetGuildConfig(ulong guildId)
 		{
 			if(!guilds.ContainsKey(guildId))
 			{
@@ -296,7 +296,7 @@ namespace Agatha2
 			return guilds[guildId];
 		}
 
-		internal static bool EnableModuleForGuild(BotModule module, UInt64 guildId)
+		internal static bool EnableModuleForGuild(BotModule module, ulong guildId)
 		{
 			GuildConfig guild = GetGuildConfig(guildId);
 			if(!guild.enabledModules.Contains(module.moduleName))
@@ -308,7 +308,7 @@ namespace Agatha2
 			return false;
 		}
 
-		internal static bool DisableModuleForGuild(BotModule module, UInt64 guildId)
+		internal static bool DisableModuleForGuild(BotModule module, ulong guildId)
 		{
 			GuildConfig guild = GetGuildConfig(guildId);
 			if(guild.enabledModules.Contains(module.moduleName))
