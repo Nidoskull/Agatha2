@@ -249,3 +249,4 @@ ModelManifest.xml
 
 # Agatha stuff.
 [Dd]ata/*
+modules/markov/data/markov.bin

@@ -18,11 +18,11 @@ namespace Agatha2
 	internal class ModuleTwitch : BotModule
 	{
 
-		private Dictionary<String, Boolean> streamStatus;
-		private Dictionary<String, String> streamIDtoUserName;
-		private Dictionary<String, String> streamIDToDisplayName;
-		internal Dictionary<String, String> streamNametoID;
-		private List<String> streamers;
+		private Dictionary<string, bool> streamStatus;
+		private Dictionary<string, string> streamIDtoUserName;
+		private Dictionary<string, string> streamIDToDisplayName;
+		internal Dictionary<string, string> streamNametoID;
+		private List<string> streamers;
 		private Dictionary<ulong, ulong> streamChannelIds = new Dictionary<ulong, ulong>();
 		internal string streamAPIClientID;
 
@@ -60,7 +60,7 @@ namespace Agatha2
 			var logFile = File.ReadAllLines(@"modules/twitch/data/streamers.txt");
 			try
 			{
-				foreach(String streamer in new List<string>(logFile))
+				foreach(string streamer in new List<string>(logFile))
 				{
 					JToken jData = RetrieveUserIdFromUserName(streamer);
 					string streamerID = jData["id"].ToString();
@@ -90,11 +90,11 @@ namespace Agatha2
 
 		internal override bool Register(List<BotCommand> commands)
 		{
-			streamStatus = new Dictionary<String, Boolean>();
-			streamIDtoUserName = new Dictionary<String, String>();
-			streamIDToDisplayName = new Dictionary<String, String>();
-			streamNametoID = new Dictionary<String, String>();
-			streamers = new List<String>();
+			streamStatus = new Dictionary<string, bool>();
+			streamIDtoUserName = new Dictionary<string, string>();
+			streamIDToDisplayName = new Dictionary<string, string>();
+			streamNametoID = new Dictionary<string, string>();
+			streamers = new List<string>();
 			commands.Add(new CommandTwitch());
 			return true;
 		}
@@ -197,7 +197,7 @@ namespace Agatha2
 				}
 			}
 		}
-		internal JToken RetrieveUserIdFromUserName(String streamer)
+		internal JToken RetrieveUserIdFromUserName(string streamer)
 		{
 			Console.WriteLine($"Retrieving streamer info for {streamer}.");
 			var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/users?login={streamer}");

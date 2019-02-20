@@ -33,7 +33,7 @@ namespace Agatha2
 					StreamReader sr = new StreamReader(s);
 					foreach(var x in JToken.Parse(sr.ReadToEnd()))
 					{
-						string padding = new String(' ', 49 - (x["name"].ToString().Length + x["total"].ToString().Length));
+						string padding = new string(' ', 49 - (x["name"].ToString().Length + x["total"].ToString().Length));
 						result = $"{result}\n {x["name"]}:{padding}{x["total"]} posts.";
 					}
 					result = $"{result}\n-----------------------------------------------------------";

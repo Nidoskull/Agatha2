@@ -26,7 +26,7 @@ namespace Agatha2
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length >= 2)
 			{
-				String streamer = message_contents[1];
+				string streamer = message_contents[1];
 				JToken jData = twitch.RetrieveUserIdFromUserName(streamer);
 				if(jData != null && jData.HasValues)
 				{
