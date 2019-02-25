@@ -40,7 +40,7 @@ namespace Agatha2
 		{
 			if(!File.Exists(fishDbPath))
 			{
-				Debug.WriteLine($"No fish found, creating an empty one at {fishDbPath}.");
+				Program.WriteToLog($"No fish found, creating an empty one at {fishDbPath}.");
 				SQLiteConnection.CreateFile(fishDbPath);				
 			}
 			SQLiteConnection fishDbConnection = new SQLiteConnection($"Data Source={fishDbPath};Version=3;");
@@ -76,7 +76,7 @@ namespace Agatha2
 				fishingHoles.Add(fishHole);
 				fishHole.holeId = fishingHoles.Count.ToString();
 			}
-			Debug.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
+			Program.WriteToLog($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}
 
 		internal override bool Register(List<BotCommand> commands)
@@ -107,7 +107,7 @@ namespace Agatha2
 			}
 			catch(Exception e)
 			{
-				Debug.WriteLine($"Exception in Aetolia auth: {e.ToString()}.");
+				Program.WriteToLog($"Exception in Aetolia auth: {e.ToString()}.");
 			}
 			return s;
 		}

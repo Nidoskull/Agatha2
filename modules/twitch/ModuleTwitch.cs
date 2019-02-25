@@ -50,7 +50,7 @@ namespace Agatha2
 					}
 					catch(Exception e)
 					{
-						Debug.WriteLine($"Exception when loading stream channel config: {e.Message}");
+						Program.WriteToLog($"Exception when loading stream channel config: {e.Message}");
 					}
 				}
 			}
@@ -83,7 +83,7 @@ namespace Agatha2
 			}
 			catch(Exception e)
 			{
-				Debug.WriteLine($"Exception when loading Twitch module: {e.Message}");
+				Program.WriteToLog($"Exception when loading Twitch module: {e.Message}");
 			}
 		}
 
@@ -185,7 +185,7 @@ namespace Agatha2
 					}
 					catch(WebException e)
 					{
-						Debug.WriteLine($"Exception in streamer polling: {e}");
+						Program.WriteToLog($"Exception in streamer polling: {e}");
 					}
 				}
 				catch(Exception e)
@@ -224,7 +224,7 @@ namespace Agatha2
 			}
 			catch(WebException e)
 			{
-				Debug.WriteLine($"Exception in Twitch ID retrieval: {e.ToString()}");
+				Program.WriteToLog($"Exception in Twitch ID retrieval: {e.ToString()}");
 			}
 			return null;
 		}

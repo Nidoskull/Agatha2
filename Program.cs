@@ -72,7 +72,9 @@ namespace Agatha2
 		internal static List<BotModule> modules = new List<BotModule>();
 		internal static DiscordSocketClient Client {get => _client; set => _client = value; }
 		internal static string token;
-
+		internal static string _usageInformation = "dotnet run Agatha2.csproj --token=SOMETOKEN [--verbose --version]";
+		internal static string UsageInformation { get => _usageInformation; set => _usageInformation = value; }
+		internal static bool verbose = false;
 		internal static string _sourceAuthor;
 		internal static string _sourceVersion;
 		internal static string _sourceLocation;
@@ -80,6 +82,17 @@ namespace Agatha2
 		internal static string SourceVersion { get => _sourceVersion; set => _sourceVersion = value; }
 		internal static string SourceLocation { get => _sourceLocation; set => _sourceLocation = value; }
 
+		internal static void WriteToLog(string message)
+		{
+			if(verbose)
+			{
+				Console.WriteLine(message);
+			}
+			else
+			{
+				Debug.WriteLine(message);
+			}
+		}
 		internal static bool IsAuthorized(SocketUser user, ulong guildId)
 		{
 			GuildConfig guild = GetGuildConfig(guildId);
@@ -96,11 +109,41 @@ namespace Agatha2
 		internal static void Main(string[] args)
 		{
 
+			try
+			{
+				TomlTable configTable = Toml.ReadFile("data/config.tml");
+				SourceAuthor =          configTable.Get<string>("SourceAuthor");
+				SourceVersion =         configTable.Get<string>("SourceVersion");
+				SourceLocation =        configTable.Get<string>("SourceLocation");
+			}
+			catch(Exception e)
+			{
+				WriteToLog($"Exception when loading version information: {e}");
+				SourceAuthor =   "Someone";
+				SourceVersion =  "0.:shrug:.:shrug:";
+				SourceLocation = "unspecified";
+			}
+
 			for(int i = 0;i < args.Length;i++)
 			{
 				string check_token = args[i];
-				if(check_token.ToLower().Contains("token"))
+				if(check_token.ToLower().Contains("version"))
 				{
+					Console.WriteLine($"agatha2 v{Program.SourceVersion}");
+					return;
+				}
+				else if(check_token.ToLower().Contains("verbose"))
+				{
+					verbose = true;
+				}
+				else if(check_token.ToLower().Contains("token"))
+				{
+					if(token != null)
+					{
+						Console.WriteLine("Duplicate token supplied.");
+						Console.WriteLine(UsageInformation);
+						return;
+					}
 					int splitpoint = check_token.IndexOf('=')+1;
 					if(check_token.Length >= splitpoint)
 					{
@@ -113,27 +156,13 @@ namespace Agatha2
 			if(token == null)
 			{
 				Console.WriteLine("Please specify a Discord secrets token to use when connecting with this bot.");
+				Console.WriteLine(UsageInformation);
 				return;
 			}
 			Console.WriteLine($"Connecting with token '{token}'.");
 
-			try
-			{
-				TomlTable configTable = Toml.ReadFile("data/config.tml");
-				SourceAuthor =          configTable.Get<string>("SourceAuthor");
-				SourceVersion =         configTable.Get<string>("SourceVersion");
-				SourceLocation =        configTable.Get<string>("SourceLocation");
-			}
-			catch(Exception e)
-			{
-				Debug.WriteLine($"Exception when loading version information: {e}");
-				SourceAuthor =   "Someone";
-				SourceVersion =  "0.:shrug:.:shrug:";
-				SourceLocation = "unspecified";
-			}
-
 			// Load all modules.
-			Debug.WriteLine("Loading modules.");
+			WriteToLog("Loading modules.");
 			modules.Add(new ModuleAetolia());
 			modules.Add(new ModuleBartender());
 			modules.Add(new ModuleChumhandle());
@@ -146,7 +175,7 @@ namespace Agatha2
 			{
 				module.LoadConfig();
 			}
-			Debug.WriteLine($"Registering {modules.Count} modules.");
+			WriteToLog($"Registering {modules.Count} modules.");
 			foreach(BotModule module in modules)
 			{
 				List<BotCommand> tmpCmds = new List<BotCommand>();
@@ -157,33 +186,33 @@ namespace Agatha2
 						command.Register(module);
 						commands.Add(command);
 					}
-					Debug.WriteLine($"Registered module {module.moduleName} with {tmpCmds.Count} commands.");
+					WriteToLog($"Registered module {module.moduleName} with {tmpCmds.Count} commands.");
 				}
 			}
-			Debug.WriteLine("Done.");
+			WriteToLog("Done.");
 
-			Debug.WriteLine($"Starting {modules.Count} modules.");
+			WriteToLog($"Starting {modules.Count} modules.");
 			foreach(BotModule module in modules)
 			{
 				Task.Run( () => module.StartModule());
 			}
-			Debug.WriteLine("Done.");
+			WriteToLog("Done.");
 
 			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
 			commands.Add(new CommandGuild());
 
-			Debug.WriteLine($"Registering {commands.Count} commands with aliases.");
+			WriteToLog($"Registering {commands.Count} commands with aliases.");
 			foreach(BotCommand cmd in commands)
 			{
 				foreach(string alias in cmd.aliases)
 				{
-					Debug.WriteLine($"Registered command {cmd.aliases[0]} to {alias}.");
+					WriteToLog($"Registered command {cmd.aliases[0]} to {alias}.");
 					commandAliases.Add(alias, cmd);
 				}
 			}
-			Debug.WriteLine("Done.");
+			WriteToLog("Done.");
 
 			// Load guild configuration.
 			if(!Directory.Exists(@"data/guilds"))
@@ -192,7 +221,7 @@ namespace Agatha2
 			}
 			foreach (var f in (from file in Directory.EnumerateFiles(@"data/guilds", "*.json", SearchOption.AllDirectories) select new { File = file }))
 			{
-				Debug.WriteLine($"Loading guild config from {f.File}.");
+				WriteToLog($"Loading guild config from {f.File}.");
 				try
 				{
 					GuildConfig guild = JsonConvert.DeserializeObject<GuildConfig>(File.ReadAllText(f.File));
@@ -200,17 +229,17 @@ namespace Agatha2
 				}
 				catch(Exception e)
 				{
-					Debug.WriteLine($"Exception when loading guild config: {e.Message}");
+					WriteToLog($"Exception when loading guild config: {e.Message}");
 				}
 			}
-			Debug.WriteLine("Done.");
+			WriteToLog("Done.");
 			Console.WriteLine("Connected.");
 			new Program().MainAsync().GetAwaiter().GetResult();
 		}
 
 		private Task Log(LogMessage msg)
 		{
-			Debug.WriteLine(msg.ToString());
+			WriteToLog(msg.ToString());
 			return Task.CompletedTask;
 		}
 
@@ -228,15 +257,15 @@ namespace Agatha2
 			{
 				try
 				{
-					Debug.WriteLine("Logging in client.");
+					WriteToLog("Logging in client.");
 					await Client.LoginAsync(TokenType.Bot, token);
-					Debug.WriteLine("Starting main loop.");
+					WriteToLog("Starting main loop.");
 					await Client.StartAsync();
 					await Task.Delay(-1);
 				}
 				catch(Exception e)
 				{
-					Debug.WriteLine($"Core loop exception: {e.Message}.");
+					WriteToLog($"Core loop exception: {e.Message}.");
 					break;
 				}
 			}
@@ -328,7 +357,7 @@ namespace Agatha2
 				}
 				catch(Exception e)
 				{
-					Debug.WriteLine($"Unhandled exception in command input - {e.Message}.");
+					WriteToLog($"Unhandled exception in command input - {e.Message}.");
 				}
 			}
 		}
@@ -340,7 +369,7 @@ namespace Agatha2
 				GuildConfig guild = new GuildConfig();
 				guild.guildId = guildId;
 				guilds.Add(guild.guildId, guild);
-				Debug.WriteLine($"Created GuildConfig for guild {guildId}.");
+				WriteToLog($"Created GuildConfig for guild {guildId}.");
 			}
 			return guilds[guildId];
 		}

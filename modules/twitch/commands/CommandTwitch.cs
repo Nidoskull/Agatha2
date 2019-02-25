@@ -56,7 +56,7 @@ namespace Agatha2
 					}
 					catch(WebException e)
 					{
-						Debug.WriteLine($"Stream exception: {e}");
+						Program.WriteToLog($"Stream exception: {e}");
 					}
 				}
 				else

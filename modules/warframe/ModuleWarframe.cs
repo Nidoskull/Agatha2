@@ -63,7 +63,7 @@ namespace Agatha2
 					}
 					catch(Exception e)
 					{
-						Debug.WriteLine($"Exception when loading stream channel config: {e.Message}");
+						Program.WriteToLog($"Exception when loading stream channel config: {e.Message}");
 					}
 				}
 			}
@@ -195,7 +195,7 @@ namespace Agatha2
 							}
 							catch(Exception e)
 							{
-								Debug.WriteLine($"Couldn't convert time ({e.Message}).");
+								Program.WriteToLog($"Couldn't convert time ({e.Message}).");
 							} 
 
 							string rewardString = "";
@@ -265,7 +265,7 @@ namespace Agatha2
 			}
 			catch(Exception e)
 			{
-				Debug.WriteLine($"Exception in Warframe worldstate lookup: {e.ToString()}.");
+				Program.WriteToLog($"Exception in Warframe worldstate lookup: {e.ToString()}.");
 			}
 		}
 
