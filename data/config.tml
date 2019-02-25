@@ -1,4 +1,3 @@
-Token = "SORRYNOTOKEN"
-Awake = false
-CommandPrefix = '.'
-MarkovChance = 0
+SourceAuthor = "undefined"
+SourceVersion = ":shrug:"
+SourceLocation = "github.com"
