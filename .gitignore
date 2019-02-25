@@ -248,5 +248,5 @@ ModelManifest.xml
 .fake/
 
 # Agatha stuff.
-[Dd]ata/*
+data/guilds/*
 modules/markov/data/markov.bin
