@@ -117,6 +117,21 @@ namespace Agatha2
 			}
 			Console.WriteLine($"Connecting with token '{token}'.");
 
+			try
+			{
+				TomlTable configTable = Toml.ReadFile("data/config.tml");
+				SourceAuthor =          configTable.Get<string>("SourceAuthor");
+				SourceVersion =         configTable.Get<string>("SourceVersion");
+				SourceLocation =        configTable.Get<string>("SourceLocation");
+			}
+			catch(Exception e)
+			{
+				Debug.WriteLine($"Exception when loading version information: {e}");
+				SourceAuthor =   "Someone";
+				SourceVersion =  "0.:shrug:.:shrug:";
+				SourceLocation = "unspecified";
+			}
+
 			// Load all modules.
 			Debug.WriteLine("Loading modules.");
 			modules.Add(new ModuleAetolia());
@@ -189,7 +204,7 @@ namespace Agatha2
 				}
 			}
 			Debug.WriteLine("Done.");
-
+			Console.WriteLine("Connected.");
 			new Program().MainAsync().GetAwaiter().GetResult();
 		}
 

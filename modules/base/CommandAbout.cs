@@ -12,7 +12,7 @@ namespace Agatha2
 		{
 			usage = "about";
 			description = "Shows some bot information.";
-			aliases = new List<string>() {"about"};
+			aliases = new List<string>() {"about", "version"};
 		}
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
