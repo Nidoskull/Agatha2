@@ -34,16 +34,14 @@ namespace Agatha2
 		}
 		internal override bool Register(List<BotCommand> commands)
 		{
-			Console.WriteLine("Deserializing Markov dictionary.");
 			try
 			{
 				using (var file = File.OpenRead("data/markov.bin")) {
 					markovDict = Serializer.Deserialize<Dictionary<string, List<string>>>(file);
 				}
 			}
-			catch (FileNotFoundException ex)
+			catch(FileNotFoundException)
 			{
-				Console.WriteLine(ex);
 				markovDict = new Dictionary<string, List<string>>();
 			}
 			commands.Add(new CommandReplyrate());
@@ -55,7 +53,6 @@ namespace Agatha2
 			if(hasDictionaryChanged)
 			{
 				hasDictionaryChanged = false;
-				Console.WriteLine("Serializing Markov dictionary.");
 				using (var file = File.Create("data/markov.bin")) {
 					Serializer.Serialize(file, markovDict);
 				}

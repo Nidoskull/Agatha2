@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -55,7 +56,7 @@ namespace Agatha2
 					}
 					catch(WebException e)
 					{
-						Console.WriteLine($"Stream error: {e}");
+						Debug.WriteLine($"Stream exception: {e}");
 					}
 				}
 				else

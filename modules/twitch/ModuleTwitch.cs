@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using Nett;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -49,14 +50,13 @@ namespace Agatha2
 					}
 					catch(Exception e)
 					{
-						Console.WriteLine($"Exception when loading stream channel config: {e.Message}");
+						Debug.WriteLine($"Exception when loading stream channel config: {e.Message}");
 					}
 				}
 			}
 		}
 		internal override void StartModule()
 		{
-			Console.WriteLine("Starting Twitch polling.");
 			var logFile = File.ReadAllLines(@"modules/twitch/data/streamers.txt");
 			try
 			{
@@ -70,7 +70,7 @@ namespace Agatha2
 					streamNametoID.Add(streamer, streamerID);
 					streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
 				}
-				Console.WriteLine("Done loading streamers."); /* Initializing poll timer.");
+				/*
 				IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
 				CancellationTokenSource source = new CancellationTokenSource();
 				Action action = (() => 
@@ -79,12 +79,11 @@ namespace Agatha2
 				}
 				);
 				pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-				Console.WriteLine("Stream poller initialized.");
 				*/
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine($"Exception when loading Twitch module: {e.Message}");
+				Debug.WriteLine($"Exception when loading Twitch module: {e.Message}");
 			}
 		}
 
@@ -132,12 +131,10 @@ namespace Agatha2
 
 		internal async Task PollStreamers(SocketMessage message)
 		{
-			Console.WriteLine("Polling streamers.");
 			foreach(string streamer in streamers)
 			{
 				try
 				{
-					Console.WriteLine($"Looking up user id {streamer}");
 					var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/streams?user_id={streamer}");
 					request.Method = "Get";
 					request.Timeout = 12000;
@@ -188,7 +185,7 @@ namespace Agatha2
 					}
 					catch(WebException e)
 					{
-						Console.WriteLine(e);
+						Debug.WriteLine($"Exception in streamer polling: {e}");
 					}
 				}
 				catch(Exception e)
@@ -199,7 +196,6 @@ namespace Agatha2
 		}
 		internal JToken RetrieveUserIdFromUserName(string streamer)
 		{
-			Console.WriteLine($"Retrieving streamer info for {streamer}.");
 			var request = (HttpWebRequest)WebRequest.Create($"https://api.twitch.tv/helix/users?login={streamer}");
 			request.Method = "Get";
 			request.Timeout = 12000;
@@ -228,7 +224,7 @@ namespace Agatha2
 			}
 			catch(WebException e)
 			{
-				Console.WriteLine(e.ToString());
+				Debug.WriteLine($"Exception in Twitch ID retrieval: {e.ToString()}");
 			}
 			return null;
 		}

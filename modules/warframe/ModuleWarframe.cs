@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading;
 using Nett;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -62,7 +63,7 @@ namespace Agatha2
 					}
 					catch(Exception e)
 					{
-						Console.WriteLine($"Exception when loading stream channel config: {e.Message}");
+						Debug.WriteLine($"Exception when loading stream channel config: {e.Message}");
 					}
 				}
 			}
@@ -84,7 +85,6 @@ namespace Agatha2
 		}
 		internal override void StartModule()
 		{
-			Console.WriteLine("Starting Warframe world state polling.");
 			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(1));
 			CancellationTokenSource source = new CancellationTokenSource();
 			Action action = (() => 
@@ -195,7 +195,7 @@ namespace Agatha2
 							}
 							catch(Exception e)
 							{
-								Console.WriteLine($"Couldn't convert time ({e.Message}).");
+								Debug.WriteLine($"Couldn't convert time ({e.Message}).");
 							} 
 
 							string rewardString = "";
@@ -265,7 +265,7 @@ namespace Agatha2
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine($"Exception in Warframe worldstate lookup: {e.ToString()}.");
+				Debug.WriteLine($"Exception in Warframe worldstate lookup: {e.ToString()}.");
 			}
 		}
 

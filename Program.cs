@@ -8,6 +8,7 @@ using Nett;
 using System.Linq;
 using Discord.Rest;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -94,15 +95,30 @@ namespace Agatha2
 
 		internal static void Main(string[] args)
 		{
-			// Load config.
-			TomlTable configTable = Toml.ReadFile("data/config.tml");
-			token =                 configTable.Get<string>("Token");
-			SourceAuthor =          configTable.Get<string>("SourceAuthor");
-			SourceVersion =         configTable.Get<string>("SourceVersion");
-			SourceLocation =        configTable.Get<string>("SourceLocation");
+
+			for(int i = 0;i < args.Length;i++)
+			{
+				string check_token = args[i];
+				if(check_token.ToLower().Contains("token"))
+				{
+					int splitpoint = check_token.IndexOf('=')+1;
+					if(check_token.Length >= splitpoint)
+					{
+						token = check_token.Substring(splitpoint);
+						break;
+					}
+				}
+			}
+
+			if(token == null)
+			{
+				Console.WriteLine("Please specify a Discord secrets token to use when connecting with this bot.");
+				return;
+			}
+			Console.WriteLine($"Connecting with token '{token}'.");
 
 			// Load all modules.
-			Console.WriteLine("Loading modules.");
+			Debug.WriteLine("Loading modules.");
 			modules.Add(new ModuleAetolia());
 			modules.Add(new ModuleBartender());
 			modules.Add(new ModuleChumhandle());
@@ -115,7 +131,7 @@ namespace Agatha2
 			{
 				module.LoadConfig();
 			}
-			Console.WriteLine($"Registering {modules.Count} modules.");
+			Debug.WriteLine($"Registering {modules.Count} modules.");
 			foreach(BotModule module in modules)
 			{
 				List<BotCommand> tmpCmds = new List<BotCommand>();
@@ -126,33 +142,33 @@ namespace Agatha2
 						command.Register(module);
 						commands.Add(command);
 					}
-					Console.WriteLine($"Registered module {module.moduleName} with {tmpCmds.Count} commands.");
+					Debug.WriteLine($"Registered module {module.moduleName} with {tmpCmds.Count} commands.");
 				}
 			}
-			Console.WriteLine("Done.");
+			Debug.WriteLine("Done.");
 
-			Console.WriteLine($"Starting {modules.Count} modules.");
+			Debug.WriteLine($"Starting {modules.Count} modules.");
 			foreach(BotModule module in modules)
 			{
 				Task.Run( () => module.StartModule());
 			}
-			Console.WriteLine("Done.");
+			Debug.WriteLine("Done.");
 
 			commands.Add(new CommandAbout());
 			commands.Add(new CommandHelp());
 			commands.Add(new CommandModules());
 			commands.Add(new CommandGuild());
 
-			Console.WriteLine($"Registering {commands.Count} commands with aliases.");
+			Debug.WriteLine($"Registering {commands.Count} commands with aliases.");
 			foreach(BotCommand cmd in commands)
 			{
 				foreach(string alias in cmd.aliases)
 				{
-					Console.WriteLine($"Registered command {cmd.aliases[0]} to {alias}.");
+					Debug.WriteLine($"Registered command {cmd.aliases[0]} to {alias}.");
 					commandAliases.Add(alias, cmd);
 				}
 			}
-			Console.WriteLine("Done.");
+			Debug.WriteLine("Done.");
 
 			// Load guild configuration.
 			if(!Directory.Exists(@"data/guilds"))
@@ -161,7 +177,7 @@ namespace Agatha2
 			}
 			foreach (var f in (from file in Directory.EnumerateFiles(@"data/guilds", "*.json", SearchOption.AllDirectories) select new { File = file }))
 			{
-				Console.WriteLine($"Loading guild config from {f.File}.");
+				Debug.WriteLine($"Loading guild config from {f.File}.");
 				try
 				{
 					GuildConfig guild = JsonConvert.DeserializeObject<GuildConfig>(File.ReadAllText(f.File));
@@ -169,17 +185,17 @@ namespace Agatha2
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine($"Exception when loading guild config: {e.Message}");
+					Debug.WriteLine($"Exception when loading guild config: {e.Message}");
 				}
 			}
-			Console.WriteLine("Done.");
+			Debug.WriteLine("Done.");
 
 			new Program().MainAsync().GetAwaiter().GetResult();
 		}
 
 		private Task Log(LogMessage msg)
 		{
-			Console.WriteLine(msg.ToString());
+			Debug.WriteLine(msg.ToString());
 			return Task.CompletedTask;
 		}
 
@@ -197,19 +213,39 @@ namespace Agatha2
 			{
 				try
 				{
-					Console.WriteLine("Logging in client.");
+					Debug.WriteLine("Logging in client.");
 					await Client.LoginAsync(TokenType.Bot, token);
-					Console.WriteLine("Starting main loop.");
+					Debug.WriteLine("Starting main loop.");
 					await Client.StartAsync();
 					await Task.Delay(-1);
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine($"Core loop exception: {e.Message}.");
+					Debug.WriteLine($"Core loop exception: {e.Message}.");
+					break;
 				}
 			}
 		}
-		private async Task ReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		private static Task ReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		{
+			Task.Run(() => HandleReactionRemoved(cache, channel, reaction));
+			return Task.FromResult(0);
+
+		}
+
+		private static Task ReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		{
+			Task.Run(() => HandleReactionAdded(cache, channel, reaction));
+			return Task.FromResult(0);
+		}
+
+		private static Task MessageReceived(SocketMessage message)
+		{
+			Task.Run(() => HandleMessage(message));
+			return Task.FromResult(0);
+		}
+
+		private static void HandleReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
 			IGuildUser user = (IGuildUser)cache.Value.Author;
 			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
@@ -218,12 +254,11 @@ namespace Agatha2
 			{
 				if(guild.enabledModules.Contains(module.moduleName))
 				{
-					await Task.Run( () => module.ReactionRemoved(guildChannel.Guild, reaction));
+					module.ReactionAdded(guildChannel.Guild, reaction);
 				}
 			}
 		}
-
-		private async Task ReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
+		private static void HandleReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
 			IGuildUser user = (IGuildUser)cache.Value.Author;
 			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
@@ -232,12 +267,11 @@ namespace Agatha2
 			{
 				if(guild.enabledModules.Contains(module.moduleName))
 				{
-					await Task.Run( () => module.ReactionAdded(guildChannel.Guild, reaction));
+					module.ReactionRemoved(guildChannel.Guild, reaction);
 				}
 			}
 		}
-
-		private async Task MessageReceived(SocketMessage message)
+		private static void HandleMessage(SocketMessage message)
 		{
 			if(!message.Author.IsBot)
 			{
@@ -253,16 +287,16 @@ namespace Agatha2
 							BotCommand cmd = commandAliases[command];
 							if(cmd.parent == null || guild.enabledModules.Contains(cmd.parent.moduleName))
 							{
-								await cmd.ExecuteCommand(message, guild);
+								cmd.ExecuteCommand(message, guild);
 							}
 							else
 							{
-								await message.Channel.SendMessageAsync("That module is disabled for this guild.");
+								message.Channel.SendMessageAsync("That module is disabled for this guild.");
 							}
 						}
 						else
 						{
-							await message.Channel.SendMessageAsync("Unknown command, insect.");
+							message.Channel.SendMessageAsync("Unknown command, insect.");
 						}
 						return;
 					}
@@ -272,14 +306,14 @@ namespace Agatha2
 						{
 							if(guild.enabledModules.Contains(module.moduleName))
 							{
-								await Task.Run( () => module.ListenTo(message));
+								Task.Run( () => module.ListenTo(message));
 							}
 						}
 					}
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine($"Unhandled exception in command input - {e.Message}.");
+					Debug.WriteLine($"Unhandled exception in command input - {e.Message}.");
 				}
 			}
 		}
@@ -291,7 +325,7 @@ namespace Agatha2
 				GuildConfig guild = new GuildConfig();
 				guild.guildId = guildId;
 				guilds.Add(guild.guildId, guild);
-				Console.WriteLine($"Created GuildConfig for guild {guildId}.");
+				Debug.WriteLine($"Created GuildConfig for guild {guildId}.");
 			}
 			return guilds[guildId];
 		}

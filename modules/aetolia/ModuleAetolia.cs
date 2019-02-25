@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -37,10 +38,9 @@ namespace Agatha2
 		internal List<FishingHole> fishingHoles;
 		internal override void StartModule()
 		{
-			Console.WriteLine("Loading Aetolia fish database.");
 			if(!File.Exists(fishDbPath))
 			{
-				Console.WriteLine($"No database found, creating an empty one at {fishDbPath}.");
+				Debug.WriteLine($"No fish found, creating an empty one at {fishDbPath}.");
 				SQLiteConnection.CreateFile(fishDbPath);				
 			}
 			SQLiteConnection fishDbConnection = new SQLiteConnection($"Data Source={fishDbPath};Version=3;");
@@ -76,7 +76,7 @@ namespace Agatha2
 				fishingHoles.Add(fishHole);
 				fishHole.holeId = fishingHoles.Count.ToString();
 			}
-			Console.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
+			Debug.WriteLine($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}
 
 		internal override bool Register(List<BotCommand> commands)
@@ -94,7 +94,6 @@ namespace Agatha2
 		internal HttpWebResponse GetAPIResponse(string responseType)
 		{
 			string endPoint = $"http://api.aetolia.com/{responseType}.json";
-			Console.WriteLine($"IRE API: Hitting {endPoint}.");
 			HttpWebResponse s = null;
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endPoint);
 			request.Method = "Get";
@@ -103,13 +102,12 @@ namespace Agatha2
 				s = (HttpWebResponse)request.GetResponse();
 				if(s != null && s.StatusCode.ToString() != "OK")
 				{
-					Console.WriteLine($"Bot is not authed with Aetolia.");
 					s = null;
 				}
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine($"Exception in Aetolia auth: {e.ToString()}.");
+				Debug.WriteLine($"Exception in Aetolia auth: {e.ToString()}.");
 			}
 			return s;
 		}
