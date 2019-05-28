@@ -31,6 +31,7 @@ namespace Agatha2
 		{
 			moduleName = "Twitch";
 			description = "A module for watching for and looking up Twitch streamers.";
+			hasPeriodicEvent = true;
 		}
 
 		internal override void LoadConfig()
@@ -70,16 +71,6 @@ namespace Agatha2
 					streamNametoID.Add(streamer, streamerID);
 					streamIDToDisplayName.Add(streamerID, jData["display_name"].ToString());
 				}
-				/*
-				IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(5));
-				CancellationTokenSource source = new CancellationTokenSource();
-				Action action = (() => 
-				{
-					PollStreamers(null);
-				}
-				);
-				pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-				*/
 			}
 			catch(Exception e)
 			{
@@ -87,6 +78,10 @@ namespace Agatha2
 			}
 		}
 
+		internal override void DoPeriodicEvent()
+		{
+			PollStreamers(null);
+		}
 		internal override bool Register(List<BotCommand> commands)
 		{
 			streamStatus = new Dictionary<string, bool>();

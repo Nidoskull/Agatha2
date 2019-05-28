@@ -59,8 +59,5 @@ namespace Agatha2
 			}
 			return results;
 		}
-		internal override void ListenTo(SocketMessage message)
-		{
-		}
 	}
 }

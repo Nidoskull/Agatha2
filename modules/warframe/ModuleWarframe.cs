@@ -31,6 +31,7 @@ namespace Agatha2
 		{
 			moduleName = "Warframe";
 			description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
+			hasPeriodicEvent = true;
 		}
 
 		internal override void LoadConfig()
@@ -83,19 +84,8 @@ namespace Agatha2
 			}
 			return token;
 		}
-		internal override void StartModule()
-		{
-			IObservable<long> pollTimer = Observable.Interval(TimeSpan.FromMinutes(1));
-			CancellationTokenSource source = new CancellationTokenSource();
-			Action action = (() => 
-			{
-				CheckAlerts();
-			}
-			);
-			pollTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
-		}
 
-		internal void CheckAlerts()
+		internal override void DoPeriodicEvent()
 		{
 
 			if(warframeChannelIds.Count <= 0)
@@ -277,7 +267,7 @@ namespace Agatha2
 			commands.Add(new CommandAlerts());
 			return true;
 		}
-		internal override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message, GuildConfig guild)
 		{
 			string searchSpace =  message.Content.ToLower();
 			if(searchSpace.Contains("hek"))

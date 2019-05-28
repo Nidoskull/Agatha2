@@ -14,23 +14,12 @@ namespace Agatha2
 	{
    		private bool hasDictionaryChanged = false;
 		private Dictionary<string, List<string>> markovDict;
-		internal int markovChance = 0;
 
 		internal ModuleMarkov()
 		{
 			moduleName = "Markov";
 			description = "Listens to chatter and produces Markov string responses.";
-		}
-		internal override void StartModule()
-		{
-			IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
-			CancellationTokenSource source = new CancellationTokenSource();
-			Action action = (() => 
-			{
-				TrySaveDictionary();
-			}
-			);
-			periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
+			hasPeriodicEvent = true;
 		}
 		internal override bool Register(List<BotCommand> commands)
 		{
@@ -44,11 +33,10 @@ namespace Agatha2
 			{
 				markovDict = new Dictionary<string, List<string>>();
 			}
-			commands.Add(new CommandReplyrate());
 			return true;
 		}
 
-		private void TrySaveDictionary()
+		internal override void DoPeriodicEvent()
 		{
 			if(hasDictionaryChanged)
 			{
@@ -84,7 +72,7 @@ namespace Agatha2
 			return result;
 		}
 
-		internal override void ListenTo(SocketMessage message)
+		internal override void ListenTo(SocketMessage message, GuildConfig guild)
 		{
 			string lastString = null;
 			foreach(string token in message.Content.Split(" "))
@@ -117,7 +105,7 @@ namespace Agatha2
 				lastString = token;
 			}
 			string searchSpace =  message.Content.ToLower();
-			if((markovChance > 0 && Program.rand.Next(100) <= markovChance) || searchSpace.Contains("agatha"))
+			if((guild.MarkovChance > 0 && Program.rand.Next(100) <= guild.MarkovChance) || searchSpace.Contains(guild.MarkovTrigger))
 			{
 				string[] tokens = message.Content.Split(" ");
 				if(tokens.Length > 0)

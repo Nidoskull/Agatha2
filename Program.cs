@@ -9,6 +9,8 @@ using System.Linq;
 using Discord.Rest;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Threading;
 
 namespace Agatha2
 {
@@ -19,7 +21,11 @@ namespace Agatha2
 		internal string adminRole = "bot wrangler";
 		internal List<string> enabledModules = new List<string>();
 		internal string commandPrefix = ".";
+		internal string markovTrigger = "agatha";
+		internal int markovChance = 0;
 
+		public string MarkovTrigger { get => markovTrigger; set => markovTrigger = value; }
+		public int MarkovChance { get => markovChance; set => markovChance = value; }
 		public string AdminRole { get => adminRole; set => adminRole = value; }
 		public ulong GuildId { get => guildId; set => guildId = value; }
 		public List<string> EnabledModules { get => enabledModules; set => enabledModules = value; }
@@ -34,18 +40,98 @@ namespace Agatha2
 			}
 			File.WriteAllText($"{savePath}/{guildId}.json", JsonConvert.SerializeObject((GuildConfig)this));
 		}
+
+		internal Embed GetConfigSettings()
+		{
+			EmbedBuilder embedBuilder = new EmbedBuilder();
+			embedBuilder.Title = "Guild configuration.";
+			embedBuilder.AddField("adminRole",    AdminRole);
+			embedBuilder.AddField("commandPrefix", CommandPrefix);
+			embedBuilder.AddField("markovChance",  MarkovChance);
+			embedBuilder.AddField("markovTrigger", MarkovTrigger);
+			embedBuilder.Description = $"Use {commandPrefix}gconf [setting] [value] to modify guild configuration.";
+			return embedBuilder.Build();
+		}
+
+		internal string SetConfig(string[] message_contents)
+		{
+
+			if(message_contents.Length <= 1)
+			{
+				return "No guild setting supplied, how did you even get to this block?";
+			}
+
+			string cmdArg = message_contents[1].ToLower();
+			if(message_contents.Length <= 2)
+			{
+				return $"No configuration value supplied for setting '{cmdArg}'.";
+			}
+			else
+			{
+
+				string fullMsg = "";
+				for(int i = 2;i < message_contents.Length; i++)
+				{
+					fullMsg += $" {message_contents[i]}";
+				}
+				fullMsg = fullMsg.ToLower().Trim();
+
+				string resultString = "Unknown configuration error.";
+
+				switch(cmdArg)
+				{
+					case "adminrole":
+						AdminRole = fullMsg;
+						resultString = $"Admin role is now '{AdminRole}'.";
+						break;
+					case "commandprefix":
+						CommandPrefix = fullMsg;
+						resultString = $"Command prefix is now '{CommandPrefix}'.";
+						break;
+					case "markovchance":
+						try
+						{
+							int newReplyRate = Convert.ToInt32(fullMsg);
+							if(newReplyRate >= 0 && newReplyRate <= 100)
+							{
+								MarkovChance = newReplyRate;
+								resultString = $"Reply rate is now {MarkovChance}.";
+								break;
+							}
+							else
+							{
+								return "Enter a value between 0 and 100, insect.";
+							}
+						}
+						catch
+						{
+							return "Enter a value between 0 and 100, insect.";
+						}
+					case "markovtrigger":
+						MarkovTrigger = message_contents[2].ToLower();
+						resultString = $"Markov trigger word is now '{MarkovTrigger}'.";
+						break;
+					default:
+						return $"Unknown guild configuration option '{cmdArg}'.";
+				}
+				Save();
+				return resultString;
+			}
+		}
 	}
 	
 	internal abstract class BotModule
 	{
 		internal string moduleName;
 		internal string description;
+		internal bool hasPeriodicEvent = false;
 		internal abstract bool Register(List<BotCommand> commands);
-		internal virtual void ListenTo(SocketMessage message) {}
+		internal virtual void ListenTo(SocketMessage message, GuildConfig guild) {}
 		internal virtual void StartModule() {}
 		internal virtual void ReactionAdded(SocketGuild guild, SocketReaction reaction) {}
 		internal virtual void ReactionRemoved(SocketGuild guild, SocketReaction reaction) {}
 		internal virtual void LoadConfig() {}
+		internal virtual void DoPeriodicEvent() {}
 	}
 
 	internal abstract class BotCommand
@@ -98,7 +184,7 @@ namespace Agatha2
 			GuildConfig guild = GetGuildConfig(guildId);
 			var guildUser = user as SocketGuildUser;
 			var role = (guildUser as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == guild.adminRole);
-			return (guildUser.Roles.Contains(role));
+			return guildUser.Roles.Contains(role);
 		}
 
 		internal static int Clamp(int value, int min, int max)  
@@ -171,6 +257,7 @@ namespace Agatha2
 			modules.Add(new ModuleTwitch());
 			modules.Add(new ModuleUtility());
 			modules.Add(new ModuleWarframe());
+
 			foreach(BotModule module in modules)
 			{
 				module.LoadConfig();
@@ -194,7 +281,20 @@ namespace Agatha2
 			WriteToLog($"Starting {modules.Count} modules.");
 			foreach(BotModule module in modules)
 			{
-				Task.Run( () => module.StartModule());
+				Task.Run(() => module.StartModule());
+
+				if(module.hasPeriodicEvent)
+				{
+					IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
+					CancellationTokenSource source = new CancellationTokenSource();
+					Action action = (() => 
+					{
+						module.DoPeriodicEvent();
+					}
+					);
+					periodicSaveTimer.Subscribe(x => { Task task = new Task(action); task.Start();}, source.Token);
+				}
+
 			}
 			WriteToLog("Done.");
 
@@ -325,7 +425,13 @@ namespace Agatha2
 					GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
 					if(message.Content.Length > 1 && message.Content.StartsWith(guild.commandPrefix) && !message.Content.Substring(1,1).Equals(guild.commandPrefix))
 					{
-						string command = message.Content.Substring(1).Split(" ")[0].ToLower();
+						string command = message.Content.Substring(guild.commandPrefix.Length).Trim();
+						string[] command_tokens = command.Split(" ");
+						string commandFirst = command;
+						command = command_tokens[0].ToLower();
+
+						Console.WriteLine($"mc '{message.Content}' fc '{commandFirst}' sc '{command}'");
+
 						if(commandAliases.ContainsKey(command))
 						{
 							BotCommand cmd = commandAliases[command];
@@ -340,7 +446,7 @@ namespace Agatha2
 						}
 						else
 						{
-							message.Channel.SendMessageAsync("Unknown command, insect.");
+							message.Channel.SendMessageAsync($"Unknown command '{command}', insect.");
 						}
 						return;
 					}
@@ -350,7 +456,7 @@ namespace Agatha2
 						{
 							if(guild.enabledModules.Contains(module.moduleName))
 							{
-								Task.Run( () => module.ListenTo(message));
+								Task.Run( () => module.ListenTo(message, guild));
 							}
 						}
 					}

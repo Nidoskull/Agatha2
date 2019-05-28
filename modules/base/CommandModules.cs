@@ -35,7 +35,7 @@ namespace Agatha2
 						moduleList = $"{moduleList}~~{tmpModName}~~ (disabled for this guild)\n";
 					}
 				}
-				embedBuilder.AddField("Modules", moduleList);
+				embedBuilder.AddField("Modules", (moduleList == null || moduleList == "") ? "No modules available." : moduleList);
 			}
 			else 
 			{

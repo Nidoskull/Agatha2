@@ -23,12 +23,6 @@ namespace Agatha2
 			commands.Add(new CommandRoll());
 			return true;
 		}
-		internal override void ListenTo(SocketMessage message)
-		{
-		}
-		internal override void StartModule()
-		{
-		}
 	}
 
 	internal class Die  

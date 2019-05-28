@@ -61,8 +61,5 @@ namespace Agatha2
 			System.IO.File.WriteAllLines(@"modules/bartender/data/bartending_garnishes.txt", BartendingData["garnish"]);
 			System.IO.File.WriteAllLines(@"modules/bartender/data/bartending_beverages.txt", BartendingData["beverage"]);
 		}
-		internal override void ListenTo(SocketMessage message)
-		{
-		}
 	}
 }

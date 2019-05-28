@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Threading;
+using System.Reactive.Linq;
 
 namespace Agatha2
 {
@@ -33,7 +35,6 @@ namespace Agatha2
 			moduleName = "Aetolia";
 			description = "A character lookup and news-reading module for the IRE MUD Aetolia: The Midnight Age.";
 		}
-
 		private string fishDbPath = @"modules/aetolia/data/fish.db";
 		internal List<FishingHole> fishingHoles;
 		internal override void StartModule()
@@ -111,7 +112,7 @@ namespace Agatha2
 			}
 			return s;
 		}
-		internal override void ListenTo(SocketMessage message)
+		internal void CheckForAetoliaEvents()
 		{
 		}
 	}
