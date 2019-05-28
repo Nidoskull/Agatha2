@@ -31,7 +31,6 @@ namespace Agatha2
 		{
 			moduleName = "Warframe";
 			description = "A pointless module for interjecting Warframe quotes into innocent conversations.";
-			hasPeriodicEvent = true;
 		}
 
 		internal override void LoadConfig()

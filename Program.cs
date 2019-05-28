@@ -124,7 +124,7 @@ namespace Agatha2
 	{
 		internal string moduleName;
 		internal string description;
-		internal bool hasPeriodicEvent = false;
+		internal int hasPeriodicEventInSeconds = -1;
 		internal abstract bool Register(List<BotCommand> commands);
 		internal virtual void ListenTo(SocketMessage message, GuildConfig guild) {}
 		internal virtual void StartModule() {}
@@ -283,9 +283,9 @@ namespace Agatha2
 			{
 				Task.Run(() => module.StartModule());
 
-				if(module.hasPeriodicEvent)
+				if(module.hasPeriodicEventInSeconds > 0)
 				{
-					IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromMinutes(10));
+					IObservable<long> periodicSaveTimer = Observable.Interval(TimeSpan.FromSeconds(module.hasPeriodicEventInSeconds));
 					CancellationTokenSource source = new CancellationTokenSource();
 					Action action = (() => 
 					{
@@ -429,8 +429,6 @@ namespace Agatha2
 						string[] command_tokens = command.Split(" ");
 						string commandFirst = command;
 						command = command_tokens[0].ToLower();
-
-						Console.WriteLine($"mc '{message.Content}' fc '{commandFirst}' sc '{command}'");
 
 						if(commandAliases.ContainsKey(command))
 						{

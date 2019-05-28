@@ -31,7 +31,7 @@ namespace Agatha2
 		{
 			moduleName = "Twitch";
 			description = "A module for watching for and looking up Twitch streamers.";
-			hasPeriodicEvent = true;
+			hasPeriodicEventInSeconds = 60;
 		}
 
 		internal override void LoadConfig()

@@ -9,6 +9,8 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.Threading;
 using System.Reactive.Linq;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Agatha2
 {
@@ -34,9 +36,14 @@ namespace Agatha2
 		{
 			moduleName = "Aetolia";
 			description = "A character lookup and news-reading module for the IRE MUD Aetolia: The Midnight Age.";
+			hasPeriodicEventInSeconds = 60;
 		}
+
+		internal List<string> seenEvents = new List<string>();
 		private string fishDbPath = @"modules/aetolia/data/fish.db";
 		internal List<FishingHole> fishingHoles;
+		internal Dictionary<ulong, ulong> aetoliaChannelIds = new Dictionary<ulong, ulong>();
+
 		internal override void StartModule()
 		{
 			if(!File.Exists(fishDbPath))
@@ -80,6 +87,24 @@ namespace Agatha2
 			Program.WriteToLog($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}
 
+		internal override void LoadConfig()
+		{
+			string loadFile = @"modules/aetolia/data/channel_ids.json";
+			if(File.Exists(loadFile))
+			{
+				foreach(KeyValuePair<string, string> guildAndChannel in JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(loadFile)))
+				{
+					try
+					{
+						aetoliaChannelIds.Add((ulong)Convert.ToInt64(guildAndChannel.Key), (ulong)Convert.ToInt64(guildAndChannel.Value));
+					}
+					catch(Exception e)
+					{
+						Program.WriteToLog($"Exception when loading stream channel config: {e.Message}");
+					}
+				}
+			}
+		}
 		internal override bool Register(List<BotCommand> commands)
 		{
 			fishingHoles = new List<FishingHole>();
@@ -112,8 +137,65 @@ namespace Agatha2
 			}
 			return s;
 		}
-		internal void CheckForAetoliaEvents()
+
+		internal override void DoPeriodicEvent()
 		{
+
+			if(aetoliaChannelIds.Count <= 0)
+			{
+				return;
+			}
+
+			HttpWebResponse aetInfo = GetAPIResponse("gamefeed");
+			List<string> resultDescriptions = new List<string>();
+			List<string> resultTitles = new List<string>();
+			if(aetInfo != null)
+			{
+				{
+					var s = aetInfo.GetResponseStream();
+					if(s != null)
+					{
+						StreamReader sr = new StreamReader(s);
+						foreach(JToken x in JToken.Parse(sr.ReadToEnd()))
+						{
+							string tokenId = x["id"].ToString().ToLower().Trim();
+							if(!seenEvents.Contains(tokenId))
+							{
+								seenEvents.Add(tokenId);
+								resultDescriptions.Add(x["description"].ToString().Trim());
+								string resultTitle = x["caption"].ToString();
+								if(!resultTitles.Contains(resultTitle))
+								{
+									resultTitles.Add(resultTitle);
+								}
+							}
+						}
+						if(seenEvents.Count > 25)
+						{
+							int removing = seenEvents.Count - 25;
+							seenEvents.RemoveRange(0, removing);
+							Console.WriteLine($"Trimmed {removing}, {seenEvents.Count} remain");
+						}
+					}
+				}
+			}
+			if(resultDescriptions.Count > 0)
+			{
+				EmbedBuilder embedBuilder = new EmbedBuilder();
+				embedBuilder.Title = string.Join(", ", resultTitles.ToArray());
+				embedBuilder.Description = string.Join("\n", resultDescriptions.ToArray());
+				Embed embed = embedBuilder.Build();
+				foreach(KeyValuePair<ulong, ulong> channelId in aetoliaChannelIds)
+				{
+					Console.WriteLine($"Foo {channelId.Key}-{channelId.Value}");
+					IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
+					if(channel != null)
+					{
+						Console.WriteLine("Bar");
+						channel.SendMessageAsync("", false, embed);
+					}
+				}
+			}
 		}
 	}
 }

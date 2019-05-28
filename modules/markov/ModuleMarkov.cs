@@ -19,7 +19,7 @@ namespace Agatha2
 		{
 			moduleName = "Markov";
 			description = "Listens to chatter and produces Markov string responses.";
-			hasPeriodicEvent = true;
+			hasPeriodicEventInSeconds = 600;
 		}
 		internal override bool Register(List<BotCommand> commands)
 		{
