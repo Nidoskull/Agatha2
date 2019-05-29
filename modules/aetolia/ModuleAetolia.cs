@@ -187,11 +187,9 @@ namespace Agatha2
 				Embed embed = embedBuilder.Build();
 				foreach(KeyValuePair<ulong, ulong> channelId in aetoliaChannelIds)
 				{
-					Console.WriteLine($"Foo {channelId.Key}-{channelId.Value}");
 					IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
 					if(channel != null)
 					{
-						Console.WriteLine("Bar");
 						channel.SendMessageAsync("", false, embed);
 					}
 				}
