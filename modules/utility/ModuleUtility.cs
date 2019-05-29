@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
 using System.Reactive.Linq;
+using System.Diagnostics;
 
 namespace Agatha2
 {
@@ -24,14 +25,15 @@ namespace Agatha2
 		}
 		internal override void ListenTo(SocketMessage message, GuildConfig guild)
 		{
-			if(message.Content.Length < 200 && message.Content.Substring(message.Content.Length) == "?")
+			if(message.Content.Length < 200 && message.Content.Substring(message.Content.Length-1) == "?")
 			{
-				int firstOr = message.Content.FirstIndexOf(" or ");
+				int firstOr = message.Content.IndexOf(" or ");
 				int lastOr = message.Content.LastIndexOf(" or ");
 				if(firstOr > 0 && firstOr == lastOr)
 				{
-					message.AddReactionAsync(new Emoji("←"));
-					message.AddReactionAsync(new Emoji("→"));
+					SocketUserMessage msg = (SocketUserMessage)message;
+					msg.AddReactionAsync(new Emoji("←"));
+					msg.AddReactionAsync(new Emoji("→"));
 				}
 			}
 		}

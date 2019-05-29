@@ -452,9 +452,11 @@ namespace Agatha2
 					{
 						foreach(BotModule module in modules)
 						{
+							Debug.WriteLine($"{module.moduleName} is checking.");
 							if(guild.enabledModules.Contains(module.moduleName))
 							{
-								Task.Run( () => module.ListenTo(message, guild));
+								Debug.WriteLine($"{module.moduleName} is listening.");
+								Task.Run(() => module.ListenTo(message, guild));
 							}
 						}
 					}

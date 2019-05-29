@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
 using System.Reactive.Linq;
+using System.Diagnostics;
 
 namespace Agatha2
 {
