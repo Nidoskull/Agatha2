@@ -423,10 +423,7 @@ namespace Agatha2
 					}
 				}
 			}
-			catch(Exception e)
-			{
-				Program.WriteToLog($"Exception in HandleReactionAdded: {e.Message}");
-			}
+			catch {}
 		}
 		private static void HandleReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
@@ -443,10 +440,7 @@ namespace Agatha2
 					}
 				}
 			}
-			catch(Exception e)
-			{
-				Program.WriteToLog($"Exception in HandleReactionRemoved: {e.Message}");
-			}
+			catch {}
 		}
 		private static void HandleMessage(SocketMessage message)
 		{
