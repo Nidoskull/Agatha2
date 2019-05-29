@@ -391,28 +391,42 @@ namespace Agatha2
 
 		private static void HandleReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
-			IGuildUser user = (IGuildUser)cache.Value.Author;
-			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
-			GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
-			foreach(BotModule module in modules)
+			try
 			{
-				if(guild.enabledModules.Contains(module.moduleName))
+				IGuildUser user = (IGuildUser)cache.Value.Author;
+				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+				GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
+				foreach(BotModule module in modules)
 				{
-					module.ReactionAdded(guildChannel.Guild, reaction);
+					if(guild.enabledModules.Contains(module.moduleName))
+					{
+						module.ReactionAdded(guildChannel.Guild, reaction);
+					}
 				}
+			}
+			catch(Exception e)
+			{
+				Program.WriteToLog($"Exception in HandleReactionAdded: {e.Message}");
 			}
 		}
 		private static void HandleReactionRemoved(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction)
 		{
-			IGuildUser user = (IGuildUser)cache.Value.Author;
-			SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
-			GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
-			foreach(BotModule module in modules)
+			try
 			{
-				if(guild.enabledModules.Contains(module.moduleName))
+				IGuildUser user = (IGuildUser)cache.Value.Author;
+				SocketGuildChannel guildChannel = (SocketGuildChannel)channel;
+				GuildConfig guild = GetGuildConfig(guildChannel.Guild.Id);
+				foreach(BotModule module in modules)
 				{
-					module.ReactionRemoved(guildChannel.Guild, reaction);
+					if(guild.enabledModules.Contains(module.moduleName))
+					{
+						module.ReactionRemoved(guildChannel.Guild, reaction);
+					}
 				}
+			}
+			catch(Exception e)
+			{
+				Program.WriteToLog($"Exception in HandleReactionRemoved: {e.Message}");
 			}
 		}
 		private static void HandleMessage(SocketMessage message)
@@ -452,10 +466,8 @@ namespace Agatha2
 					{
 						foreach(BotModule module in modules)
 						{
-							Debug.WriteLine($"{module.moduleName} is checking.");
 							if(guild.enabledModules.Contains(module.moduleName))
 							{
-								Debug.WriteLine($"{module.moduleName} is listening.");
 								Task.Run(() => module.ListenTo(message, guild));
 							}
 						}

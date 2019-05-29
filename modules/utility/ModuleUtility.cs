@@ -32,8 +32,8 @@ namespace Agatha2
 				if(firstOr > 0 && firstOr == lastOr)
 				{
 					SocketUserMessage msg = (SocketUserMessage)message;
-					msg.AddReactionAsync(new Emoji("←"));
-					msg.AddReactionAsync(new Emoji("→"));
+					msg.AddReactionAsync(new Emoji("⬅"));
+					msg.AddReactionAsync(new Emoji("➡"));
 				}
 			}
 		}
