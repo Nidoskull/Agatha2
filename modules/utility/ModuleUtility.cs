@@ -25,7 +25,9 @@ namespace Agatha2
 		}
 		internal override void ListenTo(SocketMessage message, GuildConfig guild)
 		{
-			if(message.Content.Length < 200 && message.Content.Substring(message.Content.Length-1) == "?")
+			if(message.Content.Length < guild.adHocPollCharacterLimit && 
+			 message.Content.ToLower().IndexOf("vote") > 0 && 
+			 message.Content.Substring(message.Content.Length-1) == "?")
 			{
 				int firstOr = message.Content.IndexOf(" or ");
 				int lastOr = message.Content.LastIndexOf(" or ");

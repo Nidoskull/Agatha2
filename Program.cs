@@ -23,7 +23,8 @@ namespace Agatha2
 		internal string commandPrefix = ".";
 		internal string markovTrigger = "agatha";
 		internal int markovChance = 0;
-
+		internal int adHocPollCharacterLimit = 60;
+		public int AdHocPollCharacterLimit { get => adHocPollCharacterLimit; set => adHocPollCharacterLimit = value; }
 		public string MarkovTrigger { get => markovTrigger; set => markovTrigger = value; }
 		public int MarkovChance { get => markovChance; set => markovChance = value; }
 		public string AdminRole { get => adminRole; set => adminRole = value; }
@@ -49,6 +50,7 @@ namespace Agatha2
 			embedBuilder.AddField("commandPrefix", CommandPrefix);
 			embedBuilder.AddField("markovChance",  MarkovChance);
 			embedBuilder.AddField("markovTrigger", MarkovTrigger);
+			embedBuilder.AddField("adHocPollCharacterLimit", AdHocPollCharacterLimit);
 			embedBuilder.Description = $"Use {commandPrefix}gconf [setting] [value] to modify guild configuration.";
 			return embedBuilder.Build();
 		}
@@ -88,6 +90,23 @@ namespace Agatha2
 						CommandPrefix = fullMsg;
 						resultString = $"Command prefix is now '{CommandPrefix}'.";
 						break;
+					case "adhocpollcharacterlimit":
+						try
+						{
+							int newReplyRate = Convert.ToInt32(fullMsg);
+							if(newReplyRate < 0)
+							{
+								newReplyRate = 0;
+							}
+							AdHocPollCharacterLimit = newReplyRate;
+							resultString = $"Poll character threshold is now {AdHocPollCharacterLimit}.";
+							break;
+						}
+						catch
+						{
+							return "Enter a numerical value, insect.";
+						}
+
 					case "markovchance":
 						try
 						{
