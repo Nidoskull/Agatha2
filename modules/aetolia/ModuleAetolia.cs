@@ -119,15 +119,16 @@ namespace Agatha2
 
 		internal HttpWebResponse GetAPIResponse(string responseType)
 		{
-			string endPoint = $"http://api.aetolia.com/{responseType}.json";
 			HttpWebResponse s = null;
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endPoint);
-			request.Method = "Get";
 			try
 			{
+				string endPoint = $"http://api.aetolia.com/{responseType}.json";
+				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(endPoint);
+				request.Method = "Get";
 				s = (HttpWebResponse)request.GetResponse();
 				if(s != null && s.StatusCode.ToString() != "OK")
 				{
+					Program.WriteToLog($"Non-OK statuscode: {s.StatusCode.ToString()}");
 					s = null;
 				}
 			}
@@ -138,6 +139,67 @@ namespace Agatha2
 			return s;
 		}
 
+		internal override string PingAPI()
+		{
+			return PingAPI("checkauth");
+		}
+
+		internal override string PingAPI(string token)
+		{
+			string result = "Malformed, null or invalid API response, or something broke. Check logs.";
+			try
+			{
+				HttpWebResponse aetInfo = GetAPIResponse(token);
+				if(aetInfo != null)
+				{
+					var s = aetInfo.GetResponseStream();
+					if(s != null)
+					{
+						StreamReader sr = new StreamReader(s);
+						string sr_result = sr.ReadToEnd();
+						if(sr_result == null)
+						{
+							result = "aetInfo stream contents are null.";
+						}
+						else
+						{
+							try
+							{
+								var jToken = JToken.Parse(sr_result);
+								if(jToken is JArray)
+								{
+									JArray jArray = (JArray)jToken;
+									result = $"Array:\n{jArray.ToString()}";
+								}
+								else if(jToken is JObject)
+								{
+									JObject jObject = (JObject)jToken;
+									result = $"Object:\n{jObject.ToString()}";
+								}
+								else
+								{
+									result = $"Token:\n{jToken.ToString()}";
+								}
+							}
+							catch(Exception e)
+							{
+								result = $"Exception when reading JSON object: {e.Message}\n\nRaw string is:\n\n{sr_result}";
+							}
+						}
+					}
+					else
+					{
+						result = "Null return from GetResponseStream().";
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Program.WriteToLog("Done2");
+				result = $"Exception when calling out to Aetolia API:\n```{e.Message}```";
+			}
+			return $"`{token}.json` reply: ```\n{result}```";
+		}
 		internal override void DoPeriodicEvent()
 		{
 
@@ -174,11 +236,12 @@ namespace Agatha2
 						{
 							int removing = seenEvents.Count - 25;
 							seenEvents.RemoveRange(0, removing);
-							Console.WriteLine($"Trimmed {removing}, {seenEvents.Count} remain");
+							Program.WriteToLog($"Trimmed {removing}, {seenEvents.Count} remain");
 						}
 					}
 				}
 			}
+
 			if(resultDescriptions.Count > 0)
 			{
 				EmbedBuilder embedBuilder = new EmbedBuilder();

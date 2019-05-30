@@ -66,7 +66,7 @@ namespace Agatha2
 			}
 			else
 			{
-				await twitch.PollStreamers(message);
+				twitch.PollStreamers(message);
 				await message.Channel.SendMessageAsync($"{message.Author.Mention}: subscribed streamer polling complete.");
 			}
 		}

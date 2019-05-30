@@ -66,28 +66,15 @@ namespace Agatha2
 						}
 						else
 						{
+							GuildConfig checkGuild = Program.GetGuildConfig(guildChannel.Guild.Id);
 							bool enableModule = message_contents[2].ToLower().Equals("enable");
 							if(enableModule)
 							{
-								if(Program.EnableModuleForGuild(foundModule, guildChannel.Guild.Id))
-								{
-									embedBuilder.Description = $"Enabled module {foundModule.moduleName} for this guild.";
-								}
-								else
-								{
-									embedBuilder.Description = $"Module {foundModule.moduleName} is already enabled for this guild.";
-								}
+								embedBuilder.Description = checkGuild.EnableModule(foundModule);
 							}
 							else
 							{
-								if(Program.DisableModuleForGuild(foundModule, guildChannel.Guild.Id))
-								{
-									embedBuilder.Description = $"Disabled module {foundModule.moduleName} for this guild.";
-								}
-								else
-								{
-									embedBuilder.Description = $"Module {foundModule.moduleName} is already disabled for this guild.";
-								}
+								embedBuilder.Description = checkGuild.DisableModule(foundModule);
 							}
 						}
 					}

@@ -124,7 +124,7 @@ namespace Agatha2
 			return embedBuilder;
 		}
 
-		internal async Task PollStreamers(SocketMessage message)
+		internal void PollStreamers(SocketMessage message)
 		{
 			foreach(string streamer in streamers)
 			{
@@ -171,7 +171,7 @@ namespace Agatha2
 										foreach(KeyValuePair<ulong, ulong> streamChannel in streamChannelIds)
 										{
 											IMessageChannel channel = Program.Client.GetChannel(streamChannel.Value) as IMessageChannel;
-											await channel.SendMessageAsync(streamAnnounce, false, embedBuilder.Build());
+											channel.SendMessageAsync(streamAnnounce, false, embedBuilder.Build());
 										}
 									}
 								}
@@ -180,12 +180,12 @@ namespace Agatha2
 					}
 					catch(WebException e)
 					{
-						Program.WriteToLog($"Exception in streamer polling: {e}");
+						Program.WriteToLog($"WebException in streamer polling: {e}");
 					}
 				}
 				catch(Exception e)
 				{
-					await message.Channel.SendMessageAsync($"I tried to poll {streamer} for stream info, but I got an exception instead. ({e.Message})");
+					Program.WriteToLog($"Exception in streamer polling: {e}");
 				}
 			}
 		}
