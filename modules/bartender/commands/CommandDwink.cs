@@ -28,8 +28,8 @@ namespace Agatha2
 			{
 				drinkParts.Add(bartender.BartendingData[drinkPart][Program.rand.Next(bartender.BartendingData[drinkPart].Count)]);
 			}
-			string result = $"slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to";
-			await message.Channel.SendMessageAsync($"_{Program.ApplyCypher(result, "owo")} {message.Author.Mention}._");
+			string result = $"slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to {message.Author.Mention}.";
+			await message.Channel.SendMessageAsync($"_{Program.ApplyCypher(result, "owo")}_");
 		}
 	}
 
