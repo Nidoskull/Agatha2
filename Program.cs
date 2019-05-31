@@ -24,7 +24,7 @@ namespace Agatha2
 		internal static Dictionary<string, BotCommand> commandAliases = new Dictionary<string, BotCommand>();
 		internal static List<BotModule> modules = new List<BotModule>();
 		internal static DiscordSocketClient Client {get => _client; set => _client = value; }
-		internal static Dictionary<string, Dictionary<string, List<string>>> cyphers = new Dictionary<string, Dictionary<string, List<string>>>();
+		internal static Dictionary<string, BotCypher> cyphers = new Dictionary<string, BotCypher>();
 
 		internal static string token;
 		internal static string _usageInformation = "dotnet run Agatha2.csproj --token=SOMETOKEN [--verbose --version]";
@@ -368,14 +368,10 @@ namespace Agatha2
 			string outgoing = incoming;
 			if(cyphers.ContainsKey(cypher))
 			{
-				foreach(KeyValuePair<string, List<string>> cypherList in Program.cyphers[cypher])
-				{
-					foreach(string cypherChar in cypherList.Value)
-					{
-						outgoing = outgoing.Replace(cypherChar, cypherList.Key, false, CultureInfo.CurrentCulture);
-						outgoing = outgoing.Replace(cypherChar.ToUpper(), cypherList.Key.ToUpper(), false, CultureInfo.CurrentCulture);
-					}
-				}
+				BotCypher cypherObj = Program.cyphers[cypher];
+				outgoing = cypherObj.ApplyPreSubstitution(outgoing);
+				outgoing = cypherObj.ApplySubstition(outgoing);
+				outgoing = cypherObj.ApplyPostSubstitution(outgoing);
 			}
 			return outgoing;
 		}

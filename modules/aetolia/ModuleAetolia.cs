@@ -251,7 +251,7 @@ namespace Agatha2
 					IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
 					if(channel != null)
 					{
-						Program.SendReply(channel, embedBuilder);
+						Task.Run( () => ( Program.SendReply(channel, embedBuilder) ));
 					}
 				}
 			}

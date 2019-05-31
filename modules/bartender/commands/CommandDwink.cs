@@ -17,11 +17,7 @@ namespace Agatha2
 			usage = "dwink";
 			description = "Whips up a wandom dwink fow youw enjoyment. :3c";
 			aliases = new List<string>() {"dwink"};
-
-			Dictionary<string, List<string>> cypher = new Dictionary<string, List<string>>();
-			cypher.Add("w", new List<string> {"l", "r", "qu"});
-			cypher.Add("frick", new List<string> {"fuck"});
-			Program.cyphers.Add("owo", cypher);
+			Program.cyphers.Add("owo", new CypherOwo());
 
 		}
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
@@ -32,8 +28,25 @@ namespace Agatha2
 			{
 				drinkParts.Add(bartender.BartendingData[drinkPart][Program.rand.Next(bartender.BartendingData[drinkPart].Count)]);
 			}
-			string result = $"_slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to {message.Author.Mention}._";
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {Program.ApplyCypher(result, "owo")}");
+			string result = $"slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to";
+			await message.Channel.SendMessageAsync($"_{Program.ApplyCypher(result, "owo")} {message.Author.Mention}._");
+		}
+	}
+
+	internal class CypherOwo : BotCypher
+	{
+		public CypherOwo()
+		{
+			substitution.Add("frick", new List<string> {"fuck"});
+			substitution.Add("w", new List<string> {"l", "r", "qu"});
+		}
+		internal override string ApplyPreSubstitution(string incoming)
+		{
+			return incoming;
+		}
+		internal override string ApplyPostSubstitution(string incoming)
+		{
+			return $"{incoming} OwO";
 		}
 	}
 }

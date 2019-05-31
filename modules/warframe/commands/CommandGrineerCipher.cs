@@ -20,28 +20,39 @@ namespace Agatha2
 			description = "Strength to the Grineer!";
 			usage = "grineer [message to translate]";
 			aliases = new List<string>() {"grineer"};
-
-			// Create and store our cypher.
-			Dictionary<string, List<string>> cypher = new Dictionary<string, List<string>>();
-			cypher.Add("ra",  new List<string> {"ba"});
-			cypher.Add("ke",  new List<string> {"be"});
-			cypher.Add("bro", new List<string> {"bo"});
-			cypher.Add("f",   new List<string> {"ck"});
-			cypher.Add("agr", new List<string> {"ar"});
-			cypher.Add("gr",  new List<string> {"cl", "wh"});
-			cypher.Add("k",   new List<string> {"c"});
-			cypher.Add("tr",  new List<string> {"st"});
-			cypher.Add("hu",  new List<string> {"i"});
-			cypher.Add("s",   new List<string> {"ll"});
-			cypher.Add("kl",  new List<string> {"th"});
-			cypher.Add("r",   new List<string> {"w", "d", "h"});
-			Program.cyphers.Add("grineer", cypher);
-
+			Program.cyphers.Add("grineer", new CypherGrineer());
 		}
 
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {Program.ApplyCypher(message.Content.Substring(message.Content.Split(" ")[0].Length), "grineer")}");
+		}
+	}
+
+	internal class CypherGrineer : BotCypher
+	{
+		public CypherGrineer()
+		{
+			substitution.Add("ra",  new List<string> {"ba"});
+			substitution.Add("ke",  new List<string> {"be"});
+			substitution.Add("bro", new List<string> {"bo"});
+			substitution.Add("f",   new List<string> {"ck"});
+			substitution.Add("agr", new List<string> {"ar"});
+			substitution.Add("gr",  new List<string> {"cl", "wh"});
+			substitution.Add("k",   new List<string> {"c"});
+			substitution.Add("tr",  new List<string> {"st"});
+			substitution.Add("hu",  new List<string> {"i"});
+			substitution.Add("s",   new List<string> {"ll"});
+			substitution.Add("kl",  new List<string> {"th"});
+			substitution.Add("r",   new List<string> {"w", "d", "h"});
+		}
+		internal override string ApplyPreSubstitution(string incoming)
+		{
+			return incoming;
+		}
+		internal override string ApplyPostSubstitution(string incoming)
+		{
+			return incoming;
 		}
 	}
 }
