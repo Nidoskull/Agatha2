@@ -416,7 +416,7 @@ namespace Agatha2
 				SocketGuildChannel guildChannel = channel as SocketGuildChannel;
 				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
 				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
-				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Description, guildConfig);
 				await channel.SendMessageAsync("", false, embed.Build());
 			}
 			catch {}
