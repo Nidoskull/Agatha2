@@ -21,6 +21,7 @@ namespace Agatha2
 			usage = "grineer [message to translate]";
 			aliases = new List<string>() {"grineer"};
 			Program.cyphers.Add("grineer", new CypherGrineer());
+			Program.cyphers.Add("clem", new CypherClem());
 		}
 
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
@@ -53,6 +54,65 @@ namespace Agatha2
 		internal override string ApplyPostSubstitution(string incoming)
 		{
 			return incoming;
+		}
+	}
+
+	internal class CypherClem : BotCypher
+	{
+		internal override string ApplyPostSubstitution(string incoming)
+		{
+			List<string> clem = new List<string>();
+			int clemCount = incoming.Length/5;
+			
+			bool placedFullStop = false;
+			for(int i = 1;i<=clemCount;i++)
+			{
+				int clemChance = Program.rand.Next(100);
+				string nextClem = null;
+				if(clemChance <= 10)
+				{
+					nextClem = "clem-clem";
+				}
+				else if(clemChance <= 90)
+				{
+					nextClem = "clem";
+				}
+				else if(clemChance <= 98)
+				{
+					nextClem = "grakata";
+				}
+				else
+				{
+					nextClem = "TWO GRAKATA";
+				}
+				string endCharacter = null;
+				int endCharChance = Program.rand.Next(100);
+				if(endCharChance <= 10)
+				{
+					endCharacter = ".";
+				}
+				else if(endCharChance <= 15 || i == clemCount)
+				{
+					endCharacter = "!";
+				}
+				if(placedFullStop)
+				{
+					nextClem = $"{nextClem.Substring(0,1).ToUpper()}{nextClem.Substring(1)}";
+					placedFullStop = false;
+				}
+				if(endCharacter != null)
+				{
+					nextClem = $"{nextClem}{endCharacter}";
+					placedFullStop = true;
+				}
+				else if(endCharChance <= 30)
+				{
+					nextClem = $"{nextClem},";
+				}
+				clem.Add(nextClem);
+			}
+			string result = string.Join(" ", clem.ToArray());
+			return $"{result.Substring(0,1).ToUpper()}{result.Substring(1)}";
 		}
 	}
 }
