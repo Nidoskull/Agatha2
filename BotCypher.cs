@@ -27,4 +27,12 @@ namespace Agatha2
 			return incoming;
 		}
 	}
+
+	internal class CypherProfanityFilter : BotCypher
+	{
+		public CypherProfanityFilter()
+		{
+			substitution.Add(":bee:", new List<string> {"fuck", "shit"});
+		}
+	}
 }

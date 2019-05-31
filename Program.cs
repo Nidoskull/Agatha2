@@ -64,6 +64,8 @@ namespace Agatha2
 		internal static void Main(string[] args)
 		{
 
+			cyphers.Add("profanityfilter", new CypherProfanityFilter());
+
 			try
 			{
 				TomlTable configTable = Toml.ReadFile("data/config.tml");
