@@ -264,6 +264,8 @@ namespace Agatha2
 			hekPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/hek_strings.txt"));
 			ordisPostStrings = new List<string>(File.ReadAllLines(@"modules/warframe/data/ordis_strings.txt"));
 			commands.Add(new CommandAlerts());
+			commands.Add(new CommandCorpusCipher());
+			commands.Add(new CommandGrineerCipher());
 			return true;
 		}
 		internal override void ListenTo(SocketMessage message, GuildConfig guild)

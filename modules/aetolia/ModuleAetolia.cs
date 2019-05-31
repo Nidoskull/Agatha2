@@ -234,9 +234,7 @@ namespace Agatha2
 						}
 						if(seenEvents.Count > 25)
 						{
-							int removing = seenEvents.Count - 25;
-							seenEvents.RemoveRange(0, removing);
-							Program.WriteToLog($"Trimmed {removing}, {seenEvents.Count} remain");
+							seenEvents.RemoveRange(0, seenEvents.Count - 25);
 						}
 					}
 				}
