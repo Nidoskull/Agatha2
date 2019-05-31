@@ -28,7 +28,7 @@ namespace Agatha2
 			result = $"{result}\nIn the **Land of {landTerms[0]} and {landTerms[1]}**, you are the **{chum.GetRand("chum_class")} of {chum.GetRand("chum_aspect")}**. It's you.";
 			result = $"{result}\nThe Consorts of your land are **{chum.GetRand("consort_quirk")} {chum.GetRand("consort_colour")} {chum.GetRand("consort_type")}** who like **{chum.GetRand("consort_interest")}**.";
 			embedBuilder.Description = result;
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+			await Program.SendReply(message, embedBuilder);
 		}
 	}
 }

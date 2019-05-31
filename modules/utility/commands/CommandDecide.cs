@@ -38,7 +38,7 @@ namespace Agatha2
 
 			if(options.Count <= 1)
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Give me some options to choose between.");
+				await Program.SendReply(message, "Give me some options to choose between.");
 			}
 			else
 			{
@@ -48,7 +48,7 @@ namespace Agatha2
 				{
 					choice = $"{choice}.";
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: {choice}");
+				await Program.SendReply(message, choice);
 			}
 		}
 	}

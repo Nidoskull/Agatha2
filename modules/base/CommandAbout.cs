@@ -21,7 +21,7 @@ namespace Agatha2
 			embedBuilder.AddField("Version", Program.SourceVersion);
 			embedBuilder.AddField("Source", $"[GitHub repository]({Program.SourceLocation}).");
 			embedBuilder.Description = $"Use {guild.commandPrefix}help to view usage information.";
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+			await Program.SendReply(message, embedBuilder);
 		}
 	}
 }

@@ -114,7 +114,7 @@ namespace Agatha2
 					string markovText = GetMarkovChain(tokens[Program.rand.Next(tokens.Length)]);
 					if(markovText != null && markovText != "") 
 					{
-						Task.Run( () => message.Channel.SendMessageAsync(markovText));
+						Task.Run( () => Program.SendReply(message.Channel, markovText));
 					}
 				}
 			}

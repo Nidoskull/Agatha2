@@ -23,7 +23,7 @@ namespace Agatha2
 				string[] message_contents = message.Content.Substring(1).Split(" ");
 				if(message_contents.Length <= 1)
 				{
-					await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, guild.GetConfigSettings());
+					await Program.SendReply(message, guild.GetConfigSettings());
 				}
 				else
 				{
@@ -31,12 +31,12 @@ namespace Agatha2
 				}
 				if(returnMsg != "" && returnMsg != null)
 				{
-					await message.Channel.SendMessageAsync($"{message.Author.Mention}: {returnMsg}");
+					await Program.SendReply(message, returnMsg);
 				}
 			}
 			else
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: You are not authorized to modify guild configuration, insect.");
+				await Program.SendReply(message, "You are not authorized to modify guild configuration, insect.");
 				return;
 			}
 			return;

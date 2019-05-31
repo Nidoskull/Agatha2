@@ -24,6 +24,8 @@ namespace Agatha2
 		internal string markovTrigger = "agatha";
 		internal int markovChance = 0;
 		internal int adHocPollCharacterLimit = 60;
+		internal string useCypher = "none";
+
 		public int AdHocPollCharacterLimit { get => adHocPollCharacterLimit; set => adHocPollCharacterLimit = value; }
 		public string MarkovTrigger { get => markovTrigger; set => markovTrigger = value; }
 		public int MarkovChance { get => markovChance; set => markovChance = value; }
@@ -31,6 +33,7 @@ namespace Agatha2
 		public ulong GuildId { get => guildId; set => guildId = value; }
 		public List<string> EnabledModules { get => enabledModules; set => enabledModules = value; }
 		public string CommandPrefix { get => commandPrefix; set => commandPrefix = value; }
+		public string UseCypher { get => useCypher; set => useCypher = value; }
 
 		internal void Save()
 		{
@@ -42,7 +45,7 @@ namespace Agatha2
 			File.WriteAllText($"{savePath}/{guildId}.json", JsonConvert.SerializeObject((GuildConfig)this));
 		}
 
-		internal Embed GetConfigSettings()
+		internal EmbedBuilder GetConfigSettings()
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
 			embedBuilder.Title = "Guild configuration.";
@@ -51,8 +54,9 @@ namespace Agatha2
 			embedBuilder.AddField("markovChance",  MarkovChance);
 			embedBuilder.AddField("markovTrigger", MarkovTrigger);
 			embedBuilder.AddField("adHocPollCharacterLimit", AdHocPollCharacterLimit);
+			embedBuilder.AddField("useCypher", UseCypher);
 			embedBuilder.Description = $"Use {commandPrefix}gconf [setting] [value] to modify guild configuration.";
-			return embedBuilder.Build();
+			return embedBuilder;
 		}
 
 		internal string SetConfig(string[] message_contents)
@@ -82,6 +86,23 @@ namespace Agatha2
 
 				switch(cmdArg)
 				{
+					case "usecypher":
+						if(fullMsg == "none")
+						{
+							UseCypher = "none";
+							resultString = $"No longer applying a default cypher.";
+						}
+						else if(Program.cyphers.ContainsKey(fullMsg))
+						{
+							UseCypher = fullMsg;
+							resultString = $"Default cypher is now '{UseCypher}'.";
+						}
+						else
+						{
+							resultString = $"Specify a valid cypher, or 'none' to reset. Valid cyphers are {string.Join(", ", Program.cyphers.Keys.ToArray())}.";
+						}
+						break;
+
 					case "adminrole":
 						AdminRole = fullMsg;
 						resultString = $"Admin role is now '{AdminRole}'.";

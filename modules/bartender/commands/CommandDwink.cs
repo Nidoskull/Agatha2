@@ -17,6 +17,12 @@ namespace Agatha2
 			usage = "dwink";
 			description = "Whips up a wandom dwink fow youw enjoyment. :3c";
 			aliases = new List<string>() {"dwink"};
+
+			Dictionary<string, List<string>> cypher = new Dictionary<string, List<string>>();
+			cypher.Add("w", new List<string> {"l", "r", "qu"});
+			cypher.Add("frick", new List<string> {"fuck"});
+			Program.cyphers.Add("owo", cypher);
+
 		}
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
@@ -27,48 +33,7 @@ namespace Agatha2
 				drinkParts.Add(bartender.BartendingData[drinkPart][Program.rand.Next(bartender.BartendingData[drinkPart].Count)]);
 			}
 			string result = $"_slings {drinkParts[0]}, containing {drinkParts[1]} {drinkParts[2]}, down the bar to {message.Author.Mention}._";
-			string owotext = "";
-			char lastChar = '\0';
-			foreach(char c in result)
-			{
-				switch(c)
-				{
-					case 'l':
-					case 'r':
-						owotext += 'w';
-						break;
-					case 'L':
-					case 'R':
-						owotext += 'W';
-						break;
-					case 'u':
-						if(lastChar == 'Q' || lastChar == 'q')
-						{
-							owotext += 'w';
-						}
-						else
-						{
-							owotext += c;								
-						}
-						break;
-					case 'U':
-						if(lastChar == 'Q' || lastChar == 'q')
-						{
-							owotext += 'W';
-						}
-						else
-						{
-							owotext += c;
-						}
-						break;
-					default:
-						owotext += c;
-						break;
-				}
-				lastChar = c;
-			}
-			result = $"{owotext} :3c";			
-			await message.Channel.SendMessageAsync(result);
+			await message.Channel.SendMessageAsync($"{message.Author.Mention}: {Program.ApplyCypher(result, "owo")}");
 		}
 	}
 }

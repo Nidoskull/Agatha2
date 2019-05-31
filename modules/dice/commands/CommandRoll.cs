@@ -33,11 +33,11 @@ namespace Agatha2
 			}
 			if(!foundDice)
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Dice syntax is `{guild.commandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.");
+				await Program.SendReply(message, $"Dice syntax is `{guild.commandPrefix}roll [1-100]d[1-100]<+/-[modifier]>` separated by spaces or commas. Separate dice count from number of sides with `#` for individual rolls.");
 			}
 			else
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+				await Program.SendReply(message, embedBuilder);
 			}
 		}
 	}

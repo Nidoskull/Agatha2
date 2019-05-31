@@ -21,7 +21,7 @@ namespace Agatha2
 		}
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
-			await message.Channel.SendMessageAsync("Not implemented, sorry.");
+			await Program.SendReply(message, "Not implemented, sorry.");
 		}
 	}
 }

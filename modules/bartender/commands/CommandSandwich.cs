@@ -42,7 +42,7 @@ namespace Agatha2
 					}
 				}
 			}
-			await message.Channel.SendMessageAsync(result);
+			await Program.SendReply(message, result);
 		}
 	}
 }

@@ -75,7 +75,7 @@ namespace Agatha2
 					}
 				}
 			}
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+			await Program.SendReply(message, embedBuilder);
 		}
 	}
 }

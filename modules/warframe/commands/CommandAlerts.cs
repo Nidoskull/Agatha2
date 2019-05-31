@@ -26,7 +26,7 @@ namespace Agatha2
 			ModuleWarframe wf = (ModuleWarframe)parent;
 			if(wf.alerts.Count <= 0)
 			{
-			await message.Channel.SendMessageAsync($"{message.Author.Mention}: There are no mission alerts available currently, Tenno.");
+				await Program.SendReply(message, "There are no mission alerts available currently, Tenno.");
 			}
 			else
 			{
@@ -38,7 +38,7 @@ namespace Agatha2
 						embedBuilder.AddField($"{alertInfo.Value["Header"]} - {alertInfo.Value["Mission Type"]} ({alertInfo.Value["Faction"]})", $"{alertInfo.Value["Level"]}. Expires in {alertInfo.Value["Expires"]}.\nRewards:{alertInfo.Value["Rewards"]}");
 					}
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+				await Program.SendReply(message, embedBuilder);
 			}
 		}
 	}

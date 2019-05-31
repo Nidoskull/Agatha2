@@ -245,7 +245,7 @@ namespace Agatha2
 								IMessageChannel channel = Program.Client.GetChannel(channelId.Value) as IMessageChannel;
 								if(channel != null)
 								{
-									channel.SendMessageAsync($"There are new mission alerts available, Tenno.", false, embedBuilder.Build());
+									Task.Run(() => (Program.SendReply(channel, "There are new mission alerts available, Tenno.", embedBuilder)));
 								}
 							}
 						}
@@ -273,15 +273,15 @@ namespace Agatha2
 			string searchSpace =  message.Content.ToLower();
 			if(searchSpace.Contains("hek"))
 			{
-				Task.Run( () => message.Channel.SendMessageAsync(hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
+				Task.Run( () => Program.SendReply(message.Channel, hekPostStrings[Program.rand.Next(hekPostStrings.Count)]));
 			}
 			else if(searchSpace.Contains("ordis"))
 			{
-				Task.Run( () => message.Channel.SendMessageAsync(ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
+				Task.Run( () => Program.SendReply(message.Channel, ordisPostStrings[Program.rand.Next(ordisPostStrings.Count)]));
 			}
 			else if(searchSpace.Contains("look at them"))
 			{
-				Task.Run( () => message.Channel.SendMessageAsync(vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
+				Task.Run( () => Program.SendReply(message.Channel, vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
 			}
 		}
 	}

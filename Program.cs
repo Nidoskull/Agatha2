@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Globalization;
 
 namespace Agatha2
 {	
@@ -23,6 +24,8 @@ namespace Agatha2
 		internal static Dictionary<string, BotCommand> commandAliases = new Dictionary<string, BotCommand>();
 		internal static List<BotModule> modules = new List<BotModule>();
 		internal static DiscordSocketClient Client {get => _client; set => _client = value; }
+		internal static Dictionary<string, Dictionary<string, List<string>>> cyphers = new Dictionary<string, Dictionary<string, List<string>>>();
+
 		internal static string token;
 		internal static string _usageInformation = "dotnet run Agatha2.csproj --token=SOMETOKEN [--verbose --version]";
 		internal static string UsageInformation { get => _usageInformation; set => _usageInformation = value; }
@@ -316,12 +319,12 @@ namespace Agatha2
 							}
 							else
 							{
-								message.Channel.SendMessageAsync("That module is disabled for this guild.");
+								Task.Run(() => Program.SendReply(message, "That module is disabled for this guild."));
 							}
 						}
 						else
 						{
-							message.Channel.SendMessageAsync($"Unknown command '{command}', insect.");
+							Task.Run(() => Program.SendReply(message, $"Unknown command '{command}', insect."));
 						}
 						return;
 					}
@@ -353,6 +356,99 @@ namespace Agatha2
 				WriteToLog($"Created GuildConfig for guild {guildId}.");
 			}
 			return guilds[guildId];
+		}
+
+		internal static string ApplyCurrentCypher(string incoming, GuildConfig guild)
+		{
+			return (guild.useCypher != null && cyphers.ContainsKey(guild.useCypher)) ? ApplyCypher(incoming, guild.useCypher) : incoming;
+		}
+
+		internal static string ApplyCypher(string incoming, string cypher)
+		{
+			string outgoing = incoming;
+			if(cyphers.ContainsKey(cypher))
+			{
+				foreach(KeyValuePair<string, List<string>> cypherList in Program.cyphers[cypher])
+				{
+					foreach(string cypherChar in cypherList.Value)
+					{
+						outgoing = outgoing.Replace(cypherChar, cypherList.Key, false, CultureInfo.CurrentCulture);
+						outgoing = outgoing.Replace(cypherChar.ToUpper(), cypherList.Key.ToUpper(), false, CultureInfo.CurrentCulture);
+					}
+				}
+			}
+			return outgoing;
+		}
+
+		internal static async Task SendReply(SocketMessage replyingTo, string outgoing)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = replyingTo.Channel as SocketGuildChannel;
+				await replyingTo.Channel.SendMessageAsync($"{replyingTo.Author.Mention}: {ApplyCurrentCypher(outgoing, Program.GetGuildConfig(guildChannel.Guild.Id))}");
+			}
+			catch {}
+		}
+
+		internal static async Task SendReply(IMessageChannel channel, string outgoing)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = channel as SocketGuildChannel;
+				await channel.SendMessageAsync(ApplyCurrentCypher(outgoing, Program.GetGuildConfig(guildChannel.Guild.Id)));
+			}
+			catch {}
+		}
+
+		internal static async Task SendReply(IMessageChannel channel, string outgoing, EmbedBuilder embed)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = channel as SocketGuildChannel;
+				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
+				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				await channel.SendMessageAsync(ApplyCurrentCypher(outgoing, guildConfig), false, embed.Build());
+			}
+			catch {}
+		}
+
+		internal static async Task SendReply(IMessageChannel channel, EmbedBuilder embed)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = channel as SocketGuildChannel;
+				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
+				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				await channel.SendMessageAsync("", false, embed.Build());
+			}
+			catch {}
+		}
+
+		internal static async Task SendReply(SocketMessage replyingTo, string outgoing, EmbedBuilder embed)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = replyingTo.Channel as SocketGuildChannel;
+				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
+				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				await replyingTo.Channel.SendMessageAsync($"{replyingTo.Author.Mention}: {ApplyCurrentCypher(outgoing, guildConfig)}", false, embed.Build());
+			}
+			catch {}
+		}
+		internal static async Task SendReply(SocketMessage replyingTo, EmbedBuilder embed)
+		{
+			try
+			{
+				SocketGuildChannel guildChannel = replyingTo.Channel as SocketGuildChannel;
+				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
+				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				await replyingTo.Channel.SendMessageAsync($"{replyingTo.Author.Mention}:", false, embed.Build());
+			}
+			catch {}
 		}
 	}
 }

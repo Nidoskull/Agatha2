@@ -52,7 +52,7 @@ namespace Agatha2
 								}
 							}
 						}
-						await message.Channel.SendMessageAsync($"{message.Author.Mention}", false, twitch.MakeAuthorEmbed(jData, jsonStream).Build());
+						await Program.SendReply(message, twitch.MakeAuthorEmbed(jData, jsonStream));
 					}
 					catch(WebException e)
 					{
@@ -61,13 +61,13 @@ namespace Agatha2
 				}
 				else
 				{
-					 await message.Channel.SendMessageAsync($"{message.Author.Mention}: No user found for '{streamer}'.");
+					 await Program.SendReply(message, $"No user found for '{streamer}'.");
 				}
 			}
 			else
 			{
 				twitch.PollStreamers(message);
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: subscribed streamer polling complete.");
+				await Program.SendReply(message, $"Subscribed streamer polling complete.");
 			}
 		}
 	}

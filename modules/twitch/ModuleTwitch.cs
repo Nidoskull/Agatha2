@@ -171,7 +171,7 @@ namespace Agatha2
 										foreach(KeyValuePair<ulong, ulong> streamChannel in streamChannelIds)
 										{
 											IMessageChannel channel = Program.Client.GetChannel(streamChannel.Value) as IMessageChannel;
-											channel.SendMessageAsync(streamAnnounce, false, embedBuilder.Build());
+											Task.Run(() => (Program.SendReply(channel, streamAnnounce, embedBuilder)));
 										}
 									}
 								}

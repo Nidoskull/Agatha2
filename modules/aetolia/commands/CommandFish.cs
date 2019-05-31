@@ -57,7 +57,7 @@ namespace Agatha2
 			string[] message_contents = message.Content.Substring(1).Split(" ");
 			if(message_contents.Length < 2)
 			{
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}: Usage: {usage}");
+				await Program.SendReply(message, $"Usage: {usage}");
 			}
 			else
 			{
@@ -106,7 +106,7 @@ namespace Agatha2
 					}
 					embedBuilder.Description = $"{fishResults}\n\nSpecify an ID number or a more specific search string for detailed information on a fishing hole.";
 				}
-				await message.Channel.SendMessageAsync($"{message.Author.Mention}:", false, embedBuilder.Build());
+				await Program.SendReply(message, embedBuilder);
 			}
 		}
 	}
