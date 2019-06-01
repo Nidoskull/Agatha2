@@ -94,7 +94,7 @@ namespace Agatha2
 					KeyValuePair<FishingHole, string> fishHole = matches.First();
 					embedBuilder.Title = fishHole.Key.holeName;
 					embedBuilder.AddField("Type", fishHole.Key.holeType);
-					embedBuilder.AddField("Vnum", fishHole.Key.vNum);
+					embedBuilder.AddField("Vnums", string.Join(", ", fishHole.Key.vNums.ToArray()));
 					embedBuilder.AddField("Fish", string.Join(", ", fishHole.Key.containsFish.ToArray()));
 				}
 				else
@@ -102,7 +102,7 @@ namespace Agatha2
 					string fishResults = "Multiple matches found:\n";
 					foreach(KeyValuePair<FishingHole, string> fishHole in matches)
 					{
-						fishResults = $"{fishResults}\n{fishHole.Key.holeId}. {fishHole.Key.holeName} - {fishHole.Key.holeType} - v{fishHole.Key.vNum} [{fishHole.Value.ToString()}]";
+						fishResults = $"{fishResults}\n{fishHole.Key.holeId}. {fishHole.Key.holeName} - {fishHole.Key.holeType} - v{fishHole.Key.vNums[0]} [{fishHole.Value.ToString()}]";
 					}
 					embedBuilder.Description = $"{fishResults}\n\nSpecify an ID number or a more specific search string for detailed information on a fishing hole.";
 				}

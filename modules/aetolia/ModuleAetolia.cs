@@ -18,13 +18,13 @@ namespace Agatha2
 		internal string holeName;
 		internal string holeType;
 		internal string holeId;
-		internal string vNum;
+		internal List<string> vNums;
 		internal List<string> containsFish;
-		internal FishingHole(string _name, string _type, string _vnum, List<string> _fish)
+		internal FishingHole(string _name, string _type, List<string> _vnum, List<string> _fish)
 		{
 				holeName = _name;
 				holeType = _type;
-				vNum = _vnum;
+				vNums = _vnum;
 				containsFish = _fish;
 		}
 	}
@@ -58,7 +58,7 @@ namespace Agatha2
 					FishingHole fishHole = new FishingHole(
 						fish["name"].ToString(), 
 						fish["type"].ToString(), 
-						fish["rooms"].ToObject<List<string>>()[0],
+						fish["rooms"].ToObject<List<string>>(),
 						fish["fish"].ToObject<List<string>>()
 					);
 					fishingHoles.Add(fishHole);
