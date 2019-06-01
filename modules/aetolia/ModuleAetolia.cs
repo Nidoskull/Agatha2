@@ -5,7 +5,6 @@ using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
-using System.Data.SQLite;
 using System.Diagnostics;
 using System.Threading;
 using System.Reactive.Linq;
@@ -40,7 +39,7 @@ namespace Agatha2
 		}
 
 		internal List<string> seenEvents = new List<string>();
-		private string fishDbPath = @"modules/aetolia/data/fish.db";
+		private string fishDbPath = @"modules/aetolia/data/fishdb.json";
 		internal List<FishingHole> fishingHoles;
 		internal Dictionary<ulong, ulong> aetoliaChannelIds = new Dictionary<ulong, ulong>();
 
@@ -48,43 +47,32 @@ namespace Agatha2
 		{
 			if(!File.Exists(fishDbPath))
 			{
-				Program.WriteToLog($"No fish found, creating an empty one at {fishDbPath}.");
-				SQLiteConnection.CreateFile(fishDbPath);				
+				Program.WriteToLog($"No fish database found.");
 			}
-			SQLiteConnection fishDbConnection = new SQLiteConnection($"Data Source={fishDbPath};Version=3;");
-			fishDbConnection.Open();
-
-			List<string> uniqueFish = new List<string>();
-			Dictionary<string, List<string>> tmpFish = new Dictionary<string, List<string>>();
-			SQLiteCommand command = new SQLiteCommand("SELECT * FROM fish_types;", fishDbConnection);
-			SQLiteDataReader reader = command.ExecuteReader();
-			while(reader.Read())
+			else
 			{
-				string fishName = reader["fishName"].ToString();
-				string holeName = reader["fishingHoleName"].ToString();
-				
-				if(!uniqueFish.Contains(fishName))
+				List<string> uniqueFish = new List<string>();
+				JArray fishDb = JArray.Parse(File.ReadAllText(fishDbPath));
+				foreach(JToken fish in fishDb)
 				{
-					uniqueFish.Add(fishName);
+					FishingHole fishHole = new FishingHole(
+						fish["name"].ToString(), 
+						fish["type"].ToString(), 
+						fish["rooms"].ToObject<List<string>>()[0],
+						fish["fish"].ToObject<List<string>>()
+					);
+					fishingHoles.Add(fishHole);
+					fishHole.holeId = fishingHoles.Count.ToString();
+					foreach(string fishName in fishHole.containsFish)
+					{
+						if(!uniqueFish.Contains(fishName))
+						{
+							uniqueFish.Add(fishName);
+						}
+					}
 				}
-				if(!tmpFish.ContainsKey(holeName))
-				{
-					tmpFish.Add(holeName, new List<string>());
-				}
-				tmpFish[holeName].Add(fishName);
+				Program.WriteToLog($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 			}
-			command = new SQLiteCommand("SELECT * FROM fishing_holes;", fishDbConnection);
-			reader = command.ExecuteReader();
-			while(reader.Read())
-			{
-				string holeName = reader["fishingHoleName"].ToString();
-				string holeType = reader["fishingHoleType"].ToString();
-				string holeVnum = reader["fishingHoleVnum"].ToString();
-				FishingHole fishHole = new FishingHole(holeName, holeType, holeVnum, tmpFish[holeName]);
-				fishingHoles.Add(fishHole);
-				fishHole.holeId = fishingHoles.Count.ToString();
-			}
-			Program.WriteToLog($"Associated {uniqueFish.Count} fish with {fishingHoles.Count} fishing holes. Done.");
 		}
 
 		internal override void LoadConfig()

@@ -252,3 +252,4 @@ data/guilds/*
 modules/markov/data/markov.bin
 modules/warframe/data/channel_ids.json
 modules/aetolia/data/channel_ids.json
+data/markov.bin
