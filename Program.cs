@@ -405,7 +405,7 @@ namespace Agatha2
 				SocketGuildChannel guildChannel = channel as SocketGuildChannel;
 				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
 				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
-				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Description, guildConfig);
 				await channel.SendMessageAsync(ApplyCurrentCypher(outgoing, guildConfig), false, embed.Build());
 			}
 			catch {}
@@ -431,7 +431,7 @@ namespace Agatha2
 				SocketGuildChannel guildChannel = replyingTo.Channel as SocketGuildChannel;
 				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
 				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
-				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Description, guildConfig);
 				await replyingTo.Channel.SendMessageAsync($"{replyingTo.Author.Mention}: {ApplyCurrentCypher(outgoing, guildConfig)}", false, embed.Build());
 			}
 			catch {}
@@ -443,7 +443,7 @@ namespace Agatha2
 				SocketGuildChannel guildChannel = replyingTo.Channel as SocketGuildChannel;
 				GuildConfig guildConfig = Program.GetGuildConfig(guildChannel.Guild.Id);
 				embed.Title = ApplyCurrentCypher(embed.Title, guildConfig);
-				embed.Description = ApplyCurrentCypher(embed.Title, guildConfig);
+				embed.Description = ApplyCurrentCypher(embed.Description, guildConfig);
 				await replyingTo.Channel.SendMessageAsync($"{replyingTo.Author.Mention}:", false, embed.Build());
 			}
 			catch {}
