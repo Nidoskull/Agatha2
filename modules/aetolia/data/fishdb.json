@@ -1,239 +1,20 @@
 [
   {
-    "name"  : "the Mostyn lagoon",
-    "type"  : "lagoon waters",
-    "fish"  : 
-    [ 
-      "an exotic spiny lionfish", 
-      "a bulky sea hare", 
-      "a drab toadfish", 
-      "a flameback angelfish", 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      13167
-    ]
-  },
-  {
-    "name"  : "the Arbothia pond",
-    "type"  : "lake waters",
-    "fish"  : 
-    [ 
-      "an exotic spiny lionfish", 
-      "a bulky sea hare", 
-      "a humphead wrasse", 
-      "a cardinal tetra", 
-      "a black-finned tambaqui", 
-      "a yellow perch", 
-      "a flameback angelfish", 
-      "a yellow seahorse", 
-      "a colorful clownfish", 
-      "a vicious piranha", 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      15140
-    ]
-  },
-  {
-    "name"  : "the Beryl Sea",
-    "type"  : "sea depths",
-    "fish"  : 
-    [ 
-      "a blue mackerel", 
-      "a chub mackerel", 
-      "a red snapper", 
-      "a yellowfin tuna", 
-      "a striped bass", 
-      "a lobster", 
-      "a rock goby", 
-      "a purple-striped jellyfish", 
-      "a great barracuda", 
-      "a giant moray eel", 
-      "a coldwater cod", 
-      "an ocean sunfish", 
-      "a majestic blue marlin", 
-      "a mako shark", 
-      "a tiger shark", 
-      "a hammerhead shark", 
-      "a goliath grouper", 
-      "a great white shark", 
-      "a humphead wrasse", 
-      "a Maestral hagfish", 
-      "a giant octopus", 
-      "a blueback salmon"
-    ],
-    "rooms" : 
-    [ 
-      5597
-    ]
-  },
-  {
-    "name"  : "Shallows of the Beryl Sea",
-    "type"  : "shallow waters",
-    "fish"  : 
-    [ 
-      "a blue-green anchovy", 
-      "a small pink shrimp", 
-      "a horseshoe crab", 
-      "a red snapper", 
-      "a dusky bonefish", 
-      "a rock goby", 
-      "a flameback angelfish", 
-      "a goliath grouper", 
-      "an exotic spiny lionfish", 
-      "a bulky sea hare", 
-      "a colorful clownfish", 
-      "a humphead wrasse", 
-      "a red-striped 'derby' fish", 
-      "a blueback salmon", 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      3416
-    ]
-  },
-  {
-    "name"  : "the Mournhold Vortex",
-    "type"  : "swirling elements",
-    "fish"  : 
-    [ 
-      "a glowing fire-slug", 
-      "an obsidian-plated crawler", 
-      "a lumbering lava puppy", 
-      "an eyeless sand-wriggler", 
-      "a dusty fossilback", 
-      "a broad sand manta", 
-      "an almost-invisible windskimmer", 
-      "a tubby juvenile wind fish", 
-      "a shimmering shell ammonite", 
-      "a crackling cloud moray"
-    ],
-    "rooms" : 
-    [ 
-      46365
-    ]
-  },
-  {
-    "name"  : "the Scidve Swamp",
-    "type"  : "brackish waters",
-    "fish"  : 
-    [ 
-      "a horseshoe crab", 
-      "a muddy catfish", 
-      "an oak toad", 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      9825, 
-      9829, 
-      9836, 
-      9827, 
-      9831
-    ]
-  },
-  {
-    "name"  : "Mournhold",
-    "type"  : "tidal waters",
-    "fish"  : 
-    [ 
-      "a blue mackerel", 
-      "a blue-green anchovy"
-    ],
-    "rooms" : 
-    [ 
-      46413
-    ]
-  },
-  {
-    "name"  : "Ilhavon Lake",
-    "type"  : "lake waters",
-    "fish"  : 
-    [ 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      21326
-    ]
-  },
-  {
-    "name"  : "the North Strand Lagoon",
-    "type"  : "lagoon waters",
-    "fish"  : 
-    [ 
-      "a bulky sea hare", 
-      "a humphead wrasse", 
-      "a drab toadfish", 
-      "a cardinal tetra", 
-      "a flathead mullet", 
-      "a goldlined seabream", 
-      "a smallspotted dart", 
-      "a floral wrasse", 
-      "a shoemaker spinefoot", 
-      "a flameback angelfish", 
-      "an exotic spiny lionfish", 
-      "a yellow perch", 
-      "a yellowstripe goatfish", 
-      "a blue-barred parrotfish"
-    ],
-    "rooms" : 
-    [ 
-      18236
-    ]
-  },
-  {
-    "name"  : "Widow's Crack",
-    "type"  : "icy waters",
-    "fish"  : 
-    [ 
-      "an arctic char", 
-      "a northern pike", 
-      "a king salmon", 
-      "a broad whitefish", 
-      "an Alaqsii lamprey", 
-      "a rainbow trout"
-    ],
-    "rooms" : 
-    [ 
-      22541
-    ]
-  },
-  {
-    "name"  : "the Blue Myesis River",
-    "type"  : "river waters",
+    "name"  : "the Vintal Glade",
+    "type"  : "spring waters",
     "fish"  : 
     [ 
       "a silvery minnow", 
-      "a river herring", 
       "a white sucker", 
       "a dark brown crayfish", 
-      "a bluefin killifish", 
-      "a swamp muskie", 
-      "a muddy catfish", 
       "a bronze bream", 
       "an oak toad", 
-      "a bluegill fish", 
-      "a rams-horn snail", 
-      "a Rahn's Mace crayfish", 
-      "a fang-toothed eel", 
       "a rainbow trout", 
-      "a freshwater grayling", 
-      "a spotted sunfish", 
-      "a bighead carp", 
-      "a blueback salmon", 
-      "a drab toadfish", 
-      "an olive-hued walleye", 
-      "the Myesian Gobbler"
+      "a spotted sunfish"
     ],
     "rooms" : 
     [ 
-      23892, 
-      23887
+      42876
     ]
   },
   {
@@ -250,7 +31,58 @@
     ]
   },
   {
-    "name"  : "the River Zaphar",
+    "name"  : "the Beryl Sea",
+    "type"  : "sea depths",
+    "fish"  : 
+    [ 
+      "a blue mackerel", 
+      "a chub mackerel", 
+      "a red snapper", 
+      "a striped bass", 
+      "a blueback salmon", 
+      "a lobster", 
+      "a rock goby", 
+      "a purple-striped jellyfish", 
+      "a great barracuda", 
+      "a goliath grouper", 
+      "a giant moray eel", 
+      "a whitetip reef shark", 
+      "a coldwater cod", 
+      "an ocean sunfish", 
+      "a majestic blue marlin", 
+      "a mako shark", 
+      "a Maestral hagfish", 
+      "a tiger shark", 
+      "a humphead wrasse", 
+      "a hammerhead shark", 
+      "a giant octopus", 
+      "a great white shark", 
+      "a yellowfin tuna"
+    ],
+    "rooms" : 
+    [ 
+      5597
+    ]
+  },
+  {
+    "name"  : "the Caverns of Telfinne",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      22286
+    ]
+  },
+  {
+    "name"  : "the Eidar River",
     "type"  : "river waters",
     "fish"  : 
     [ 
@@ -263,26 +95,68 @@
       "a muddy catfish", 
       "a bronze bream", 
       "an oak toad", 
-      "a bluegill fish", 
+      "a rams-horn snail", 
       "a fang-toothed eel", 
       "a rainbow trout", 
-      "a freshwater grayling", 
       "a spotted sunfish", 
       "a bighead carp", 
-      "a mottled pike", 
-      "a blueback salmon", 
       "a drab toadfish", 
-      "an olive-hued walleye", 
-      "a rams-horn snail", 
-      "unfamiliar creatures"
+      "a bluegill fish", 
+      "a freshwater grayling", 
+      "a mottled pike", 
+      "a Rahn's Mace crayfish", 
+      "an olive-hued walleye"
     ],
     "rooms" : 
     [ 
-      768
+      14430, 
+      14429
     ]
   },
   {
-    "name"  : "Alaqsii Inlet",
+    "name"  : "Mud on the Scidve",
+    "type"  : "muddy waters",
+    "fish"  : 
+    [ 
+      "a dark brown crayfish", 
+      "a horseshoe crab", 
+      "a muddy catfish", 
+      "an oak toad"
+    ],
+    "rooms" : 
+    [ 
+      9705
+    ]
+  },
+  {
+    "name"  : "Shallows near Kornar",
+    "type"  : "shallow waters",
+    "fish"  : 
+    [ 
+      "a blue-green anchovy", 
+      "a small pink shrimp", 
+      "a horseshoe crab", 
+      "a dusky bonefish", 
+      "a blueback salmon", 
+      "a rock goby", 
+      "a flameback angelfish", 
+      "an exotic spiny lionfish", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a red-striped 'derby' fish", 
+      "a red snapper", 
+      "a goliath grouper", 
+      "a giant moray eel", 
+      "a whitetip reef shark"
+    ],
+    "rooms" : 
+    [ 
+      21456
+    ]
+  },
+  {
+    "name"  : "Augerweald",
     "type"  : "icy waters",
     "fish"  : 
     [ 
@@ -291,16 +165,79 @@
       "a king salmon", 
       "a broad whitefish", 
       "a rainbow trout", 
-      "an Alaqsii lamprey", 
-      "a freshwater grayling"
+      "a freshwater grayling", 
+      "an Alaqsii lamprey"
     ],
     "rooms" : 
     [ 
-      22525
+      23922
     ]
   },
   {
-    "name"  : "the Peshwar Delta",
+    "name"  : "the Tasur'ke Sea",
+    "type"  : "sea depths",
+    "fish"  : 
+    [ 
+      "a blue mackerel", 
+      "a chub mackerel", 
+      "a red snapper", 
+      "a striped bass", 
+      "a blueback salmon", 
+      "a lobster", 
+      "a rock goby", 
+      "a purple-striped jellyfish", 
+      "a great barracuda", 
+      "a giant moray eel", 
+      "a humphead wrasse", 
+      "a coldwater cod", 
+      "an ocean sunfish", 
+      "a majestic blue marlin", 
+      "a mako shark", 
+      "a tiger shark", 
+      "a goliath grouper", 
+      "a hammerhead shark", 
+      "a whitetip reef shark", 
+      "a great white shark", 
+      "a giant octopus", 
+      "a Maestral hagfish", 
+      "a yellowfin tuna"
+    ],
+    "rooms" : 
+    [ 
+      64672, 
+      4458, 
+      4454, 
+      64681, 
+      64677
+    ]
+  },
+  {
+    "name"  : "Libec Cay",
+    "type"  : "shallow waters",
+    "fish"  : 
+    [ 
+      "a blue-green anchovy", 
+      "a small pink shrimp", 
+      "a horseshoe crab", 
+      "a dusky bonefish", 
+      "a rock goby", 
+      "a purple-striped jellyfish", 
+      "a flameback angelfish", 
+      "a goliath grouper", 
+      "an exotic spiny lionfish", 
+      "a giant moray eel", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a red-striped 'derby' fish"
+    ],
+    "rooms" : 
+    [ 
+      53604
+    ]
+  },
+  {
+    "name"  : "Bloodwood River",
     "type"  : "river waters",
     "fish"  : 
     [ 
@@ -308,54 +245,65 @@
       "a river herring", 
       "a white sucker", 
       "a dark brown crayfish", 
-      "a muddy catfish", 
-      "a bronze bream", 
-      "an oak toad", 
-      "a bluegill fish", 
-      "a Rahn's Mace crayfish", 
-      "a rainbow trout", 
-      "a freshwater grayling", 
-      "a spotted sunfish", 
-      "a bighead carp", 
-      "a drab toadfish", 
       "a bluefin killifish", 
       "a swamp muskie", 
-      "a fang-toothed eel", 
-      "a rams-horn snail"
-    ],
-    "rooms" : 
-    [ 
-      18398, 
-      18400
-    ]
-  },
-  {
-    "name"  : "Myesis Branch",
-    "type"  : "river waters",
-    "fish"  : 
-    [ 
-      "a silvery minnow", 
-      "a river herring", 
-      "a dark brown crayfish", 
       "a bronze bream", 
       "an oak toad", 
       "a bluegill fish", 
-      "a Rahn's Mace crayfish", 
       "a rainbow trout", 
       "a spotted sunfish", 
       "a bighead carp", 
       "a drab toadfish", 
-      "a white sucker", 
-      "a swamp muskie", 
+      "a Rahn's Mace crayfish", 
       "a rams-horn snail", 
-      "a fang-toothed eel", 
       "a freshwater grayling", 
       "a blueback salmon", 
       "a mottled pike"
     ],
     "rooms" : 
     [ 
-      31553
+      57566, 
+      57572
+    ]
+  },
+  {
+    "name"  : "Nal'jin Depths",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      38090
+    ]
+  },
+  {
+    "name"  : "Green Lake",
+    "type"  : "lake waters",
+    "fish"  : 
+    [ 
+      "a flameback angelfish", 
+      "an exotic spiny lionfish", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a vicious piranha", 
+      "a cardinal tetra", 
+      "a black-finned tambaqui", 
+      "a yellow perch", 
+      "a yellow seahorse", 
+      "a giant moray eel", 
+      "a whitetip reef shark"
+    ],
+    "rooms" : 
+    [ 
+      11312
     ]
   },
   {
@@ -365,29 +313,191 @@
     [ 
       "a blue mackerel", 
       "a chub mackerel", 
-      "a red snapper", 
-      "a yellowfin tuna", 
       "a striped bass", 
       "a blueback salmon", 
       "a lobster", 
-      "a purple-striped jellyfish", 
+      "a rock goby", 
+      "a great barracuda", 
       "a goliath grouper", 
-      "a giant moray eel", 
-      "a whitetip reef shark", 
       "a coldwater cod", 
       "a giant octopus", 
       "an ocean sunfish", 
+      "a majestic blue marlin", 
       "a mako shark", 
       "a tiger shark", 
       "a hammerhead shark", 
       "a great white shark", 
+      "a giant moray eel", 
       "a Maestral hagfish", 
+      "a whitetip reef shark", 
+      "a red snapper", 
       "a humphead wrasse", 
-      "a majestic blue marlin"
+      "a purple-striped jellyfish", 
+      "a yellowfin tuna"
     ],
     "rooms" : 
     [ 
-      19626
+      19626, 
+      20273, 
+      19625
+    ]
+  },
+  {
+    "name"  : "Itzatl Cave",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      11211
+    ]
+  },
+  {
+    "name"  : "Lake Astri",
+    "type"  : "lake waters",
+    "fish"  : 
+    [ 
+      "a Dramedo bullhead", 
+      "a brown trout", 
+      "a Lake Astri trout", 
+      "a spotted barbel", 
+      "a blackwater lamprey", 
+      "Bakhmal's sturgeon", 
+      "a silverside perch"
+    ],
+    "rooms" : 
+    [ 
+      57687
+    ]
+  },
+  {
+    "name"  : "Three Rock Lake",
+    "type"  : "lake waters",
+    "fish"  : 
+    [ 
+      "a flameback angelfish", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a vicious piranha", 
+      "a cardinal tetra", 
+      "a black-finned tambaqui", 
+      "a yellow perch", 
+      "an exotic spiny lionfish", 
+      "a yellow seahorse", 
+      "a giant moray eel"
+    ],
+    "rooms" : 
+    [ 
+      20302
+    ]
+  },
+  {
+    "name"  : "Ilhavon Pond",
+    "type"  : "muddy waters",
+    "fish"  : 
+    [ 
+      "a dark brown crayfish", 
+      "a horseshoe crab", 
+      "a muddy catfish", 
+      "an oak toad"
+    ],
+    "rooms" : 
+    [ 
+      55412
+    ]
+  },
+  {
+    "name"  : "the Shamtota spring",
+    "type"  : "spring waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a spotted sunfish", 
+      "a rainbow trout"
+    ],
+    "rooms" : 
+    [ 
+      58866
+    ]
+  },
+  {
+    "name"  : "the Torturers' Caverns",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      23314
+    ]
+  },
+  {
+    "name"  : "the Morgun Spring",
+    "type"  : "spring waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a spotted sunfish", 
+      "a Rahn's Mace crayfish"
+    ],
+    "rooms" : 
+    [ 
+      4793
+    ]
+  },
+  {
+    "name"  : "the Pachacacha River",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a muddy catfish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
+      "a fang-toothed eel", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a blueback salmon", 
+      "a drab toadfish", 
+      "an olive-hued walleye", 
+      "a mottled pike"
+    ],
+    "rooms" : 
+    [ 
+      1602, 
+      1044
     ]
   },
   {
@@ -399,12 +509,471 @@
       "a muddy catfish", 
       "an oak toad", 
       "a drab toadfish", 
-      "a rams-horn snail", 
+      "a rams-horn snail"
+    ],
+    "rooms" : 
+    [ 
+      18392, 
+      18366
+    ]
+  },
+  {
+    "name"  : "the Mostyn lagoon",
+    "type"  : "lagoon waters",
+    "fish"  : 
+    [ 
+      "a bulky sea hare", 
+      "a humphead wrasse", 
+      "a drab toadfish", 
+      "a vicious piranha", 
+      "a cardinal tetra", 
+      "a flathead mullet", 
+      "a blacktip grouper", 
+      "a goldlined seabream", 
+      "a smallspotted dart", 
+      "a floral wrasse", 
+      "a blue-barred parrotfish", 
+      "a shoemaker spinefoot", 
+      "an exotic spiny lionfish", 
+      "a yellow perch", 
+      "a yellowstripe goatfish", 
+      "a flameback angelfish", 
+      "a black-finned tambaqui", 
+      "a colorful clownfish", 
+      "a moorish idol"
+    ],
+    "rooms" : 
+    [ 
+      13168
+    ]
+  },
+  {
+    "name"  : "Beryl Sea near Raim",
+    "type"  : "sea depths",
+    "fish"  : 
+    [ 
+      "a chub mackerel", 
+      "a red snapper", 
+      "a striped bass", 
+      "a blueback salmon", 
+      "a lobster", 
+      "a coldwater cod", 
+      "a giant octopus", 
+      "an ocean sunfish", 
+      "a mako shark", 
+      "a tiger shark", 
+      "a hammerhead shark", 
+      "a great white shark", 
+      "a goliath grouper", 
+      "a giant moray eel", 
+      "a whitetip reef shark", 
+      "a Maestral hagfish", 
+      "a blue mackerel", 
+      "a yellowfin tuna", 
+      "a rock goby", 
+      "a great barracuda", 
+      "a majestic blue marlin"
+    ],
+    "rooms" : 
+    [ 
+      58701
+    ]
+  },
+  {
+    "name"  : "a Southern Tundral Lake",
+    "type"  : "icy waters",
+    "fish"  : 
+    [ 
+      "an arctic char", 
+      "a northern pike", 
+      "a king salmon", 
+      "a broad whitefish", 
+      "an Alaqsii lamprey"
+    ],
+    "rooms" : 
+    [ 
+      23263
+    ]
+  },
+  {
+    "name"  : "the White Myesis River",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a drab toadfish", 
+      "a swamp muskie", 
+      "a mottled pike", 
+      "an olive-hued walleye", 
+      "a blueback salmon", 
+      "a rams-horn snail"
+    ],
+    "rooms" : 
+    [ 
+      23899
+    ]
+  },
+  {
+    "name"  : "the Mournhold Vortex",
+    "type"  : "swirling elements",
+    "fish"  : 
+    [ 
+      "a glowing fire-slug", 
+      "an eyeless sand-wriggler", 
+      "a dusty fossilback", 
+      "an almost-invisible windskimmer", 
+      "a tubby juvenile wind fish", 
+      "a crackling cloud moray", 
+      "an obsidian-plated crawler", 
       "unfamiliar creatures"
     ],
     "rooms" : 
     [ 
-      18357
+      46363, 
+      46365
+    ]
+  },
+  {
+    "name"  : "the North Strand Lagoon",
+    "type"  : "lagoon waters",
+    "fish"  : 
+    [ 
+      "an exotic spiny lionfish", 
+      "a bulky sea hare", 
+      "a humphead wrasse", 
+      "a drab toadfish", 
+      "a cardinal tetra", 
+      "a flathead mullet", 
+      "a goldlined seabream", 
+      "a smallspotted dart", 
+      "a floral wrasse", 
+      "a yellowstripe goatfish", 
+      "a shoemaker spinefoot", 
+      "a black-finned tambaqui", 
+      "a yellow perch", 
+      "unfamiliar creatures"
+    ],
+    "rooms" : 
+    [ 
+      18236
+    ]
+  },
+  {
+    "name"  : "Siroccian Cave",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      3429
+    ]
+  },
+  {
+    "name"  : "Mournhold",
+    "type"  : "tidal waters",
+    "fish"  : 
+    [ 
+      "a blue mackerel", 
+      "a blue-green anchovy"
+    ],
+    "rooms" : 
+    [ 
+      46415
+    ]
+  },
+  {
+    "name"  : "Ilhavon Lake",
+    "type"  : "lake waters",
+    "fish"  : 
+    [ 
+      "a flameback angelfish", 
+      "an exotic spiny lionfish", 
+      "a yellow seahorse", 
+      "a giant moray eel", 
+      "a whitetip reef shark", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a vicious piranha", 
+      "a cardinal tetra", 
+      "a black-finned tambaqui", 
+      "a yellow perch"
+    ],
+    "rooms" : 
+    [ 
+      21326, 
+      21339
+    ]
+  },
+  {
+    "name"  : "the River Zaphar",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rams-horn snail", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a mottled pike", 
+      "a blueback salmon", 
+      "a drab toadfish", 
+      "an olive-hued walleye", 
+      "a fang-toothed eel"
+    ],
+    "rooms" : 
+    [ 
+      773
+    ]
+  },
+  {
+    "name"  : "Feral Caves",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      16575
+    ]
+  },
+  {
+    "name"  : "the Blue Myesis River",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a swamp muskie", 
+      "a muddy catfish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a drab toadfish", 
+      "an olive-hued walleye", 
+      "the Myesian Gobbler", 
+      "a bluefin killifish", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
+      "a mottled pike", 
+      "a blueback salmon"
+    ],
+    "rooms" : 
+    [ 
+      23892
+    ]
+  },
+  {
+    "name"  : "the Teo'ltien River",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a mottled pike", 
+      "a muddy catfish", 
+      "a blueback salmon", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      16629
+    ]
+  },
+  {
+    "name"  : "Shallows of the Beryl Sea",
+    "type"  : "shallow waters",
+    "fish"  : 
+    [ 
+      "a blue-green anchovy", 
+      "a small pink shrimp", 
+      "a horseshoe crab", 
+      "a red snapper", 
+      "a dusky bonefish", 
+      "a rock goby", 
+      "a goliath grouper", 
+      "an exotic spiny lionfish", 
+      "a giant moray eel", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a red-striped 'derby' fish", 
+      "a blueback salmon", 
+      "a flameback angelfish"
+    ],
+    "rooms" : 
+    [ 
+      3416, 
+      2042, 
+      2044, 
+      2043
+    ]
+  },
+  {
+    "name"  : "Alaqsii Inlet",
+    "type"  : "icy waters",
+    "fish"  : 
+    [ 
+      "an arctic char", 
+      "a northern pike", 
+      "a king salmon", 
+      "an Alaqsii lamprey", 
+      "a broad whitefish", 
+      "a rainbow trout", 
+      "a freshwater grayling"
+    ],
+    "rooms" : 
+    [ 
+      22525
+    ]
+  },
+  {
+    "name"  : "Fengard Lake",
+    "type"  : "lake waters",
+    "fish"  : 
+    [ 
+      "a flameback angelfish", 
+      "an exotic spiny lionfish", 
+      "a yellow seahorse", 
+      "a giant moray eel", 
+      "a bulky sea hare", 
+      "a humphead wrasse", 
+      "a vicious piranha", 
+      "a cardinal tetra", 
+      "a yellow perch", 
+      "a colorful clownfish"
+    ],
+    "rooms" : 
+    [ 
+      3269
+    ]
+  },
+  {
+    "name"  : "Yuzurai village",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a drab toadfish", 
+      "an olive-hued walleye", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
+      "a fang-toothed eel", 
+      "a muddy catfish", 
+      "a bluegill fish"
+    ],
+    "rooms" : 
+    [ 
+      60034
+    ]
+  },
+  {
+    "name"  : "the Scidve Grotto",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      9983
+    ]
+  },
+  {
+    "name"  : "the Dun River",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a rams-horn snail", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a blueback salmon", 
+      "a drab toadfish", 
+      "a bluegill fish", 
+      "an olive-hued walleye"
+    ],
+    "rooms" : 
+    [ 
+      5050
     ]
   },
   {
@@ -423,71 +992,25 @@
       "an oak toad", 
       "a bluegill fish", 
       "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
       "a rainbow trout", 
       "a freshwater grayling", 
       "a spotted sunfish", 
       "a bighead carp", 
       "a drab toadfish", 
-      "a mottled pike", 
       "a blueback salmon", 
-      "a fang-toothed eel", 
-      "an olive-hued walleye"
-    ],
-    "rooms" : 
-    [ 
-      1024
-    ]
-  },
-  {
-    "name"  : "the Scidve Stream",
-    "type"  : "river waters",
-    "fish"  : 
-    [ 
-      "a dark brown crayfish", 
-      "an oak toad", 
-      "a muddy catfish", 
-      "a silvery minnow", 
-      "a river herring", 
-      "a white sucker", 
-      "a bluefin killifish", 
-      "a swamp muskie", 
-      "a bluegill fish", 
-      "a rams-horn snail", 
-      "a Rahn's Mace crayfish", 
-      "a rainbow trout", 
-      "a spotted sunfish", 
       "a mottled pike", 
-      "a drab toadfish", 
-      "a bronze bream", 
-      "a freshwater grayling", 
-      "an olive-hued walleye", 
-      "a fang-toothed eel", 
-      "unfamiliar creatures"
+      "a fang-toothed eel"
     ],
     "rooms" : 
     [ 
-      9700, 
-      9693, 
-      9685, 
-      9691, 
-      9974, 
-      9982
+      1017, 
+      1014, 
+      1030
     ]
   },
   {
-    "name"  : "the Scidve Grotto",
-    "type"  : "cave waters",
-    "fish"  : 
-    [ 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      9983
-    ]
-  },
-  {
-    "name"  : "the Caverns of Telfinne",
+    "name"  : "Caverns beneath Festering Wastes",
     "type"  : "cave waters",
     "fish"  : 
     [ 
@@ -495,33 +1018,105 @@
       "a colorless blindfish", 
       "a cave salamander", 
       "a rams-horn snail", 
-      "an olive-hued walleye", 
-      "a drab toadfish"
+      "a drab toadfish", 
+      "an olive-hued walleye"
     ],
     "rooms" : 
     [ 
-      22286
+      22866, 
+      20850
     ]
   },
   {
-    "name"  : "Three Rock Lake",
-    "type"  : "lake waters",
+    "name"  : "the Scidve Stream",
+    "type"  : "river waters",
     "fish"  : 
     [ 
-      "a flameback angelfish", 
-      "an exotic spiny lionfish", 
-      "a giant moray eel", 
-      "a bulky sea hare", 
-      "a humphead wrasse", 
-      "a cardinal tetra", 
-      "a yellow perch", 
-      "a yellow seahorse", 
-      "a whitetip reef shark", 
-      "a vicious piranha"
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a bluegill fish", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a mottled pike", 
+      "a drab toadfish", 
+      "a muddy catfish", 
+      "a blueback salmon"
     ],
     "rooms" : 
     [ 
-      20302
+      9973
+    ]
+  },
+  {
+    "name"  : "The Western Ocean",
+    "type"  : "sea depths",
+    "fish"  : 
+    [ 
+      "a blue mackerel", 
+      "a chub mackerel", 
+      "a red snapper", 
+      "a blueback salmon", 
+      "a lobster", 
+      "a rock goby", 
+      "a purple-striped jellyfish", 
+      "a giant moray eel", 
+      "a whitetip reef shark", 
+      "a humphead wrasse", 
+      "a coldwater cod", 
+      "an ocean sunfish", 
+      "a mako shark", 
+      "a tiger shark", 
+      "a hammerhead shark", 
+      "a great white shark", 
+      "a majestic blue marlin", 
+      "a Maestral hagfish", 
+      "a great barracuda", 
+      "a striped bass", 
+      "a giant octopus", 
+      "a goliath grouper", 
+      "a yellowfin tuna"
+    ],
+    "rooms" : 
+    [ 
+      58683
+    ]
+  },
+  {
+    "name"  : "Myesis Branch",
+    "type"  : "river waters",
+    "fish"  : 
+    [ 
+      "a silvery minnow", 
+      "a river herring", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bluefin killifish", 
+      "a swamp muskie", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a fang-toothed eel", 
+      "a rainbow trout", 
+      "a freshwater grayling", 
+      "a spotted sunfish", 
+      "a bighead carp", 
+      "a mottled pike", 
+      "a drab toadfish", 
+      "a rams-horn snail", 
+      "a Rahn's Mace crayfish"
+    ],
+    "rooms" : 
+    [ 
+      31559
     ]
   },
   {
@@ -531,6 +1126,7 @@
     [ 
       "a flameback angelfish", 
       "an exotic spiny lionfish", 
+      "a yellow seahorse", 
       "a giant moray eel", 
       "a whitetip reef shark", 
       "a bulky sea hare", 
@@ -539,12 +1135,12 @@
       "a cardinal tetra", 
       "a black-finned tambaqui", 
       "a yellow perch", 
-      "a yellow seahorse", 
       "a colorful clownfish"
     ],
     "rooms" : 
     [ 
-      11994
+      11994, 
+      12078
     ]
   },
   {
@@ -559,13 +1155,13 @@
       "a bulky sea hare", 
       "a colorful clownfish", 
       "a humphead wrasse", 
-      "a vicious piranha", 
       "a cardinal tetra", 
       "a black-finned tambaqui", 
       "a yellow perch", 
       "a shimmering Duirani koi", 
       "a surly badgerfish", 
       "a giant moray eel", 
+      "a vicious piranha", 
       "a water sparrow"
     ],
     "rooms" : 
@@ -574,33 +1170,39 @@
     ]
   },
   {
-    "name"  : "Ilhavon Pond",
-    "type"  : "muddy waters",
+    "name"  : "the Forgotten Dome",
+    "type"  : "cave waters",
     "fish"  : 
     [ 
-      "a dark brown crayfish", 
-      "an oak toad", 
-      "a muddy catfish", 
-      "a horseshoe crab"
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
+      "an olive-hued walleye"
     ],
     "rooms" : 
     [ 
-      55412
+      54770
     ]
   },
   {
-    "name"  : "a Southern Tundral Lake",
-    "type"  : "icy waters",
+    "name"  : "Siroccian Springs",
+    "type"  : "spring waters",
     "fish"  : 
     [ 
-      "an arctic char", 
-      "a northern pike", 
-      "a king salmon", 
-      "a broad whitefish"
+      "a silvery minnow", 
+      "a white sucker", 
+      "a dark brown crayfish", 
+      "a bronze bream", 
+      "an oak toad", 
+      "a rainbow trout", 
+      "a spotted sunfish", 
+      "a Rahn's Mace crayfish"
     ],
     "rooms" : 
     [ 
-      23263
+      3005
     ]
   },
   {
@@ -612,53 +1214,48 @@
       "a river herring", 
       "a white sucker", 
       "a dark brown crayfish", 
+      "a bluefin killifish", 
       "a swamp muskie", 
       "a muddy catfish", 
       "a bronze bream", 
       "an oak toad", 
       "a bluegill fish", 
       "a rams-horn snail", 
-      "a Rahn's Mace crayfish", 
       "a fang-toothed eel", 
       "a rainbow trout", 
       "a freshwater grayling", 
       "a spotted sunfish", 
       "a bighead carp", 
-      "a blueback salmon", 
       "a drab toadfish", 
-      "a mottled pike", 
+      "a Rahn's Mace crayfish", 
+      "a blueback salmon", 
+      "a mottled pike"
+    ],
+    "rooms" : 
+    [ 
+      11967
+    ]
+  },
+  {
+    "name"  : "Siroccian Lake",
+    "type"  : "cave waters",
+    "fish"  : 
+    [ 
+      "a white sucker", 
+      "a colorless blindfish", 
+      "a cave salamander", 
+      "a rams-horn snail", 
+      "a drab toadfish", 
       "an olive-hued walleye"
     ],
     "rooms" : 
     [ 
-      11993, 
-      11962, 
-      11878
+      26905, 
+      27087
     ]
   },
   {
-    "name"  : "Beryl Sea shallows near Raim",
-    "type"  : "shallow waters",
-    "fish"  : 
-    [ 
-      "a blue-green anchovy", 
-      "a dusky bonefish", 
-      "a rock goby", 
-      "a small pink shrimp", 
-      "a colorful clownfish", 
-      "a red-striped 'derby' fish", 
-      "a bulky sea hare", 
-      "a flameback angelfish", 
-      "an exotic spiny lionfish", 
-      "unfamiliar creatures"
-    ],
-    "rooms" : 
-    [ 
-      58697
-    ]
-  },
-  {
-    "name"  : "the Pachacacha River",
+    "name"  : "the Peshwar Delta",
     "type"  : "river waters",
     "fish"  : 
     [ 
@@ -668,48 +1265,52 @@
       "a dark brown crayfish", 
       "a bluefin killifish", 
       "a swamp muskie", 
+      "a muddy catfish", 
       "a bronze bream", 
       "an oak toad", 
       "a bluegill fish", 
+      "a Rahn's Mace crayfish", 
+      "a fang-toothed eel", 
       "a rainbow trout", 
       "a freshwater grayling", 
       "a spotted sunfish", 
       "a bighead carp", 
-      "a mottled pike", 
-      "a drab toadfish", 
-      "an olive-hued walleye", 
-      "a blueback salmon", 
-      "a muddy catfish", 
-      "a fang-toothed eel", 
       "a rams-horn snail", 
-      "unfamiliar creatures", 
-      "a Rahn's Mace crayfish"
+      "a blueback salmon", 
+      "a drab toadfish", 
+      "a mottled pike"
     ],
     "rooms" : 
     [ 
-      1602, 
-      1576, 
-      1009, 
-      1010
+      1609, 
+      1604, 
+      18397, 
+      18400, 
+      1603
     ]
   },
   {
-    "name"  : "the Azdun spring",
-    "type"  : "spring waters",
+    "name"  : "Beryl Sea shallows near Raim",
+    "type"  : "shallow waters",
     "fish"  : 
     [ 
-      "a silvery minnow", 
-      "a white sucker", 
-      "a dark brown crayfish", 
-      "a bronze bream", 
-      "an oak toad", 
-      "a spotted sunfish", 
-      "a Rahn's Mace crayfish", 
-      "a rainbow trout"
+      "a blue-green anchovy", 
+      "a small pink shrimp", 
+      "a dusky bonefish", 
+      "a rock goby", 
+      "a flameback angelfish", 
+      "a goliath grouper", 
+      "an exotic spiny lionfish", 
+      "a whitetip reef shark", 
+      "a bulky sea hare", 
+      "a colorful clownfish", 
+      "a humphead wrasse", 
+      "a red-striped 'derby' fish", 
+      "a horseshoe crab"
     ],
     "rooms" : 
     [ 
-      8109
+      58698
     ]
   }
 ]
