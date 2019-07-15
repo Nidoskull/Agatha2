@@ -115,6 +115,7 @@ namespace Agatha2
 				if(tokens.Length > 0)
 				{
 					string markovText = GetMarkovChain(tokens[Program.rand.Next(tokens.Length)]);
+					markovText.Replace("@", "@\u200B");
 					if(markovText != null && markovText != "") 
 					{
 						Task.Run( () => Program.SendReply(message.Channel, markovText));
