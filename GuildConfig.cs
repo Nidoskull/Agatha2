@@ -22,13 +22,13 @@ namespace Agatha2
 		internal List<string> enabledModules = new List<string>();
 		internal string commandPrefix = ".";
 		internal string markovTrigger = "agatha";
-		internal int markovChance = 0;
+		internal float markovChance = 0;
 		internal int adHocPollCharacterLimit = 60;
 		internal string useCypher = "none";
 
 		public int AdHocPollCharacterLimit { get => adHocPollCharacterLimit; set => adHocPollCharacterLimit = value; }
 		public string MarkovTrigger { get => markovTrigger; set => markovTrigger = value; }
-		public int MarkovChance { get => markovChance; set => markovChance = value; }
+		public float MarkovChance { get => markovChance; set => markovChance = value; }
 		public string AdminRole { get => adminRole; set => adminRole = value; }
 		public ulong GuildId { get => guildId; set => guildId = value; }
 		public List<string> EnabledModules { get => enabledModules; set => enabledModules = value; }
@@ -131,8 +131,8 @@ namespace Agatha2
 					case "markovchance":
 						try
 						{
-							int newReplyRate = Convert.ToInt32(fullMsg);
-							if(newReplyRate >= 0 && newReplyRate <= 100)
+							float newReplyRate = float.Parse(fullMsg);
+							if(newReplyRate >= 0f && newReplyRate <= 100f)
 							{
 								MarkovChance = newReplyRate;
 								resultString = $"Reply rate is now {MarkovChance}.";

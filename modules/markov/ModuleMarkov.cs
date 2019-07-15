@@ -106,8 +106,11 @@ namespace Agatha2
 				lastString = token;
 			}
 			string searchSpace =  message.Content.ToLower();
-			if((guild.MarkovChance > 0 && Program.rand.Next(100) <= guild.MarkovChance) || searchSpace.Contains(guild.MarkovTrigger))
+			float markovProc = (float)(Program.rand.NextDouble()*100);
+			Program.WriteToLog($"Rolled {markovProc} against {guild.MarkovChance}.");
+			if((guild.MarkovChance > 0f && markovProc <= guild.MarkovChance) || searchSpace.Contains(guild.MarkovTrigger))
 			{
+				Program.WriteToLog($"Firing.");
 				string[] tokens = message.Content.Split(" ");
 				if(tokens.Length > 0)
 				{
