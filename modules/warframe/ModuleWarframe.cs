@@ -266,6 +266,7 @@ namespace Agatha2
 			commands.Add(new CommandAlerts());
 			commands.Add(new CommandCorpusCipher());
 			commands.Add(new CommandGrineerCipher());
+			commands.Add(new CommandRiven());
 			return true;
 		}
 		internal override void ListenTo(SocketMessage message, GuildConfig guild)

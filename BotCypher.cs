@@ -34,16 +34,13 @@ namespace Agatha2
 		{
 			substitution.Add(":bee:", new List<string> {"fuck", "shit"});
 		}
-		internal override string ApplyPreSubstitution(string incoming)
+	}
+
+	internal class CypherYinglet : BotCypher
+	{
+		public CypherYinglet()
 		{
-			foreach(KeyValuePair<string, List<string>> cypher in substitution)
-			{
-				foreach(string cyph in cypher.Value)
-				{
-					incoming = incoming.Replace(cyph, cypher.Key);
-				}
-			}
-			return incoming;
+			substitution.Add("zh", new List<string> {"th"});
 		}
 	}
 }

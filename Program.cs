@@ -65,6 +65,7 @@ namespace Agatha2
 		{
 
 			cyphers.Add("profanityfilter", new CypherProfanityFilter());
+			cyphers.Add("yinglet", new CypherYinglet());
 
 			try
 			{
