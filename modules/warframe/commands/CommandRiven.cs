@@ -26,9 +26,12 @@ namespace Agatha2
 		internal override async Task ExecuteCommand(SocketMessage message, GuildConfig guild)
 		{
 			EmbedBuilder embedBuilder = new EmbedBuilder();
+			embedBuilder.Title = "Riven price checker";
+			embedBuilder.Description = "Oops! Something broke.";
+			
 			try 
 			{
-				if(rivenDataCache == null || lastRivenUpdate.Date.CompareTo(DateTime.UtcNow.Date) != 0)
+				if(rivenDataCache == null || lastRivenUpdate == null || lastRivenUpdate.Date.CompareTo(DateTime.UtcNow.Date) != 0)
 				{
 					lastRivenUpdate = DateTime.UtcNow;
 					WebClient client = new WebClient();
@@ -47,7 +50,6 @@ namespace Agatha2
 						List<string> matches = new List<string>();
 						foreach(JToken riven in rivenDataCache)
 						{
-
 							/*
 								{
 									"itemType" : "Melee Riven Mod",
@@ -72,7 +74,7 @@ namespace Agatha2
 
 						if(matches.Count > 1)
 						{
-							embedBuilder.AddField("Multiple matches", $"There were several possible Rivens for your search term. Did you mean: {string.Join(", ", matches.ToArray())}?");
+							embedBuilder.Description = $"There were several possible Rivens for your search term. Did you mean: {string.Join(", ", matches.ToArray())}?";
 						}
 						else if(matches.Count == 1)
 						{
@@ -106,31 +108,32 @@ namespace Agatha2
 							}
 							avg /= entries;
 							embedBuilder.Title = rivenTitle;
+							embedBuilder.Description = "Here are your search results, Tenno.";
 							embedBuilder.AddField("Highest price", $"{hig}");
 							embedBuilder.AddField("Lowest price",  $"{low}");
 							embedBuilder.AddField("Sold today",    $"{sld}");
 						}
 						else
 						{
-							embedBuilder.AddField("No results", "There were no Rivens matching your string sold today. Maybe try riven.market?");
+							embedBuilder.Description = "There were no Rivens matching your string sold today, Tenno. Maybe try riven.market?";
 						}
 					}
 					else
 					{
-						embedBuilder.AddField("No search term", "Please specify a name or partial name of the Riven you wish to search for.");
+						embedBuilder.Description = "Please specify a name or partial name of the Riven you wish to search for.";
 					}
 				}
 				else
 				{
-					embedBuilder.AddField("No search term", "Please specify a name or partial name of the Riven you wish to search for.");
+					embedBuilder.Description = "Please specify a name or partial name of the Riven you wish to search for.";
 				}
 			}
 			catch(Exception e)
 			{
 				Program.WriteToLog($"Exception when showing riven prices: {e.ToString()}.");
-				embedBuilder.AddField("Oh no", "Something broke, sorry. Try again later.");
+				embedBuilder.Description = "Something broke, sorry. Try again later.";
 			}
-			await Program.SendReply(message, embedBuilder);
+			await Program.SendReply(message.Channel, embedBuilder);
 		}
 	}
 }
