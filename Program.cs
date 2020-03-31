@@ -126,7 +126,7 @@ namespace Agatha2
 			modules.Add(new ModuleChumhandle());
 			modules.Add(new ModuleDice());
 			modules.Add(new ModuleMarkov());
-			modules.Add(new ModuleTwitch());
+			//modules.Add(new ModuleTwitch());
 			modules.Add(new ModuleUtility());
 			modules.Add(new ModuleWarframe());
 
