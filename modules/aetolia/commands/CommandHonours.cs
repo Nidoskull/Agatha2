@@ -52,7 +52,6 @@ namespace Agatha2
 					{
 						StreamReader sr = new StreamReader(s);
 						JObject ci = JObject.Parse(sr.ReadToEnd());
-						Console.WriteLine($"honk2 {ci.ToString()}");
 						result = "```\n---------------------------------------------------------------------";
 						result = $"{result}\n{GetKeyValueSafe("fullname", "unknown", ci, false)}";
 						result = $"{result}\n---------------------------------------------------------------------";
