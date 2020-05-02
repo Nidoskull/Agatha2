@@ -24,6 +24,7 @@ namespace Agatha2
 		private static List<string> hekPostStrings;
 		private static List<string> ordisPostStrings;
 		private static List<string> vorPostStrings;
+		private static List<string> simarisPostStrings;
 		private Dictionary<string, string> tokensToStrings = new Dictionary<string, string>();
 		private Dictionary<ulong, ulong> warframeChannelIds = new Dictionary<ulong, ulong>();
 
@@ -260,9 +261,10 @@ namespace Agatha2
 
 		internal override bool Register(List<BotCommand> commands)
 		{
-			vorPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/vor_strings.txt"));
-			hekPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/hek_strings.txt"));
-			ordisPostStrings = new List<string>(File.ReadAllLines(@"modules/warframe/data/ordis_strings.txt"));
+			vorPostStrings =     new List<string>(File.ReadAllLines(@"modules/warframe/data/vor_strings.txt"));
+			hekPostStrings =     new List<string>(File.ReadAllLines(@"modules/warframe/data/hek_strings.txt"));
+			ordisPostStrings =   new List<string>(File.ReadAllLines(@"modules/warframe/data/ordis_strings.txt"));
+			simarisPostStrings = new List<string>(File.ReadAllLines(@"modules/warframe/data/simaris_strings.txt"));
 			commands.Add(new CommandAlerts());
 			commands.Add(new CommandCorpusCipher());
 			commands.Add(new CommandGrineerCipher());
@@ -283,6 +285,10 @@ namespace Agatha2
 			else if(searchSpace.Contains("look at them"))
 			{
 				Task.Run( () => Program.SendReply(message.Channel, vorPostStrings[Program.rand.Next(vorPostStrings.Count)]));
+			}
+			else if(searchSpace.Contains("hunter") || searchSpace.Contains("simaris") || searchSpace.Contains("sanctuary"))
+			{
+				Task.Run( () => Program.SendReply(message.Channel, simarisPostStrings[Program.rand.Next(simarisPostStrings.Count)]));
 			}
 		}
 	}
