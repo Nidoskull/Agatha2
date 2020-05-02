@@ -13,6 +13,20 @@ namespace Agatha2
 {
 	internal class CommandHonours : BotCommand
 	{
+
+		internal string GetKeyValueSafe(string keyReply, string defaultReply, JObject ci, bool lowercase)
+		{
+			string reply = defaultReply;
+			if(ci.ContainsKey(keyReply))
+			{
+				reply = ci[keyReply].ToString();
+			}
+			if(lowercase)
+			{
+				reply = reply.ToLower();
+			}
+			return reply;
+		}
 		internal CommandHonours()
 		{
 			usage = "honours <character>";
@@ -38,35 +52,36 @@ namespace Agatha2
 					{
 						StreamReader sr = new StreamReader(s);
 						JObject ci = JObject.Parse(sr.ReadToEnd());
-						result = "```\n-------------------------------------------------------------------------------";
-						result = $"{result}\n{ci["fullname"]}";
-						result = $"{result}\n-------------------------------------------------------------------------------";
-						if(ci["class"].ToString().Equals("(none)"))
+						Console.WriteLine($"honk2 {ci.ToString()}");
+						result = "```\n---------------------------------------------------------------------";
+						result = $"{result}\n{GetKeyValueSafe("fullname", "unknown", ci, false)}";
+						result = $"{result}\n---------------------------------------------------------------------";
+						if(GetKeyValueSafe("class", "(none)", ci, false).Equals("(none)"))
 						{
-							result = $"{result}\nThey are a level {ci["level"]} {ci["race"]} with no class.";
+							result = $"{result}\nThey are a level {GetKeyValueSafe("level", "0", ci, false)} {GetKeyValueSafe("race", "mysterious", ci, false)} with no class.";
 						}
 						else
 						{
-							result = $"{result}\nThey are a level {ci["level"]} {ci["race"]} {ci["class"]}.";
+							result = $"{result}\nThey are a level {GetKeyValueSafe("level", "0", ci, false)} {GetKeyValueSafe("race", "mysterious", ci, false)} {GetKeyValueSafe("class", "adventurer", ci, false)}.";
 						}
-						if(ci["city"].ToString().Equals("(none)"))
+						if(GetKeyValueSafe("city", "(none)", ci, false).Equals("(none)"))
 						{
 							result = $"{result}\nThey hold no citizenship.";
 						}
 						else
 						{
-							result = $"{result}\nThey are a citizen of {ci["city"]}.";
+							result = $"{result}\nThey are a citizen of {GetKeyValueSafe("city", "(none)", ci, false)}.";
 						}
-						if(ci["guild"].ToString().Equals("(none)"))
+						if(GetKeyValueSafe("guild", "(none)", ci, false).Equals("(none)"))
 						{
 							result = $"{result}\nThey hold no guild membership.";
 						}
 						else
 						{
-							result = $"{result}\nThey are a member of the {ci["guild"]}.";
+							result = $"{result}\nThey are a member of the {GetKeyValueSafe("guild", "(none)", ci, false).Equals("(none)")}.";
 						}
-						result = $"{result}\nThey are {ci["xp rank"].ToString().ToLower()} in experience, {ci["explore rank"].ToString().ToLower()} in exploration and {ci["combat rank"].ToString().ToLower()} in combat.";
-						result = $"{result}\n-------------------------------------------------------------------------------```";
+						result = $"{result}\nThey are {GetKeyValueSafe("xp rank", "unranked", ci, true)} in experience, {GetKeyValueSafe("explore rank", "unranked", ci, true)} in exploration and {GetKeyValueSafe("combat rank", "unranked", ci, true)} in combat.";
+						result = $"{result}\n---------------------------------------------------------------------```";
 					}
 				}
 			}
