@@ -21,6 +21,7 @@ namespace Agatha2
 		internal override bool Register(List<BotCommand> commands)
 		{
 			commands.Add(new CommandDecide());
+			commands.Add(new CommandIcebreaker());
 			return true;
 		}
 		internal override void ListenTo(SocketMessage message, GuildConfig guild)
