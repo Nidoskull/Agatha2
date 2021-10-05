@@ -1,3 +1,4 @@
+/*
 using Discord.WebSocket;
 using System;
 using System.Collections;
@@ -46,3 +47,4 @@ namespace Agatha2
 		}
 	}
 }
+*/

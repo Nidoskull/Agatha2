@@ -38,10 +38,10 @@ namespace Agatha2
 			hasPeriodicEventInSeconds = 60;
 		}
 
-		internal List<string> seenEvents = new List<string>();
+		//internal List<string> seenEvents = new List<string>();
 		private string fishDbPath = @"modules/aetolia/data/fishdb.json";
 		internal List<FishingHole> fishingHoles;
-		internal Dictionary<ulong, ulong> aetoliaChannelIds = new Dictionary<ulong, ulong>();
+		//internal Dictionary<ulong, ulong> aetoliaChannelIds = new Dictionary<ulong, ulong>();
 
 		internal override void StartModule()
 		{
@@ -77,6 +77,7 @@ namespace Agatha2
 
 		internal override void LoadConfig()
 		{
+			/*
 			string loadFile = @"modules/aetolia/data/channel_ids.json";
 			if(File.Exists(loadFile))
 			{
@@ -88,23 +89,25 @@ namespace Agatha2
 					}
 					catch(Exception e)
 					{
-						Program.WriteToLog($"Exception when loading stream channel config: {e.Message}");
+						Program.WriteToLog($"Exception when loading Aetolia API channel config: {e.Message}");
 					}
 				}
 			}
+			*/
 		}
 		internal override bool Register(List<BotCommand> commands)
 		{
 			fishingHoles = new List<FishingHole>();
-			commands.Add(new CommandNstat());
-			commands.Add(new CommandReadnews());
-			commands.Add(new CommandHonours());
-			commands.Add(new CommandWho());
+			//commands.Add(new CommandNstat());    // Disabled pending API update, may be redundant 
+			//commands.Add(new CommandReadnews()); // in view of official Aet Discord integration
+			//commands.Add(new CommandHonours());
+			//commands.Add(new CommandWho());
 			commands.Add(new CommandFish());
 			commands.Add(new CommandAltprompt());
 			return true;
 		}
 
+		/*	
 		internal HttpWebResponse GetAPIResponse(string responseType)
 		{
 			HttpWebResponse s = null;
@@ -244,5 +247,6 @@ namespace Agatha2
 				}
 			}
 		}
+		*/
 	}
 }
